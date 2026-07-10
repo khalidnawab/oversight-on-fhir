@@ -5,6 +5,7 @@ from oversight.errors import BackendPolicyError
 from oversight.inference.base import InferenceBackend
 from oversight.inference.frontier import FrontierAPIBackend
 from oversight.inference.local_stub import LocalModelBackend
+from oversight.inference.scripted import ScriptedDemoBackend
 
 
 def get_backend(settings: Settings, client: Any | None = None) -> InferenceBackend:
@@ -12,6 +13,8 @@ def get_backend(settings: Settings, client: Any | None = None) -> InferenceBacke
     synthetic_data_only is set (Section 4.9 — real PHI and the frontier API are mutually exclusive)."""
     if settings.backend == "local":
         return LocalModelBackend()
+    if settings.backend == "demo":
+        return ScriptedDemoBackend()
     if settings.backend == "frontier":
         if not settings.synthetic_data_only:
             raise BackendPolicyError(

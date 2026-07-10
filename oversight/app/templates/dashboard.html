@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Oversight dashboard</h1>
+<p class="evidence">Sourced entirely from FHIR <code>AuditEvent</code> queries — proof the oversight
+events are genuine resources, not internal logs.</p>
+
+<div class="card">
+  <p><span class="metric">{{ stats.total_decisions }}</span> oversight decisions
+     &nbsp;·&nbsp; <span class="metric">{{ (stats.override_rate * 100) | round(0) }}%</span> override rate
+     &nbsp;·&nbsp; <span class="metric">{{ stats.escalations }}</span> escalations</p>
+
+  <h2>Dispositions</h2>
+  <table>
+    <tr><th>Accept</th><th>Edit</th><th>Reject</th></tr>
+    <tr><td>{{ stats.dispositions.accept }}</td><td>{{ stats.dispositions.edit }}</td><td>{{ stats.dispositions.reject }}</td></tr>
+  </table>
+
+  <h2>Override reasons <span class="evidence">(data-vintage broken out — analytically important)</span></h2>
+  <table>
+    <tr><th>Reason</th><th>Count</th></tr>
+    {% for code, n in stats.reasons.items() %}
+    <tr><td>{{ code }}{% if code == "data-vintage" %} ★{% endif %}</td><td>{{ n }}</td></tr>
+    {% endfor %}
+  </table>
+  <p class="evidence">A high data-vintage rate is an automation-bias-relevant signal: the agent is
+  repeatedly acting on stale data the clinician has already superseded.</p>
+</div>
+{% endblock %}

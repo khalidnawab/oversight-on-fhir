@@ -16,5 +16,20 @@ services:
       retries: 20
       start_period: 90s
 
+  app:
+    build: .
+    container_name: oversight-app
+    ports:
+      - "8000:8000"
+    environment:
+      OVERSIGHT_FHIR_BASE_URL: http://hapi:8080/fhir
+      # Default to the offline scripted demo backend so the stack runs with no API key.
+      # Switch to frontier (needs ANTHROPIC_API_KEY + synthetic-only) or local by config alone.
+      OVERSIGHT_BACKEND: demo
+      OVERSIGHT_SYNTHETIC_DATA_ONLY: "true"
+    depends_on:
+      hapi:
+        condition: service_healthy
+
 volumes:
   fhir-data:

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Oversight-on-FHIR</h1>
+<p>Select a synthetic patient to see the agent's de-escalation recommendation, its evidence, the AI
+disclosure, and the accept / edit / reject oversight control. Every decision is persisted as a FHIR
+resource.</p>
+<ul>
+  {% for p in patients %}
+  <li><a href="/patient/{{ p.pid }}/{{ p.eid }}">{{ p.label }}</a></li>
+  {% endfor %}
+</ul>
+<p class="evidence">Synthetic data only — no PHI.</p>
+{% endblock %}

@@ -25,6 +25,6 @@ class Settings(BaseSettings):
     @field_validator("backend")
     @classmethod
     def _valid_backend(cls, v: str) -> str:
-        if v not in ("frontier", "local"):
-            raise ValueError(f"backend must be 'frontier' or 'local', got {v!r}")
+        if v not in ("frontier", "local", "demo"):
+            raise ValueError(f"backend must be 'frontier', 'local', or 'demo', got {v!r}")
         return v
