@@ -18,11 +18,15 @@ def _hapi_up():
         return False
 
 
-def test_home_lists_patients(monkeypatch):
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_census_home_renders(monkeypatch):
     c = _client(monkeypatch)
     r = c.get("/")
     assert r.status_code == 200
-    assert "clean-1" in r.text and "hr-1" in r.text
+    assert "census" in r.text.lower()
+    assert "Eligible for review" in r.text
+    # at least one known patient surname from the unit
+    assert "Rivera" in r.text or "Webb" in r.text
 
 
 def test_cds_discovery(monkeypatch):
@@ -46,7 +50,7 @@ def test_high_risk_patient_view_escalates(monkeypatch):
     c = _client(monkeypatch)
     r = c.get("/patient/hr-1/enc-hr-1")
     assert r.status_code == 200
-    assert "Escalated to human review" in r.text
+    assert "Escalated" in r.text
     assert "allergy_to_candidate" in r.text
 
 
@@ -66,7 +70,7 @@ def test_disposition_then_dashboard(monkeypatch):
     assert resp.status_code == 303
     dash = c.get("/dashboard")
     assert dash.status_code == 200
-    assert "oversight decisions" in dash.text
+    assert "oversight decisions" in dash.text.lower()
 
 
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")

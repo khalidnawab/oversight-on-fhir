@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block page_title %}Census{% endblock %}
+{% block page_crumb %}Antimicrobial stewardship · de-escalation review{% endblock %}
+{% block page_h1 %}Unit census{% endblock %}
+{% block topbar_right %}
+  <div class="scan-chip"><span class="pulse"></span> Agent scanned {{ entries|length }} patients · {{ scanned_at }}</div>
+{% endblock %}
+
+{% block content %}
+<div class="kpis stagger">
+  <div class="kpi accent-brand"><div class="label">Eligible for review</div>
+    <div class="value">{{ counts.eligible }}</div><div class="foot">cultures resulted, ≥ review window</div></div>
+  <div class="kpi accent-info"><div class="label">Insufficient info</div>
+    <div class="value">{{ counts.insufficient }}</div><div class="foot">awaiting susceptibilities</div></div>
+  <div class="kpi accent-warn"><div class="label">Monitoring</div>
+    <div class="value">{{ counts.monitoring }}</div><div class="foot">before review window</div></div>
+  <div class="kpi"><div class="label">On census</div>
+    <div class="value">{{ entries|length }}</div><div class="foot">patients on antibiotics</div></div>
+</div>
+
+<p class="eyebrow">The agent queried the unit over FHIR and flagged de-escalation candidates. Deterministic — no model involved in eligibility.</p>
+
+<table class="worklist">
+  <thead><tr>
+    <th style="width:24%">Patient</th><th>Day of therapy</th><th>Current regimen</th>
+    <th>Cultures</th><th>Agent assessment</th><th>Status</th><th></th>
+  </tr></thead>
+  <tbody class="stagger">
+    {% for e in entries %}
+    <tr>
+      <td>
+        <span class="dot-strip dot-{{ e.eligibility }}"></span>
+        <span style="display:inline-block;vertical-align:middle">
+          <div class="pt-name">{{ e.patient_name }}</div>
+          <div class="pt-sub">{{ e.location or "—" }}</div>
+        </span>
+      </td>
+      <td><strong>Day {{ e.day_of_therapy }}</strong><div class="pt-sub">{{ (e.dot_hours)|round(0)|int }} h</div></td>
+      <td>{% for m in e.regimen %}<div class="{% if m.broad_spectrum %}headline{% endif %}">{{ m.name }}</div>{% endfor %}</td>
+      <td>
+        {% if e.culture_status == "resulted" %}<span class="chip">✓ resulted</span>
+        {% elif e.culture_status == "pending" %}<span class="chip">… pending</span>
+        {% else %}<span class="chip">none</span>{% endif %}
+      </td>
+      <td>
+        {% set h = headlines.get(e.patient_id) %}
+        {% if h and h.escalate %}<span class="badge escalate">⚠ escalate</span>
+          <div class="pt-sub">{{ h.rules|join(", ") }}</div>
+        {% elif h and h.action == "narrow" %}<span class="headline"><span class="arrow">→</span> narrow to {{ h.agent }}</span>
+        {% elif h and h.action == "continue" %}<span class="pt-sub">continue current</span>
+        {% elif e.eligibility == "insufficient" %}<span class="pt-sub">needs data</span>
+        {% else %}<span class="pt-sub">—</span>{% endif %}
+      </td>
+      <td><span class="badge {{ e.eligibility }}">{{ e.eligibility|replace("_"," ") }}</span></td>
+      <td>
+        {% if e.eligibility in ("eligible","insufficient") %}
+          <a class="btn btn-review" href="/patient/{{ e.patient_id }}/{{ e.encounter_id }}">Review →</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

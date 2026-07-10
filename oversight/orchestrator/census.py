@@ -46,6 +46,10 @@ class CensusScanner:
         low = med_name.lower()
         return any(tok in low for tok in self._broad)
 
+    def classify(self, patient_id: str, now: _dt.datetime | None = None) -> CensusEntry | None:
+        now = now or _dt.datetime.now(_dt.timezone.utc)
+        return self._classify(self._fhir.read("Patient", patient_id), now)
+
     def scan(self, now: _dt.datetime | None = None) -> list[CensusEntry]:
         now = now or _dt.datetime.now(_dt.timezone.utc)
         entries = []

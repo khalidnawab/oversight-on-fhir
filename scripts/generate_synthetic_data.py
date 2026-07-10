@@ -176,7 +176,7 @@ UNIT = [
      "regimen": [{"name": "piperacillin-tazobactam", "rxnorm": "1659149", "hours_ago": 90}],
      "creatinine": 1.0, "weight": 82, "lactate": 1.8, "temp": 38.1, "hr": 96, "wbc": 14.2,
      "culture": {"conclusion": "Escherichia coli in blood culture x2. Susceptible to ceftriaxone, ciprofloxacin.",
-                 "susceptibilities": {"ceftriaxone": "Susceptible", "cefazolin": "Susceptible"}},
+                 "susceptibilities": {"ceftriaxone": "Susceptible"}},
      "notes": {"hp": ("34117-2", "History & Physical", "67M admitted from ED with fever and dysuria. Blood and urine cultures obtained. Started on empiric piperacillin-tazobactam for suspected urosepsis. Hemodynamically stable, no pressors."),
                "prog": ("11506-3", "Progress Note", "Day 4. Afebrile x24h. Blood cultures now positive for E. coli, ceftriaxone-susceptible. Candidate for de-escalation. Renal function normal.")}},
 

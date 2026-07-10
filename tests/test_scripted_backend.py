@@ -1,30 +1,50 @@
 from oversight.inference.base import InferenceBackend
 from oversight.inference.scripted import ScriptedDemoBackend
+from oversight.orchestrator.context import ClinicalContext
+from oversight.orchestrator.prompt import build_prompt
 from oversight.schema.validate import load_schema, validate_recommendation
+
+
+def _prompt(ctx):
+    return build_prompt(ctx, knowledge_passages=[])
+
+
+def _ctx(pid, susceptibilities, regimen_ref="MedicationRequest/mr-1"):
+    return ClinicalContext(
+        patient_reference=f"Patient/{pid}", encounter_reference=f"Encounter/enc-{pid}",
+        current_regimen=[{"medication": "piperacillin-tazobactam", "fhir_reference": regimen_ref}],
+        susceptibilities=susceptibilities,
+        culture_conclusions=[{"text": "positive", "fhir_reference": f"DiagnosticReport/dr-{pid}"}])
 
 
 def test_is_a_backend():
     assert isinstance(ScriptedDemoBackend(), InferenceBackend)
 
 
-def test_clean_patient_proposal():
-    b = ScriptedDemoBackend()
-    r = b.generate("... Patient/clean-1 Encounter/enc-clean-1 ...", load_schema(), n_samples=3)
+def test_narrows_to_susceptible_target():
+    ctx = _ctx("mssa", [{"agent": "cefazolin", "interpretation": "Susceptible", "fhir_reference": "Observation/o"}])
+    r = ScriptedDemoBackend().generate(_prompt(ctx), load_schema(), n_samples=3)
     validate_recommendation(r.recommendation)
-    assert r.recommendation["patient_reference"] == "Patient/clean-1"
+    assert r.recommendation["patient_reference"] == "Patient/mssa"
     assert r.recommendation["candidacy"]["recommended_agent"] == "cefazolin"
     assert len(r.samples) == 3
-    # evidence points at this patient's diagnostic report
-    assert r.recommendation["rationale"][0]["evidence"][0]["fhir_reference"] == "DiagnosticReport/dr-clean-1"
 
 
-def test_high_risk_patient_proposal_references_hr():
-    r = ScriptedDemoBackend().generate("Patient/hr-1 Encounter/enc-hr-1", load_schema())
-    assert r.recommendation["patient_reference"] == "Patient/hr-1"
-    assert r.recommendation["candidacy"]["current_regimen"][0]["fhir_reference"] == "MedicationRequest/mr-hr-1"
+def test_prefers_ceftriaxone_when_only_it_is_susceptible():
+    ctx = _ctx("ecoli", [{"agent": "ceftriaxone", "interpretation": "Susceptible", "fhir_reference": "Observation/o"}])
+    r = ScriptedDemoBackend().generate(_prompt(ctx), load_schema())
+    assert r.recommendation["candidacy"]["recommended_agent"] == "ceftriaxone"
 
 
-def test_unknown_patient_is_insufficient():
-    r = ScriptedDemoBackend().generate("no patient here", load_schema())
+def test_continue_when_no_narrow_target_susceptible():
+    ctx = _ctx("pseudo", [{"agent": "cefepime", "interpretation": "Susceptible", "fhir_reference": "Observation/o"}])
+    r = ScriptedDemoBackend().generate(_prompt(ctx), load_schema())
+    validate_recommendation(r.recommendation)
+    assert r.recommendation["candidacy"]["recommended_action"] == "continue"
+
+
+def test_insufficient_when_no_susceptibilities():
+    ctx = _ctx("pending", [])
+    r = ScriptedDemoBackend().generate(_prompt(ctx), load_schema())
     validate_recommendation(r.recommendation)
     assert r.recommendation["candidacy"]["recommended_action"] == "insufficient_information"

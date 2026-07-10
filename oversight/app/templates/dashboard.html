@@ -1,28 +1,56 @@
 {% extends "base.html" %}
+{% block page_title %}Oversight analytics{% endblock %}
+{% block page_crumb %}Antimicrobial stewardship · governance{% endblock %}
+{% block page_h1 %}Oversight analytics{% endblock %}
+{% block topbar_right %}<div class="scan-chip">Sourced entirely from FHIR <span class="mono">AuditEvent</span> queries</div>{% endblock %}
+
 {% block content %}
-<h1>Oversight dashboard</h1>
-<p class="evidence">Sourced entirely from FHIR <code>AuditEvent</code> queries — proof the oversight
-events are genuine resources, not internal logs.</p>
+<div class="kpis stagger">
+  <div class="kpi accent-brand"><div class="label">Oversight decisions</div>
+    <div class="value">{{ stats.total_decisions }}</div><div class="foot">accept / edit / reject captured</div></div>
+  <div class="kpi accent-danger"><div class="label">Override rate</div>
+    <div class="value">{{ (stats.override_rate*100)|round(0)|int }}%</div><div class="foot">edit or reject</div></div>
+  <div class="kpi accent-warn"><div class="label">Escalations</div>
+    <div class="value">{{ stats.escalations }}</div><div class="foot">deterministic high-risk routing</div></div>
+  <div class="kpi accent-info"><div class="label">Data-vintage overrides</div>
+    <div class="value">{{ stats.data_vintage_overrides }}</div><div class="foot">automation-bias signal</div></div>
+</div>
 
-<div class="card">
-  <p><span class="metric">{{ stats.total_decisions }}</span> oversight decisions
-     &nbsp;·&nbsp; <span class="metric">{{ (stats.override_rate * 100) | round(0) }}%</span> override rate
-     &nbsp;·&nbsp; <span class="metric">{{ stats.escalations }}</span> escalations</p>
+<div class="grid-2 stagger">
+  <div class="card">
+    <div class="card-head"><h2>Dispositions</h2></div>
+    <div class="card-body" style="display:flex;gap:28px;align-items:center">
+      {% set total = stats.total_decisions or 1 %}
+      {% set accept = stats.dispositions.accept %}
+      <div class="ring" style="--p: {{ (accept/total*100)|round(0)|int }}; position:relative">
+        <div class="rv">{{ (accept/total*100)|round(0)|int }}%</div>
+      </div>
+      <div style="flex:1">
+        <div class="bar-row"><span class="lbl">Accept</span>
+          <div class="bar-track"><div class="bar-fill" style="width:{{ (accept/total*100)|round(0)|int }}%"></div></div>
+          <span class="num">{{ accept }}</span></div>
+        <div class="bar-row"><span class="lbl">Edit</span>
+          <div class="bar-track"><div class="bar-fill info" style="width:{{ (stats.dispositions.edit/total*100)|round(0)|int }}%"></div></div>
+          <span class="num">{{ stats.dispositions.edit }}</span></div>
+        <div class="bar-row"><span class="lbl">Reject</span>
+          <div class="bar-track"><div class="bar-fill danger" style="width:{{ (stats.dispositions.reject/total*100)|round(0)|int }}%"></div></div>
+          <span class="num">{{ stats.dispositions.reject }}</span></div>
+      </div>
+    </div>
+  </div>
 
-  <h2>Dispositions</h2>
-  <table>
-    <tr><th>Accept</th><th>Edit</th><th>Reject</th></tr>
-    <tr><td>{{ stats.dispositions.accept }}</td><td>{{ stats.dispositions.edit }}</td><td>{{ stats.dispositions.reject }}</td></tr>
-  </table>
-
-  <h2>Override reasons <span class="evidence">(data-vintage broken out — analytically important)</span></h2>
-  <table>
-    <tr><th>Reason</th><th>Count</th></tr>
-    {% for code, n in stats.reasons.items() %}
-    <tr><td>{{ code }}{% if code == "data-vintage" %} ★{% endif %}</td><td>{{ n }}</td></tr>
-    {% endfor %}
-  </table>
-  <p class="evidence">A high data-vintage rate is an automation-bias-relevant signal: the agent is
-  repeatedly acting on stale data the clinician has already superseded.</p>
+  <div class="card">
+    <div class="card-head"><h2>Override reasons</h2></div>
+    <div class="card-body">
+      {% set rmax = (stats.reasons.values()|list|max) or 1 %}
+      {% for code, n in stats.reasons.items() %}
+      <div class="bar-row {% if code == 'data-vintage' %}spotlight{% endif %}">
+        <span class="lbl">{{ code|replace("-"," ") }}{% if code == 'data-vintage' %} ★{% endif %}</span>
+        <div class="bar-track"><div class="bar-fill {% if code == 'data-vintage' %}danger{% else %}info{% endif %}" style="width:{{ (n/rmax*100)|round(0)|int }}%"></div></div>
+        <span class="num">{{ n }}</span></div>
+      {% endfor %}
+      <p class="pt-sub" style="margin-top:14px">A rising <strong>data-vintage</strong> rate means the agent is repeatedly acting on data the clinician has already superseded — the automation-bias signal regulators require monitoring but few systems can produce.</p>
+    </div>
+  </div>
 </div>
 {% endblock %}

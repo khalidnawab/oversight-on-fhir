@@ -1,71 +1,121 @@
 {% extends "base.html" %}
-{% block content %}
-<h1>De-escalation recommendation</h1>
-<p class="evidence">Patient <code>{{ rec.patient_reference }}</code> · Encounter <code>{{ rec.encounter_reference }}</code>
-· persisted as <code>{{ guidance_ref }}</code></p>
+{% block page_title %}{{ patient_name }}{% endblock %}
+{% block page_crumb %}<a href="/">Census</a> · de-escalation review{% endblock %}
+{% block page_h1 %}{{ patient_name }}{% endblock %}
+{% block topbar_right %}
+  <div class="scan-chip">{{ location }} · Day {{ day_of_therapy }} · <span class="mono">{{ rec.patient_reference }}</span></div>
+{% endblock %}
 
+{% block content %}
 {% if rec.routing.decision == "escalate" %}
-<div class="escalate">
-  <strong>Escalated to human review.</strong>
-  Triggered by deterministic high-risk rule(s): {{ rec.routing.triggered_high_risk_rules | join(", ") }}.
-  The model did not decide this — the routing engine did.
+<div class="escalate-banner stagger">
+  <strong>⚠ Escalated to Infectious Diseases.</strong>
+  Routed to a human by a deterministic high-risk rule — <em>{{ rec.routing.triggered_high_risk_rules | join(", ") }}</em>.
+  The model did not make this call; the routing engine did, before any recommendation was surfaced as confident.
 </div>
 {% endif %}
 
-<div class="card">
-  <h2>Recommended action</h2>
-  <p><strong>{{ rec.candidacy.recommended_action }}</strong>
-     {% if rec.candidacy.recommended_agent %}→ {{ rec.candidacy.recommended_agent }}{% endif %}
-     &nbsp;·&nbsp; candidate: {{ rec.candidacy.is_deescalation_candidate }}</p>
+<div class="grid-2 stagger">
+  <div>
+    <div class="card">
+      <div class="card-head">
+        <h2>Recommendation</h2>
+        {% if rec.routing.decision == "escalate" %}<span class="badge escalate">escalate</span>
+        {% else %}<span class="badge surface">surface</span>{% endif %}
+      </div>
+      <div class="card-body">
+        <div style="font-size:1.15rem;font-weight:600;margin-bottom:4px">
+          {% if rec.candidacy.recommended_action == "narrow" %}<span class="arrow" style="color:var(--brand)">→</span>
+            Narrow to <span style="color:var(--brand-ink)">{{ rec.candidacy.recommended_agent }}</span>
+          {% elif rec.candidacy.recommended_action == "continue" %}Continue current therapy
+          {% else %}{{ rec.candidacy.recommended_action|replace("_"," ") }}{% endif %}
+        </div>
+        <div class="pt-sub">candidacy: {{ rec.candidacy.is_deescalation_candidate|replace("_"," ") }}
+          · confidence {{ (rec.confidence.score*100)|round(0)|int }}% ({{ rec.confidence.method }})</div>
 
-  <h2>Current regimen</h2>
-  <ul>{% for m in rec.candidacy.current_regimen %}<li>{{ m.medication }} (<code>{{ m.fhir_reference }}</code>)</li>{% endfor %}</ul>
+        <p class="eyebrow" style="margin-top:20px">Current regimen</p>
+        {% for m in rec.candidacy.current_regimen %}
+          <span class="chip">{{ m.medication }}</span> <span class="chip ref">{{ m.fhir_reference }}</span><br>
+        {% endfor %}
 
-  <h2>Evidence</h2>
-  <ul class="evidence">
-    {% for r in rec.rationale %}
-    <li>{{ r.assertion }}
-      {% for e in r.evidence %}<br><code>{{ e.fhir_reference or e.knowledge_source_id or e.document_reference }}</code>{% endfor %}
-    </li>
-    {% endfor %}
-  </ul>
+        <p class="eyebrow" style="margin-top:20px">Evidence — every claim linked to its source</p>
+        <ul class="rationale">
+          {% for r in rec.rationale %}
+          <li><div class="assert">{{ r.assertion }}</div>
+            {% for e in r.evidence %}<span class="chip ref">{{ e.fhir_reference or e.knowledge_source_id or e.document_reference }}</span> {% endfor %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
 
-  <h2>Deterministic tool (computed in code, not by the model)</h2>
-  {% set d = rec.deterministic_tool_result %}
-  <table>
-    <tr><th>Renal dose</th><td>{{ d.renal_dose_adjustment.dose or d.renal_dose_adjustment.note }}
-        {% if d.renal_dose_adjustment.crcl %}(CrCl {{ d.renal_dose_adjustment.crcl | round(0) }} mL/min){% endif %}</td></tr>
-    <tr><th>Interactions</th><td>{{ d.interactions | length }} found</td></tr>
-    <tr><th>Contraindications</th><td>
-      {% for c in d.contraindications %}{{ c.type }}: {{ c.note }}<br>{% else %}none{% endfor %}</td></tr>
-  </table>
+    <div class="card">
+      <div class="card-head"><h2>Deterministic tool</h2><span class="pt-sub">computed in code, never by the model</span></div>
+      <div class="card-body">
+        {% set d = rec.deterministic_tool_result %}
+        <div class="tool-grid">
+          <div class="tool-cell">
+            <div class="t">Renal dose</div>
+            <div class="v">{{ d.renal_dose_adjustment.dose or "—" }}</div>
+            {% if d.renal_dose_adjustment.crcl %}<div class="pt-sub">CrCl {{ d.renal_dose_adjustment.crcl|round(0)|int }} mL/min{% if d.renal_dose_adjustment.adjusted %} · adjusted{% endif %}</div>{% endif %}
+            {% if d.renal_dose_adjustment.note %}<div class="pt-sub">{{ d.renal_dose_adjustment.note }}</div>{% endif %}
+          </div>
+          <div class="tool-cell {% if d.interactions %}flag{% endif %}">
+            <div class="t">Interactions</div>
+            <div class="v">{{ d.interactions|length }}</div>
+            {% for i in d.interactions %}<div class="pt-sub">{{ i.with }} — {{ i.severity }}</div>{% endfor %}
+          </div>
+          <div class="tool-cell {% if d.contraindications %}flag{% endif %}">
+            <div class="t">Contraindications</div>
+            <div class="v">{{ d.contraindications|length }}</div>
+            {% for c in d.contraindications %}<div class="pt-sub">{{ c.type|replace("_"," ") }}: {{ c.note }}</div>{% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <h2>Confidence</h2>
-  <p>{{ rec.confidence.score }} ({{ rec.confidence.method }}) — {{ rec.confidence.rationale }}</p>
+  <div>
+    <div class="card">
+      <div class="card-head"><h2>Your decision</h2></div>
+      <div class="card-body">
+        <div class="disclosure" style="margin-bottom:16px"><span>⚑</span><span>{{ rec.disclosure_text }}</span></div>
+        <form method="post" action="/disposition" class="decision">
+          <input type="hidden" name="guidance_ref" value="{{ guidance_ref }}">
+          <div class="seg" role="radiogroup">
+            <label><input type="radio" name="disposition" value="accept" checked onchange="reasonBox(false)"><span class="accept">Accept</span></label>
+            <label><input type="radio" name="disposition" value="edit" onchange="reasonBox(true)"><span class="edit">Edit</span></label>
+            <label><input type="radio" name="disposition" value="reject" onchange="reasonBox(true)"><span class="reject">Reject</span></label>
+          </div>
+          <div id="reasonbox" style="display:none;flex-direction:column;gap:12px">
+            <div class="field"><label>Structured reason</label>
+              <select name="reason_code">
+                <option value="">— select —</option>
+                {% for r in reasons %}<option value="{{ r.code }}">{{ r.display }}</option>{% endfor %}
+              </select>
+            </div>
+            <div class="field"><label>Note (optional)</label><textarea name="note" rows="3" placeholder="e.g. Repeat culture from today shows a resistant isolate."></textarea></div>
+          </div>
+          <button class="btn btn-primary" type="submit">Record decision →</button>
+        </form>
+        <p class="pt-sub" style="margin-top:14px">Recorded as a FHIR <span class="mono">AuditEvent</span> (OversightEvent profile) referencing <span class="mono">{{ guidance_ref }}</span>.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head"><h2>Provenance</h2></div>
+      <div class="card-body">
+        <dl class="kv">
+          <dt>AI output</dt><dd class="mono">{{ guidance_ref }}</dd>
+          <dt>Produced by</dt><dd class="mono">Device/oversight-ai</dd>
+          <dt>Encounter</dt><dd class="mono">{{ rec.encounter_reference }}</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="disclosure">{{ rec.disclosure_text }}</div>
-
-<h2>Your decision</h2>
-<form method="post" action="/disposition">
-  <input type="hidden" name="guidance_ref" value="{{ guidance_ref }}">
-  <p>
-    <label>Disposition:
-      <select name="disposition" id="disp" onchange="document.getElementById('reasonrow').style.display = this.value==='accept' ? 'none':'block'">
-        <option value="accept">Accept</option>
-        <option value="edit">Edit</option>
-        <option value="reject">Reject</option>
-      </select>
-    </label>
-  </p>
-  <div id="reasonrow" style="display:none">
-    <p><label>Reason:
-      <select name="reason_code">
-        <option value="">— select —</option>
-        {% for r in reasons %}<option value="{{ r.code }}">{{ r.display }}</option>{% endfor %}
-      </select></label></p>
-    <p><label>Note (optional):<br><textarea name="note" rows="2" cols="60"></textarea></label></p>
-  </div>
-  <button type="submit">Record decision</button>
-</form>
+<script>
+function reasonBox(show){ document.getElementById('reasonbox').style.display = show ? 'flex' : 'none'; }
+</script>
 {% endblock %}
