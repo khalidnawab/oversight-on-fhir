@@ -12,7 +12,7 @@ FIXTURES = Path(__file__).parent.parent / "fixtures"
 def main() -> int:
     settings = Settings()
     client = FhirClient.from_settings(settings)
-    for name in ("clean_candidate.json", "high_risk.json"):
+    for name in ("clean_candidate.json", "high_risk.json", "clinicians.json"):
         bundle = json.loads((FIXTURES / name).read_text(encoding="utf-8"))
         result = client.transaction(bundle)
         entries = result.get("entry", [])

@@ -1,0 +1,11 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:pract-alice",
+      "resource": {"resourceType": "Practitioner", "id": "dr-alice", "name": [{"family": "Nkemdirim", "given": ["Alice"], "prefix": ["Dr"]}], "gender": "female"},
+      "request": {"method": "PUT", "url": "Practitioner/dr-alice"}
+    }
+  ]
+}
