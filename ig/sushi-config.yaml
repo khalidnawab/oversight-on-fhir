@@ -1,0 +1,24 @@
+id: oversight-on-fhir
+canonical: https://oversight-on-fhir.org/fhir
+name: OversightOnFHIR
+title: "Oversight-on-FHIR Implementation Guide"
+description: "A draft IG representing the human oversight decision over agentic clinical AI output as first-class FHIR resources. Complementary to the HL7 AI Transparency on FHIR IG: that effort represents AI influence on clinical data; this profile represents the human decision (accept/edit/reject, with a structured reason) over agentic AI output."
+status: draft
+version: 0.1.0
+fhirVersion: 4.0.1
+copyrightYear: 2026+
+releaseLabel: ci-build
+publisher:
+  name: Oversight-on-FHIR
+  url: https://oversight-on-fhir.org
+FSHOnly: false
+applyExtensionMetadataToRoot: false
+
+pages:
+  index.md:
+    title: Home
+
+menu:
+  Home: index.html
+  Profiles: artifacts.html#2
+  Terminology: artifacts.html#3

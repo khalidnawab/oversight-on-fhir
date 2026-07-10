@@ -5,3 +5,10 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 fhir-data/
+ig/fsh-generated/
+ig/output/
+ig/input-cache/
+ig/template/
+ig/temp/
+ig/publisher.jar
+.fhir/
