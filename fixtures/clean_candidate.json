@@ -28,6 +28,11 @@
       "request": {"method": "PUT", "url": "Observation/obs-creat-clean-1"}
     },
     {
+      "fullUrl": "urn:uuid:obs-wt-clean",
+      "resource": {"resourceType": "Observation", "id": "obs-wt-clean-1", "status": "final", "category": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs"}]}], "code": {"coding": [{"system": "http://loinc.org", "code": "29463-7", "display": "Body weight"}]}, "subject": {"reference": "Patient/clean-1"}, "valueQuantity": {"value": 68, "unit": "kg", "system": "http://unitsofmeasure.org", "code": "kg"}},
+      "request": {"method": "PUT", "url": "Observation/obs-wt-clean-1"}
+    },
+    {
       "fullUrl": "urn:uuid:dr-clean",
       "resource": {"resourceType": "DiagnosticReport", "id": "dr-clean-1", "status": "final", "category": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/v2-0074", "code": "MB", "display": "Microbiology"}]}], "code": {"coding": [{"system": "http://loinc.org", "code": "600-7", "display": "Bacteria identified in Blood by Culture"}]}, "subject": {"reference": "Patient/clean-1"}, "conclusion": "Staphylococcus aureus (MSSA), susceptible to cefazolin, oxacillin. Blood culture x2 positive."},
       "request": {"method": "PUT", "url": "DiagnosticReport/dr-clean-1"}

@@ -23,6 +23,16 @@
       "request": {"method": "PUT", "url": "MedicationRequest/mr-hr-1"}
     },
     {
+      "fullUrl": "urn:uuid:obs-wt-hr",
+      "resource": {"resourceType": "Observation", "id": "obs-wt-hr-1", "status": "final", "category": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "vital-signs"}]}], "code": {"coding": [{"system": "http://loinc.org", "code": "29463-7", "display": "Body weight"}]}, "subject": {"reference": "Patient/hr-1"}, "valueQuantity": {"value": 80, "unit": "kg", "system": "http://unitsofmeasure.org", "code": "kg"}},
+      "request": {"method": "PUT", "url": "Observation/obs-wt-hr-1"}
+    },
+    {
+      "fullUrl": "urn:uuid:obs-cr-hr",
+      "resource": {"resourceType": "Observation", "id": "obs-creat-hr-1", "status": "final", "category": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory"}]}], "code": {"coding": [{"system": "http://loinc.org", "code": "2160-0", "display": "Creatinine [Mass/volume] in Serum or Plasma"}]}, "subject": {"reference": "Patient/hr-1"}, "valueQuantity": {"value": 1.1, "unit": "mg/dL", "system": "http://unitsofmeasure.org", "code": "mg/dL"}},
+      "request": {"method": "PUT", "url": "Observation/obs-creat-hr-1"}
+    },
+    {
       "fullUrl": "urn:uuid:allergy-hr",
       "resource": {"resourceType": "AllergyIntolerance", "id": "allergy-hr-1", "clinicalStatus": {"coding": [{"system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", "code": "active"}]}, "type": "allergy", "category": ["medication"], "criticality": "high", "code": {"coding": [{"system": "http://www.nlm.nih.gov/research/umls/rxnorm", "code": "2180", "display": "cefazolin"}], "text": "cefazolin"}, "patient": {"reference": "Patient/hr-1"}, "reaction": [{"manifestation": [{"text": "anaphylaxis"}], "severity": "severe"}]},
       "request": {"method": "PUT", "url": "AllergyIntolerance/allergy-hr-1"}
