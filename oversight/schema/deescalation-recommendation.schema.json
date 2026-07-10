@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oversight-on-fhir.org/schema/deescalation-recommendation.schema.json",
+  "title": "De-escalation Recommendation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "patient_reference", "encounter_reference", "candidacy", "rationale", "confidence", "routing", "disclosure_text"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "patient_reference": {"type": "string", "pattern": "^Patient/.+"},
+    "encounter_reference": {"type": "string", "pattern": "^Encounter/.+"},
+    "candidacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["is_deescalation_candidate", "current_regimen", "recommended_action", "recommended_agent", "recommended_dose"],
+      "properties": {
+        "is_deescalation_candidate": {"enum": ["yes", "no", "insufficient_information"]},
+        "current_regimen": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["medication", "fhir_reference"],
+            "properties": {
+              "medication": {"type": "string"},
+              "fhir_reference": {"type": "string", "pattern": "^MedicationRequest/.+"}
+            }
+          }
+        },
+        "recommended_action": {"enum": ["narrow", "continue", "insufficient_information", "escalate"]},
+        "recommended_agent": {"type": ["string", "null"]},
+        "recommended_dose": {"type": "null"}
+      }
+    },
+    "rationale": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assertion", "evidence"],
+        "properties": {
+          "assertion": {"type": "string", "minLength": 1},
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["type"],
+              "properties": {
+                "type": {"enum": ["fhir_resource", "note_excerpt", "knowledge_passage"]},
+                "fhir_reference": {"type": ["string", "null"]},
+                "document_reference": {"type": ["string", "null"]},
+                "text_span": {"type": ["string", "null"]},
+                "knowledge_source_id": {"type": ["string", "null"]}
+              }
+            }
+          }
+        }
+      }
+    },
+    "deterministic_tool_result": {
+      "type": ["object", "null"],
+      "properties": {
+        "renal_dose_adjustment": {},
+        "interactions": {"type": "array"},
+        "contraindications": {"type": "array"}
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["score", "method", "rationale"],
+      "properties": {
+        "score": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "method": {"type": "string"},
+        "rationale": {"type": "string"}
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "triggered_high_risk_rules", "below_confidence_threshold"],
+      "properties": {
+        "decision": {"enum": ["surface", "escalate"]},
+        "triggered_high_risk_rules": {"type": "array", "items": {"type": "string"}},
+        "below_confidence_threshold": {"type": "boolean"}
+      }
+    },
+    "disclosure_text": {"type": "string", "minLength": 1}
+  }
+}
