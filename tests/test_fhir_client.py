@@ -47,6 +47,16 @@ def test_bearer_token_is_sent():
 
 
 @respx.mock
+def test_update_puts_to_typed_id():
+    route = respx.put(f"{BASE}/Device/ai-1").mock(
+        return_value=httpx.Response(200, json={"resourceType": "Device", "id": "ai-1"}))
+    client = FhirClient(base_url=BASE)
+    out = client.update({"resourceType": "Device", "id": "ai-1"})
+    assert out["id"] == "ai-1"
+    assert route.called
+
+
+@respx.mock
 def test_http_error_becomes_fhir_error():
     respx.get(f"{BASE}/Patient/nope").mock(return_value=httpx.Response(404, json={"resourceType": "OperationOutcome"}))
     client = FhirClient(base_url=BASE)

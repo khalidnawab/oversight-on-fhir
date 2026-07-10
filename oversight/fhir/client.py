@@ -33,6 +33,10 @@ class FhirClient:
         rt = resource["resourceType"]
         return self._request("POST", f"/{rt}", json=resource)
 
+    def update(self, resource: dict) -> dict:
+        rt, rid = resource["resourceType"], resource["id"]
+        return self._request("PUT", f"/{rt}/{rid}", json=resource)
+
     def transaction(self, bundle: dict) -> dict:
         return self._request("POST", "/", json=bundle)
 
