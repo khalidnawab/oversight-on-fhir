@@ -9,7 +9,7 @@
     },
     {
       "fullUrl": "urn:uuid:enc-clean",
-      "resource": {"resourceType": "Encounter", "id": "enc-clean-1", "status": "in-progress", "class": {"system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "IMP", "display": "inpatient encounter"}, "subject": {"reference": "Patient/clean-1"}, "period": {"start": "2026-07-06T08:00:00Z"}},
+      "resource": {"resourceType": "Encounter", "id": "enc-clean-1", "status": "in-progress", "class": {"system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "IMP", "display": "inpatient encounter"}, "subject": {"reference": "Patient/clean-1"}, "location": [{"location": {"display": "Ward 5B · Bed 4"}, "status": "active"}], "period": {"start": "2026-07-06T08:00:00Z"}},
       "request": {"method": "PUT", "url": "Encounter/enc-clean-1"}
     },
     {

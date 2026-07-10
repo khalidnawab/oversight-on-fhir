@@ -9,7 +9,7 @@
     },
     {
       "fullUrl": "urn:uuid:enc-hr",
-      "resource": {"resourceType": "Encounter", "id": "enc-hr-1", "status": "in-progress", "class": {"system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "IMP", "display": "inpatient encounter"}, "subject": {"reference": "Patient/hr-1"}, "period": {"start": "2026-07-05T22:00:00Z"}},
+      "resource": {"resourceType": "Encounter", "id": "enc-hr-1", "status": "in-progress", "class": {"system": "http://terminology.hl7.org/CodeSystem/v3-ActCode", "code": "IMP", "display": "inpatient encounter"}, "subject": {"reference": "Patient/hr-1"}, "location": [{"location": {"display": "Ward 5B · Bed 6"}, "status": "active"}], "period": {"start": "2026-07-05T22:00:00Z"}},
       "request": {"method": "PUT", "url": "Encounter/enc-hr-1"}
     },
     {
@@ -41,6 +41,11 @@
       "fullUrl": "urn:uuid:dr-hr",
       "resource": {"resourceType": "DiagnosticReport", "id": "dr-hr-1", "status": "final", "category": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/v2-0074", "code": "MB", "display": "Microbiology"}]}], "code": {"coding": [{"system": "http://loinc.org", "code": "600-7", "display": "Bacteria identified in Blood by Culture"}]}, "subject": {"reference": "Patient/hr-1"}, "conclusion": "Staphylococcus aureus (MSSA), susceptible to cefazolin. NOTE: patient has documented severe cefazolin allergy."},
       "request": {"method": "PUT", "url": "DiagnosticReport/dr-hr-1"}
+    },
+    {
+      "fullUrl": "urn:uuid:obs-susc-hr",
+      "resource": {"resourceType": "Observation", "id": "obs-susc-hr-1", "status": "final", "category": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/observation-category", "code": "laboratory"}]}], "code": {"coding": [{"system": "http://loinc.org", "code": "18864-9", "display": "Cefazolin [Susceptibility]"}]}, "subject": {"reference": "Patient/hr-1"}, "valueCodeableConcept": {"coding": [{"system": "http://snomed.info/sct", "code": "131196009", "display": "Susceptible"}], "text": "Susceptible"}},
+      "request": {"method": "PUT", "url": "Observation/obs-susc-hr-1"}
     }
   ]
 }
