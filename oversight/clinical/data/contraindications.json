@@ -1,0 +1,12 @@
+{
+  "interactions": {
+    "ceftriaxone": [
+      {"with": "calcium gluconate", "severity": "major", "note": "Ceftriaxone-calcium precipitation risk, especially in neonates."},
+      {"with": "calcium chloride", "severity": "major", "note": "Ceftriaxone-calcium precipitation risk."}
+    ]
+  },
+  "cross_reactivity": {
+    "cephalosporins": ["cefazolin", "ceftriaxone", "cefepime"],
+    "penicillin_triggers": ["penicillin", "amoxicillin", "ampicillin", "piperacillin"]
+  }
+}

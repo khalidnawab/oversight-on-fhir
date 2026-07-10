@@ -1,0 +1,25 @@
+{
+  "cefazolin": {
+    "normal_dose": "1-2 g IV q8h",
+    "bands": [
+      {"min": 35, "max": 999, "dose": "1-2 g IV q8h", "adjusted": false, "label": "35+"},
+      {"min": 10, "max": 34, "dose": "1-2 g IV q12h", "adjusted": true, "label": "10-34"},
+      {"min": 0, "max": 9, "dose": "1-2 g IV q24h", "adjusted": true, "label": "<10"}
+    ]
+  },
+  "ceftriaxone": {
+    "normal_dose": "1-2 g IV q24h",
+    "bands": [
+      {"min": 0, "max": 999, "dose": "1-2 g IV q24h", "adjusted": false, "label": "any"}
+    ]
+  },
+  "cefepime": {
+    "normal_dose": "2 g IV q8h",
+    "bands": [
+      {"min": 60, "max": 999, "dose": "2 g IV q8h", "adjusted": false, "label": "60+"},
+      {"min": 30, "max": 59, "dose": "2 g IV q12h", "adjusted": true, "label": "30-59"},
+      {"min": 11, "max": 29, "dose": "2 g IV q24h", "adjusted": true, "label": "11-29"},
+      {"min": 0, "max": 10, "dose": "1 g IV q24h", "adjusted": true, "label": "<11"}
+    ]
+  }
+}

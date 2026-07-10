@@ -10,6 +10,7 @@ dependencies = [
     "pydantic>=2",
     "pydantic-settings>=2",
     "jsonschema>=4.20",
+    "rank-bm25>=0.2.2",
 ]
 
 [dependency-groups]
