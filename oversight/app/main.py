@@ -22,6 +22,7 @@ from oversight.rag.retriever import Retriever
 _TEMPLATES = Jinja2Templates(directory=str(Path(__file__).parent / "templates"))
 _STATIC = Path(__file__).parent / "static"
 _HEADLINE_CACHE: dict = {}
+_REC_CACHE: dict = {}  # (pid, eid, backend) -> (rec, guidance_ref); avoids re-running the model + re-persisting on every view
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -45,8 +46,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             return _HEADLINE_CACHE[key]
         try:
             cc = ContextBuilder(FhirClient.from_settings(settings)).build(entry.patient_id, entry.encounter_id)
-            passages = Retriever().retrieve("de-escalation MSSA cefazolin ceftriaxone", k=2)
-            rec = _orchestrator().run_with_context(cc, knowledge_passages=passages)
+            passages = Retriever().retrieve("de-escalation stop duration IV to PO", k=2)
+            # Single sample for the worklist headline keeps the census fast/cheap on the frontier
+            # backend; the patient detail view uses full self-consistency sampling.
+            headline_orch = Orchestrator(get_backend(settings), threshold=settings.confidence_threshold, n_samples=1)
+            rec = headline_orch.run_with_context(cc, knowledge_passages=passages)
             h = {"action": rec["candidacy"]["recommended_action"], "agent": rec["candidacy"]["recommended_agent"],
                  "escalate": rec["routing"]["decision"] == "escalate",
                  "rules": rec["routing"]["triggered_high_risk_rules"]}
@@ -68,14 +72,19 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/patient/{pid}/{eid}", response_class=HTMLResponse)
     def patient(request: Request, pid: str, eid: str):
         client = FhirClient.from_settings(settings)
-        cc = ContextBuilder(client).build(pid, eid)
         entry = CensusScanner(client).classify(pid)
-        passages = Retriever().retrieve(
-            f"de-escalation {', '.join(cc.allergies) or 'MSSA cefazolin'}", k=2)
-        rec = _orchestrator().run_with_context(cc, knowledge_passages=passages)
-        refs = _svc().persist_recommendation(rec)
+        key = (pid, eid, settings.backend)
+        if key in _REC_CACHE:
+            rec, guidance_ref = _REC_CACHE[key]
+        else:
+            cc = ContextBuilder(client).build(pid, eid)
+            passages = Retriever().retrieve(
+                f"de-escalation stop duration IV to PO {', '.join(cc.allergies)}", k=3)
+            rec = _orchestrator().run_with_context(cc, knowledge_passages=passages)
+            guidance_ref = _svc().persist_recommendation(rec)["guidance_response"]
+            _REC_CACHE[key] = (rec, guidance_ref)
         return _TEMPLATES.TemplateResponse(request, "clinician.html", ctx(
-            rec=rec, guidance_ref=refs["guidance_response"], reasons=t.REASON_CODES,
+            rec=rec, guidance_ref=guidance_ref, reasons=t.REASON_CODES,
             patient_name=(entry.patient_name if entry else pid),
             location=(entry.location if entry else ""),
             day_of_therapy=(entry.day_of_therapy if entry else 0)))
@@ -99,6 +108,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             raise HTTPException(status_code=403, detail="cross-origin reset blocked")
         _svc().reset_recorded()
         _HEADLINE_CACHE.clear()
+        _REC_CACHE.clear()
         return RedirectResponse(url=request.headers.get("referer") or "/", status_code=303)
 
     @app.get("/dashboard", response_class=HTMLResponse)
