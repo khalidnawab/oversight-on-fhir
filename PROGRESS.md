@@ -44,4 +44,4 @@ uv run python scripts/verify_frontier.py      # live model check (needs key)
 - Reviewed list is session-scoped (in-memory; resets on restart/Reset). Decisions themselves persist in FHIR as AuditEvents. Could derive Reviewed from FHIR to survive restarts.
 - Guideline RAG passages are accurate but demo-authored — need clinical sign-off before real use.
 - Not yet built: deterministic IV-to-PO stability guard (from vitals), duration-vs-syndrome sanity, Notes tab (DocumentReference), full IG Publisher HTML render (needs Jekyll).
-- Submission still to do: executive summary + solution narrative + demo video; send intent email (draft in Gmail).
+- Submission: intent email sent; executive summary + solution narrative drafted and cited (`docs/submission/`); repo public at github.com/khalidnawab/oversight-on-fhir; IG published at khalidnawab.github.io/oversight-on-fhir. **Still to do: demo video; final review + submit via HubSpot form.**
