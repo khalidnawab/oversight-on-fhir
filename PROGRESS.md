@@ -1,10 +1,29 @@
 # Progress snapshot — Oversight-on-FHIR
 
-_Last saved: 2026-07-10. Target: HL7 AI Challenge 2026 (deadline July 15). See `BUILD_SPEC.md` §17._
+_Last saved: 2026-07-11. Target: HL7 AI Challenge 2026 (deadline July 15). See `BUILD_SPEC.md` §17._
+
+## Public (as of 2026-07-11)
+
+- Repo public: **https://github.com/khalidnawab/oversight-on-fhir** (default branch `main`).
+- IG published: **https://khalidnawab.github.io/oversight-on-fhir/** (served from `gh-pages` = built `ig/output` + `.nojekyll`).
+- History was scrubbed of AI-authorship before going public (trailers stripped, `docs/superpowers/` removed from all commits). Local backup only: tag `pre-scrub-backup` + `%TEMP%\oversee-prescrub-backup.bundle` — never push these. Keep `docs/superpowers/` untracked going forward.
+
+## Submission artifacts (in `docs/submission/`)
+
+- `executive-summary.md`, `solution-narrative.md` — drafted in Khalid's voice, no AI attribution; clinical + stewardship claims cited to verified sources (Leone 2014, Tabah 2016 [PMID 26703860], Kam 2024, SSC 2021, IDSA/SHEA 2016, Bell 2014, Costelloe 2010, Silva/Cochrane 2013, Huebner 2019, Zhang 2018). Wording deliberately does not outrun the evidence — de-escalation-specific resistance/cost benefit framed as unproven; stewardship rationale is the anchor.
+- `demo-video-script.md` — shot-by-shot (~6:30), includes pre-flight setup + backend-honesty guardrail.
+- **Author must independently verify the cited PMIDs before final submission.**
+
+## Still to do (session 2026-07-11 handoff)
+
+1. **Record the demo video** per the script.
+2. **Submit via the HubSpot form** by end of July 14.
+3. Watch the "Everything You Need to Know Before You Apply" webinar; reconcile against any form requirements.
 
 ## Status: working end-to-end on the real model
 
-- **106 tests pass** (`uv run pytest`); 1 live-API test is opt-in (`OVERSIGHT_RUN_LIVE_TESTS=1`).
+- **~122 tests pass** (`uv run pytest`); 1 live-API test is opt-in. New this session: FHIR activity log panel (`oversight/fhir/log.py`, `/api/fhir-log`, raw-resource viewer, `static/fhir-log.js`).
+- HAPI search-result cache disabled in `docker-compose.yml` (`reuse_cached_search_results_millis: -1`) — fixes the old "count lag" flake; recreating the container wipes its H2 DB, so reload fixtures + generated data after.
 - The web app runs on the **real Claude model** (`claude-opus-4-8`) by default; key loads from gitignored `.env` (`ANTHROPIC_API_KEY`).
 - HAPI FHIR R4 runs in Docker with a 9-patient synthetic unit loaded.
 
