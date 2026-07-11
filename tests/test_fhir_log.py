@@ -1,0 +1,32 @@
+from oversight.fhir.log import FhirActivityLog
+
+
+def test_ring_buffer_bounds_and_seq():
+    log = FhirActivityLog(maxlen=3)
+    for i in range(5):
+        log.append("GET", f"Patient/p{i}", 200)
+    entries = log.since(0)
+    assert len(entries) == 3                       # bounded at maxlen
+    assert [e["seq"] for e in entries] == [3, 4, 5]  # seq keeps counting past evictions
+    assert log.latest == 5
+
+
+def test_entry_shape_read_vs_write():
+    log = FhirActivityLog()
+    log.append("GET", "Observation?patient=p1", 200)
+    log.append("POST", "AuditEvent", 201, resource_id="AuditEvent/1")
+    read, write = log.since(0)
+    assert read["kind"] == "read" and read["resource_id"] is None
+    assert write["kind"] == "write" and write["resource_id"] == "AuditEvent/1"
+    assert read["ts"]  # ISO timestamp present
+    assert read["status"] == 200 and write["status"] == 201
+
+
+def test_since_filters_and_clear_preserves_seq():
+    log = FhirActivityLog()
+    log.append("GET", "Patient/p1", 200)
+    log.append("POST", "AuditEvent", 201, resource_id="AuditEvent/1")
+    assert [e["target"] for e in log.since(1)] == ["AuditEvent"]
+    log.clear()
+    assert log.since(0) == []
+    assert log.latest == 2  # seq survives clear so pollers' cursors stay valid
