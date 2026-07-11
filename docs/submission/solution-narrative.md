@@ -43,6 +43,25 @@ ideal agentic testbed — the workflow is genuinely multi-step, every step touch
 standards-based data, and the decision is high-stakes enough that oversight behavior is
 worth measuring.
 
+The stewardship case is broader than any single trial. Higher antibiotic consumption —
+especially of broad-spectrum agents — is consistently associated with higher resistance,
+both across populations (pooled odds ratio ~2.3; Bell et al. 2014) and within individual
+patients for months after exposure (Costelloe et al. 2010); and unnecessary broad-spectrum
+use drives costly downstream harm — antimicrobial stewardship programs reduce antibiotic
+expenditure (Huebner et al. 2019), while a single *Clostridioides difficile* infection, a
+classic consequence of excess broad-spectrum exposure, carries roughly $24,000 in
+attributable cost (Zhang et al. 2018). The CDC, WHO, and IDSA/SHEA accordingly endorse
+de-escalation and shortest-effective-duration therapy to reduce selective pressure. Two
+honest caveats keep the framing grounded — and are themselves part of the argument for
+this system: de-escalation *in isolation* has not been shown in randomized trials to
+reduce resistance emergence or total cost (a Cochrane review found no qualifying RCTs
+(Silva et al. 2013); the largest ICU synthesis judged the resistance question inadequately
+investigated (Tabah et al. 2016)). The resistance and cost benefits are established for
+reducing unnecessary broad-spectrum exposure, of which de-escalation is the
+guideline-endorsed mechanism; the individual-patient effect is exactly what remains to be
+measured at scale. A system that keeps a clinician on every de-escalation decision and
+emits the outcome as queryable FHIR is built to generate precisely that evidence.
+
 The system is advisory. It never writes an order, never modifies therapy, never
 discontinues a drug. The clinician's decision is the only action gate.
 
@@ -183,3 +202,18 @@ or PII is present.*
    program: guidelines by the Infectious Diseases Society of America and the Society
    for Healthcare Epidemiology of America. *Clin Infect Dis.* 2016;62(10):e51–e77.
    PMID 27080992.
+6. Bell BG, Schellevis F, Stobberingh E, Goossens H, Pringle M. A systematic review and
+   meta-analysis of the effects of antibiotic consumption on antibiotic resistance.
+   *BMC Infect Dis.* 2014;14:13. PMID 24405683.
+7. Costelloe C, Metcalfe C, Lovering A, Mant D, Hay AD. Effect of antibiotic prescribing
+   in primary care on antimicrobial resistance in individual patients: systematic review
+   and meta-analysis. *BMJ.* 2010;340:c2096. PMID 20483949.
+8. Silva BNG, Andriolo RB, Atallah ÁN, Salomão R. De-escalation of antimicrobial
+   treatment for adults with sepsis, severe sepsis or septic shock. *Cochrane Database
+   Syst Rev.* 2013;(3):CD007934. PMID 23543557.
+9. Huebner C, Flessa S, Huebner N-O. The economic impact of antimicrobial stewardship
+   programmes in hospitals: a systematic literature review. *J Hosp Infect.*
+   2019;102(4):369–376. PMID 30880265.
+10. Zhang D, Prabhu VS, Marcella SW. Attributable healthcare resource utilization and
+    costs for patients with primary and recurrent *Clostridium difficile* infection in
+    the United States. *Clin Infect Dis.* 2018;66(9):1326–1332. PMID 29301031.

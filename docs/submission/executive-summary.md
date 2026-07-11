@@ -44,7 +44,13 @@ Sepsis Campaign 2021) and, across a randomized trial and large multicenter cohor
 is not associated with increased mortality relative to continuing broad-spectrum
 therapy (Leone 2014; Tabah 2016; Kam 2024) — yet it remains substantially underused:
 in 236 US hospitals, only 29.5% of patients with suspected sepsis were de-escalated by
-day 4, with wide variation between hospitals (Kam 2024). For governance, the oversight
+day 4, with wide variation between hospitals (Kam 2024). The broader stewardship
+rationale is well established: higher broad-spectrum use tracks with higher resistance
+(Bell 2014; Costelloe 2010) and with costly complications such as *Clostridioides
+difficile* infection (~$24,000 attributable per case; Zhang 2018), and stewardship
+programs reduce antibiotic expenditure (Huebner 2019) — while de-escalation itself is
+the guideline-endorsed mechanism for reducing unnecessary exposure rather than an
+independently trial-proven lever (Silva 2013; Tabah 2016). For governance, the oversight
 layer produces the exact monitoring metrics regulators require but institutions
 currently cannot generate — override rate by structured reason, escalation rate, and
 an automation-bias signal — computed live from FHIR `AuditEvent` queries alone, with
