@@ -11,5 +11,6 @@ ig/input-cache/
 ig/template/
 ig/temp/
 ig/publisher.jar
+ig/Requirements-fromNarrative.json
 .fhir/
 screenshots/
