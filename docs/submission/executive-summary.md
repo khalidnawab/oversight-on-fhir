@@ -35,14 +35,18 @@ and contraindication checking) is performed by deterministic code, never by the
 language model, and a set of deterministic high-risk rules force escalation to a
 human regardless of model confidence.
 
-**Measurable impact, on two layers.** Clinically, day-4 de-escalation is as safe as
-continued broad-spectrum therapy while cutting antibiotic days and length of stay,
-yet fewer than half of eligible patients are de-escalated, with more than two-fold
-variation across hospitals. For governance, the oversight layer produces the exact
-monitoring metrics regulators require but institutions currently cannot generate —
-override rate by structured reason, escalation rate, and an automation-bias signal —
-computed live from FHIR `AuditEvent` queries alone, with no internal database, which
-is itself the proof that the oversight events are genuine interoperable resources.
+**Measurable impact, on two layers.** Clinically, antimicrobial de-escalation is
+endorsed by antibiotic-stewardship and sepsis guidelines (IDSA/SHEA 2016; Surviving
+Sepsis Campaign 2021) and, across a randomized trial and large multicenter cohorts,
+is not associated with increased mortality relative to continuing broad-spectrum
+therapy (Leone 2014; Tabah 2016; Kam 2024) — yet it remains substantially underused:
+in 236 US hospitals, only 29.5% of patients with suspected sepsis were de-escalated by
+day 4, with wide variation between hospitals (Kam 2024). For governance, the oversight
+layer produces the exact monitoring metrics regulators require but institutions
+currently cannot generate — override rate by structured reason, escalation rate, and
+an automation-bias signal — computed live from FHIR `AuditEvent` queries alone, with
+no internal database, which is itself the proof that the oversight events are genuine
+interoperable resources.
 
 **Scale and equity.** A model-agnostic seam makes the reasoning backend a
 configuration choice, never a code change. The same system runs against a hosted

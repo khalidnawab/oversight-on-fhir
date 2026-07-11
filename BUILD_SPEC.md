@@ -29,7 +29,7 @@ An autonomous, standards-native agentic system that performs a real clinical rea
 
 ### 1.3 Why antibiotic de-escalation in sepsis
 
-It is clinically consequential, guideline-endorsed, and underserved. Multi-hospital evidence shows day-4 de-escalation is as safe as continued broad-spectrum therapy while cutting antibiotic days and length of stay, yet fewer than half of eligible patients are de-escalated, with more than two-fold variation across hospitals. It is also an ideal agentic testbed: the workflow is genuinely multi-step, every step touches standards-based data, and the decision is high-stakes enough that oversight behavior is worth measuring. Do not treat the clinical logic as the hard part. It is real and must be correct, but the engineering novelty is the oversight instrumentation.
+It is clinically consequential, guideline-endorsed, and underused. De-escalation is endorsed by stewardship and sepsis guidelines (IDSA/SHEA 2016; Surviving Sepsis Campaign 2021) and, across a randomized trial and large multicenter cohorts, is not associated with increased mortality versus continuing broad-spectrum therapy (Leone 2014; Tabah 2016; Kam 2024), yet it remains substantially underused — only ~29.5% of suspected-sepsis patients were de-escalated by day 4 across 236 US hospitals, with wide between-hospital variation (Kam 2024). It is also an ideal agentic testbed: the workflow is genuinely multi-step, every step touches standards-based data, and the decision is high-stakes enough that oversight behavior is worth measuring. Do not treat the clinical logic as the hard part. It is real and must be correct, but the engineering novelty is the oversight instrumentation.
 
 ### 1.4 The design thesis you are implementing
 

@@ -29,12 +29,16 @@ queryable FHIR resource. The clinical task is the vehicle. The oversight
 instrumentation and its FHIR representation are the contribution.
 
 De-escalation was chosen because it is clinically consequential, guideline-endorsed,
-and underserved: multi-hospital evidence shows day-4 de-escalation is as safe as
-continued broad-spectrum therapy while cutting antibiotic days and length of stay,
-yet fewer than half of eligible patients are de-escalated, with more than two-fold
-variation across hospitals. It is also an ideal agentic testbed — the workflow is
-genuinely multi-step, every step touches standards-based data, and the decision is
-high-stakes enough that oversight behavior is worth measuring.
+and underused. Antibiotic-stewardship and sepsis guidelines call for daily reassessment
+and narrowing of empiric therapy (IDSA/SHEA 2016; Surviving Sepsis Campaign 2021). A
+randomized trial and subsequent multicenter cohorts find de-escalation is not
+associated with increased mortality compared with continuing broad-spectrum therapy
+(Leone 2014; Tabah 2016; Kam 2024). Yet it remains substantially underused: across 236
+US hospitals and more than 124,000 patients with suspected sepsis, only 29.5% were
+de-escalated by day 4, with wide between-hospital variation (Kam 2024). It is also an
+ideal agentic testbed — the workflow is genuinely multi-step, every step touches
+standards-based data, and the decision is high-stakes enough that oversight behavior is
+worth measuring.
 
 The system is advisory. It never writes an order, never modifies therapy, never
 discontinues a drug. The clinician's decision is the only action gate.
@@ -156,3 +160,23 @@ scale across organizations and borders.
 AuditEvent · SMART-on-FHIR bearer authorization (configuration-supplied) · CDS Hooks
 service · draft Implementation Guide. All data in this submission is synthetic; no PHI
 or PII is present.*
+
+## References
+
+1. Leone M, Bechis C, Baumstarck K, et al. De-escalation versus continuation of
+   empirical antimicrobial treatment in severe sepsis: a multicenter non-blinded
+   randomized noninferiority trial. *Intensive Care Med.* 2014;40(10):1399–1408.
+   PMID 25091790.
+2. Tabah A, Cotta MO, Garnacho-Montero J, et al. A systematic review of the
+   definitions, determinants, and clinical outcomes of antimicrobial de-escalation in
+   the intensive care unit. *Clin Infect Dis.* 2016;62(8):1009–1017. PMID 26703860.
+3. Kam KQ, Chen T, Kadri SS, et al. Epidemiology and outcomes of antibiotic
+   de-escalation in patients with suspected sepsis in US hospitals. *Clin Infect Dis.*
+   2024;80(1):108–117. PMID 39657050.
+4. Evans L, Rhodes A, Alhazzani W, et al. Surviving Sepsis Campaign: international
+   guidelines for management of sepsis and septic shock 2021. *Intensive Care Med.*
+   2021;47(11):1181–1247. PMID 34599691.
+5. Barlam TF, Cosgrove SE, Abbo LM, et al. Implementing an antibiotic stewardship
+   program: guidelines by the Infectious Diseases Society of America and the Society
+   for Healthcare Epidemiology of America. *Clin Infect Dis.* 2016;62(10):e51–e77.
+   PMID 27080992.
