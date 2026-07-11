@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block page_title %}{{ resource_ref }}{% endblock %}
+{% block page_crumb %}Raw FHIR resource{% endblock %}
+{% block page_h1 %}{{ resource_ref }}{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-head"><h2>As stored on the FHIR server</h2></div>
+  <div class="card-body"><pre class="fhir-raw">{{ resource_json }}</pre></div>
+</div>
+{% endblock %}

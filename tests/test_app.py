@@ -181,3 +181,22 @@ def test_reset_clears_fhir_log(monkeypatch):
     assert c.get("/api/fhir-log?since=0").json()["entries"]
     c.post("/reset", follow_redirects=False)
     assert c.get("/api/fhir-log?since=0").json()["entries"] == []
+
+
+def test_raw_viewer_rejects_non_allowlisted_type(monkeypatch):
+    c = _client(monkeypatch)
+    assert c.get("/fhir/Binary/abc/raw").status_code == 404
+
+
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_raw_viewer_renders_allowlisted_resource(monkeypatch):
+    c = _client(monkeypatch)
+    r = c.get("/fhir/Patient/clean-1/raw")
+    assert r.status_code == 200
+    assert "resourceType" in r.text and "Patient/clean-1" in r.text
+
+
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_raw_viewer_404_on_missing_resource(monkeypatch):
+    c = _client(monkeypatch)
+    assert c.get("/fhir/Patient/does-not-exist-xyz/raw").status_code == 404

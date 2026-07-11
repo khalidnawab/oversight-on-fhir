@@ -36,6 +36,12 @@ _REVIEWED: dict = {}
 # confidence-based.)
 _N_SAMPLES = 1
 
+# Resource types the raw viewer may proxy — everything the app itself reads or writes,
+# and nothing else (the viewer must not become an arbitrary FHIR proxy).
+_VIEWABLE_TYPES = {"Patient", "Encounter", "MedicationRequest", "MedicationAdministration",
+                   "Observation", "DiagnosticReport", "AllergyIntolerance", "GuidanceResponse",
+                   "Provenance", "AuditEvent", "Device", "Practitioner"}
+
 
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or Settings()
@@ -103,6 +109,21 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         """Increments of the FHIR activity ring buffer for the live panel (polled ~1s)."""
         entries, latest = activity_log.snapshot(since)
         return JSONResponse({"entries": entries, "latest": latest})
+
+    @app.get("/fhir/{resource_type}/{rid}/raw", response_class=HTMLResponse)
+    def raw_resource(request: Request, resource_type: str, rid: str):
+        """Pretty-printed raw FHIR JSON, fetched live from the server via the same client
+        (so opening it visibly appears in the activity log — live proof, not a scripted display)."""
+        if resource_type not in _VIEWABLE_TYPES:
+            raise HTTPException(status_code=404)
+        try:
+            resource = FhirClient.from_settings(settings).read(resource_type, rid)
+        except FhirError:
+            raise HTTPException(status_code=404)
+        import json as _json
+        return _TEMPLATES.TemplateResponse(request, "raw_resource.html", ctx(
+            resource_json=_json.dumps(resource, indent=2),
+            resource_ref=f"{resource_type}/{rid}"))
 
     @app.get("/patient/{pid}/{eid}", response_class=HTMLResponse)
     def patient(request: Request, pid: str, eid: str):
