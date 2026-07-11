@@ -49,4 +49,6 @@ class FhirActivityLog:
             self._entries.clear()
 
 
+# Per-process singleton: correct for the single-worker demo server; multi-worker
+# deployments would need a shared store (documented non-goal).
 activity_log = FhirActivityLog()

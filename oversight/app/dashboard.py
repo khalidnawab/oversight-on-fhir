@@ -2,6 +2,7 @@
 the oversight events are genuine resources, not internal logs."""
 import httpx
 
+from oversight.fhir.log import activity_log
 from oversight.oversight import taxonomy as t
 
 
@@ -10,7 +11,12 @@ def aggregate_oversight(fhir_base_url: str, bearer_token: str = "", count: int =
     if bearer_token:
         headers["Authorization"] = f"Bearer {bearer_token}"
     with httpx.Client(base_url=fhir_base_url.rstrip("/"), headers=headers, timeout=30) as client:
-        bundle = client.get(f"/AuditEvent?_count={count}").json()
+        resp = client.get(f"/AuditEvent?_count={count}")
+        bundle = resp.json()
+    try:  # surface this read in the activity panel; it bypasses FhirClient by design
+        activity_log.append("GET", f"AuditEvent?_count={count}", resp.status_code)
+    except Exception:
+        pass
 
     dispositions = {c["code"]: 0 for c in t.DISPOSITION_CODES}
     reasons = {c["code"]: 0 for c in t.REASON_CODES}

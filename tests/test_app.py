@@ -219,3 +219,14 @@ def test_fhir_activity_panel_on_every_page(monkeypatch):
     assert 'id="fhir-log"' in text            # panel present in base template
     assert "writes only" in text              # filter control
     assert "/static/fhir-log.js" in text      # poller wired up
+
+
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_dashboard_query_appears_in_fhir_log(monkeypatch):
+    from oversight.fhir.log import activity_log
+    c = _client(monkeypatch)
+    activity_log.clear()
+    start = activity_log.latest
+    c.get("/dashboard")
+    targets = [e["target"] for e in activity_log.since(start)]
+    assert any(t.startswith("AuditEvent?_count=") for t in targets)
