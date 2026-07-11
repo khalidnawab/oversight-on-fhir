@@ -1,4 +1,5 @@
 import datetime as _dt
+import re
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -115,6 +116,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         """Pretty-printed raw FHIR JSON, fetched live from the server via the same client
         (so opening it visibly appears in the activity log — live proof, not a scripted display)."""
         if resource_type not in _VIEWABLE_TYPES:
+            raise HTTPException(status_code=404)
+        if not re.fullmatch(r"[A-Za-z0-9\-\.]{1,64}", rid):  # FHIR id grammar; also blocks query smuggling
             raise HTTPException(status_code=404)
         try:
             resource = FhirClient.from_settings(settings).read(resource_type, rid)

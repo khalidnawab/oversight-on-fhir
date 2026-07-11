@@ -183,9 +183,20 @@ def test_reset_clears_fhir_log(monkeypatch):
     assert c.get("/api/fhir-log?since=0").json()["entries"] == []
 
 
-def test_raw_viewer_rejects_non_allowlisted_type(monkeypatch):
+def test_raw_viewer_rejects_non_allowlisted_type_without_fhir_call(monkeypatch):
+    from oversight.fhir.log import activity_log
     c = _client(monkeypatch)
+    before = activity_log.latest
     assert c.get("/fhir/Binary/abc/raw").status_code == 404
+    assert activity_log.latest == before  # allowlist rejected it before any FHIR request
+
+
+def test_raw_viewer_rejects_malformed_rid_without_fhir_call(monkeypatch):
+    from oversight.fhir.log import activity_log
+    c = _client(monkeypatch)
+    before = activity_log.latest
+    assert c.get("/fhir/Patient/clean-1%3F_format=xml/raw").status_code == 404
+    assert activity_log.latest == before
 
 
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
