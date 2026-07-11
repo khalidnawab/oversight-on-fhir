@@ -1,0 +1,9 @@
+== Suppressed Messages ==
+
+# The "must have an OID assigned" errors on the CodeSystems and ValueSets are
+# acknowledged. OIDs are only relevant to OID-based terminology contexts (CDA,
+# HL7 v2), which this FHIR-native draft demonstrator IG will never enter, and no
+# registered OID root exists for this project to assign from. The IG Publisher
+# treats these as non-suppressible for HL7-registry publication, so they remain
+# visible in QA by design; they do not indicate a defect in the IG's content.
+%must have an OID assigned to cater for possible use with OID based terminology systems%

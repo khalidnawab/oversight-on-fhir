@@ -4,6 +4,25 @@ Alias: $high-risk = https://oversight-on-fhir.org/fhir/CodeSystem/high-risk-rule
 Alias: $dataop = http://terminology.hl7.org/CodeSystem/v3-DataOperation
 Alias: $prov-type = http://terminology.hl7.org/CodeSystem/provenance-participant-type
 
+// Synthetic supporting instances so the recommendation and oversight examples
+// resolve their references (no PHI — fabricated for illustration).
+Instance: clean-1
+InstanceOf: Patient
+Usage: #example
+Title: "Example Patient (synthetic)"
+* meta.security = http://terminology.hl7.org/CodeSystem/v3-ActReason#HTEST "test health data"
+* name.family = "Example"
+* name.given = "Pat"
+* gender = #unknown
+
+Instance: dr-alice
+InstanceOf: Practitioner
+Usage: #example
+Title: "Example Practitioner (synthetic)"
+* name.family = "Example"
+* name.given = "Alex"
+* name.prefix = "Dr"
+
 // The AI system as a Device
 Instance: oversight-ai
 InstanceOf: Device
@@ -20,7 +39,7 @@ InstanceOf: DeescalationGuidanceResponse
 Usage: #example
 Title: "Example De-escalation Guidance Response"
 * status = #success
-* moduleUri = "https://oversight-on-fhir.org/fhir/module/deescalation"
+* moduleCodeableConcept.text = "Antibiotic de-escalation decision-support module"
 * subject = Reference(Patient/clean-1)
 * occurrenceDateTime = "2026-07-10T12:00:00Z"
 * performer = Reference(Device/oversight-ai)
