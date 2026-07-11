@@ -76,3 +76,33 @@ def test_client_logs_failed_call_with_status():
     (entry,) = activity_log.since(start)
     assert entry["status"] == 500
     assert entry["target"] == "Patient/p1"
+
+
+def test_client_logs_transport_error_with_no_status():
+    activity_log.clear()
+    start = activity_log.latest
+
+    def handler(request):
+        raise httpx.ConnectError("connection refused", request=request)
+
+    client = _mock_client(handler)
+    with pytest.raises(FhirError):
+        client.read("Patient", "p1")
+    (entry,) = activity_log.since(start)
+    assert entry["status"] is None
+    assert entry["target"] == "Patient/p1"
+    assert entry["kind"] == "read"
+
+
+def test_client_logs_write_even_when_body_is_not_a_dict():
+    activity_log.clear()
+    start = activity_log.latest
+
+    def handler(request):
+        return httpx.Response(201, json=["not", "a", "resource"])
+
+    client = _mock_client(handler)
+    client.create({"resourceType": "AuditEvent"})
+    (entry,) = activity_log.since(start)
+    assert entry["kind"] == "write"
+    assert entry["resource_id"] is None

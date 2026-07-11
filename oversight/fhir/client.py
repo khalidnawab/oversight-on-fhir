@@ -64,7 +64,8 @@ class FhirClient:
             if params:
                 target += "?" + urlencode(params, doseq=True)
             resource_id = None
-            if method in ("POST", "PUT") and body.get("resourceType") and body.get("id"):
+            if (method in ("POST", "PUT") and isinstance(body, dict)
+                    and body.get("resourceType") and body.get("id")):
                 resource_id = f"{body['resourceType']}/{body['id']}"
             activity_log.append(method, target, status, resource_id)
         except Exception:
