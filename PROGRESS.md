@@ -22,6 +22,7 @@ _Last saved: 2026-07-10. Target: HL7 AI Challenge 2026 (deadline July 15). See `
 | Draft IG | FSH profiles + terminology + examples; `npx fsh-sushi ig` compiles clean; IG↔code URL alignment tested |
 | CDS Hooks | discovery + card mapping + human-facing explainer page |
 | UI | census (instant, lazy assessments) · patient tabs (Recommendation/Orders/Labs & Cultures from FHIR) · Reviewed view · oversight analytics dashboard · reset-test-data |
+| FHIR activity panel | live right-rail log of every FHIR read/write on all pages; writes highlighted + click through to raw JSON; writes-only filter |
 
 ## How to run
 
