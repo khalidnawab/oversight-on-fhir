@@ -11,6 +11,11 @@ services:
       # oversight AuditEvent references a recommendation that was cleared by "Reset test data".
       hapi.fhir.enforce_referential_integrity_on_write: "false"
       hapi.fhir.enforce_referential_integrity_on_delete: "false"
+      # Search results must reflect writes immediately. HAPI reuses cached search results for
+      # identical queries for 60s by default, so "Reset test data" (which deletes by search) can
+      # miss just-created oversight events and the dashboard can serve stale KPIs for up to a
+      # minute after a decision. -1 disables reuse; fine for a single-user demo server.
+      hapi.fhir.reuse_cached_search_results_millis: "-1"
     volumes:
       - fhir-data:/data/hapi
     healthcheck:
