@@ -211,3 +211,11 @@ def test_raw_viewer_renders_allowlisted_resource(monkeypatch):
 def test_raw_viewer_404_on_missing_resource(monkeypatch):
     c = _client(monkeypatch)
     assert c.get("/fhir/Patient/does-not-exist-xyz/raw").status_code == 404
+
+
+def test_fhir_activity_panel_on_every_page(monkeypatch):
+    c = _client(monkeypatch)
+    text = c.get("/cds-hooks").text
+    assert 'id="fhir-log"' in text            # panel present in base template
+    assert "writes only" in text              # filter control
+    assert "/static/fhir-log.js" in text      # poller wired up
