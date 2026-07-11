@@ -1,8 +1,10 @@
 from typing import Any
+from urllib.parse import urlencode
 
 import httpx
 
 from oversight.errors import FhirError
+from oversight.fhir.log import activity_log
 
 _FHIR_JSON = "application/fhir+json"
 
@@ -47,9 +49,23 @@ class FhirClient:
         try:
             resp = self._http.request(method, path, **kwargs)
         except httpx.HTTPError as e:
+            self._log(method, path, kwargs.get("params"), None, {})
             raise FhirError(f"{method} {path} failed: {e}") from e
         if resp.status_code >= 400:
+            self._log(method, path, kwargs.get("params"), resp.status_code, {})
             raise FhirError(f"{method} {path} -> {resp.status_code}: {resp.text[:500]}")
-        if not resp.content:
-            return {}
-        return resp.json()
+        body = resp.json() if resp.content else {}
+        self._log(method, path, kwargs.get("params"), resp.status_code, body)
+        return body
+
+    def _log(self, method: str, path: str, params, status: int | None, body: dict) -> None:
+        try:
+            target = path.lstrip("/") or "/"
+            if params:
+                target += "?" + urlencode(params, doseq=True)
+            resource_id = None
+            if method in ("POST", "PUT") and body.get("resourceType") and body.get("id"):
+                resource_id = f"{body['resourceType']}/{body['id']}"
+            activity_log.append(method, target, status, resource_id)
+        except Exception:
+            pass  # activity logging must never affect the clinical flow

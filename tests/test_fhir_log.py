@@ -1,4 +1,9 @@
-from oversight.fhir.log import FhirActivityLog
+import httpx
+import pytest
+
+from oversight.errors import FhirError
+from oversight.fhir.client import FhirClient
+from oversight.fhir.log import FhirActivityLog, activity_log
 
 
 def test_ring_buffer_bounds_and_seq():
@@ -30,3 +35,44 @@ def test_since_filters_and_clear_preserves_seq():
     log.clear()
     assert log.since(0) == []
     assert log.latest == 2  # seq survives clear so pollers' cursors stay valid
+
+
+def _mock_client(handler) -> FhirClient:
+    client = FhirClient("http://fhir.test/fhir")
+    client._http = httpx.Client(transport=httpx.MockTransport(handler),
+                                base_url="http://fhir.test/fhir",
+                                headers={"Accept": "application/fhir+json"})
+    return client
+
+
+def test_client_logs_read_and_write():
+    activity_log.clear()
+    start = activity_log.latest
+
+    def handler(request):
+        if request.method == "GET":
+            return httpx.Response(200, json={"resourceType": "Bundle", "entry": []})
+        return httpx.Response(201, json={"resourceType": "AuditEvent", "id": "42"})
+
+    client = _mock_client(handler)
+    client.search("Observation", {"patient": "p1"})
+    client.create({"resourceType": "AuditEvent"})
+    read, write = activity_log.since(start)
+    assert read["method"] == "GET" and read["kind"] == "read"
+    assert read["target"] == "Observation?patient=p1"   # query params in target
+    assert write["kind"] == "write" and write["resource_id"] == "AuditEvent/42"
+
+
+def test_client_logs_failed_call_with_status():
+    activity_log.clear()
+    start = activity_log.latest
+
+    def handler(request):
+        return httpx.Response(500, text="boom")
+
+    client = _mock_client(handler)
+    with pytest.raises(FhirError):
+        client.read("Patient", "p1")
+    (entry,) = activity_log.since(start)
+    assert entry["status"] == 500
+    assert entry["target"] == "Patient/p1"
