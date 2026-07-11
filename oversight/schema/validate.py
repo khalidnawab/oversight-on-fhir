@@ -26,7 +26,16 @@ _CODE_OWNED_FIELDS = ("deterministic_tool_result", "confidence", "routing")
 
 def _sanitize(node):
     if isinstance(node, dict):
-        return {k: _sanitize(v) for k, v in node.items() if k not in _STRIP_KEYWORDS}
+        out = {k: _sanitize(v) for k, v in node.items() if k not in _STRIP_KEYWORDS}
+        # Strict structured output: every object needs additionalProperties:false and all
+        # properties listed in required.
+        types = out.get("type")
+        is_object = out.get("properties") is not None or types == "object" or (
+            isinstance(types, list) and "object" in types)
+        if is_object and "properties" in out:
+            out["additionalProperties"] = False
+            out["required"] = list(out["properties"].keys())
+        return out
     if isinstance(node, list):
         return [_sanitize(x) for x in node]
     return node

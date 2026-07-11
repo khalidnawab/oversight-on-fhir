@@ -5,6 +5,7 @@ from oversight.inference.base import InferenceResult
 _CANNED = {
     "schema_version": "0.1.0",
     "patient_reference": "Patient/stub", "encounter_reference": "Encounter/stub",
+    "stewardship_assessment": "Local stub backend: canned response for seam demonstration only.",
     "candidacy": {"is_deescalation_candidate": "insufficient_information",
                   "current_regimen": [{"medication": "piperacillin-tazobactam", "fhir_reference": "MedicationRequest/stub"}],
                   "recommended_action": "insufficient_information", "recommended_agent": None, "recommended_dose": None},

@@ -25,27 +25,42 @@
       </div>
       <div class="card-body">
         <div style="font-size:1.15rem;font-weight:600;margin-bottom:4px">
-          {% if rec.candidacy.recommended_action == "narrow" %}<span class="arrow" style="color:var(--brand)">→</span>
+          {% set act = rec.candidacy.recommended_action %}
+          {% if act == "narrow" %}<span class="arrow" style="color:var(--brand)">→</span>
             Narrow to <span style="color:var(--brand-ink)">{{ rec.candidacy.recommended_agent }}</span>
-          {% elif rec.candidacy.recommended_action == "continue" %}Continue current therapy
-          {% else %}{{ rec.candidacy.recommended_action|replace("_"," ") }}{% endif %}
+          {% elif act == "continue" %}Continue current therapy
+          {% elif act == "stop" %}Stop antibiotics / reassess
+          {% elif act == "switch-iv-to-po" %}Switch IV → PO{% if rec.candidacy.recommended_agent %} ({{ rec.candidacy.recommended_agent }}){% endif %}
+          {% elif act == "broaden" %}Broaden therapy
+          {% else %}{{ act|replace("_"," ") }}{% endif %}
         </div>
         <div class="pt-sub">candidacy: {{ rec.candidacy.is_deescalation_candidate|replace("_"," ") }}
           · confidence {{ (rec.confidence.score*100)|round(0)|int }}% ({{ rec.confidence.method }})</div>
+
+        {% if rec.stewardship_assessment %}
+        <p class="eyebrow" style="margin-top:20px">Stewardship assessment</p>
+        <p style="font-size:.95rem;line-height:1.6">{{ rec.stewardship_assessment }}</p>
+        {% endif %}
 
         <p class="eyebrow" style="margin-top:20px">Current regimen</p>
         {% for m in rec.candidacy.current_regimen %}
           <span class="chip">{{ m.medication }}</span> <span class="chip ref">{{ m.fhir_reference }}</span><br>
         {% endfor %}
 
-        <p class="eyebrow" style="margin-top:20px">Evidence — every claim linked to its source</p>
+        <p class="eyebrow" style="margin-top:20px">Reasoning & evidence — every claim linked to its source</p>
         <ul class="rationale">
           {% for r in rec.rationale %}
           <li><div class="assert">{{ r.assertion }}</div>
-            {% for e in r.evidence %}<span class="chip ref">{{ e.fhir_reference or e.knowledge_source_id or e.document_reference }}</span> {% endfor %}
+            {% for e in r.evidence %}
+              {% if e.fhir_reference %}<span class="chip ref">{{ e.fhir_reference }}</span>
+              {% elif e.knowledge_source_id %}<span class="chip guideline">📖 {{ e.knowledge_source_id }}</span>
+              {% elif e.document_reference %}<span class="chip ref">{{ e.document_reference }}</span>{% endif %}
+            {% endfor %}
           </li>
           {% endfor %}
         </ul>
+        <p class="pt-sub"><span class="chip ref" style="padding:1px 6px">FHIR</span> resource evidence ·
+           <span class="chip guideline" style="padding:1px 6px">📖</span> guideline / antibiogram passage</p>
       </div>
     </div>
 

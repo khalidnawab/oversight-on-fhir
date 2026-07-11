@@ -42,6 +42,7 @@ def _propose(context: dict) -> dict:
 
     rec = {
         "schema_version": "0.1.0", "patient_reference": pref, "encounter_reference": eref,
+        "stewardship_assessment": "",
         "candidacy": {"is_deescalation_candidate": "yes", "current_regimen": regimen,
                       "recommended_action": "narrow", "recommended_agent": None, "recommended_dose": None},
         "rationale": [], "deterministic_tool_result": None,
@@ -51,6 +52,10 @@ def _propose(context: dict) -> dict:
     }
 
     if target:
+        rec["stewardship_assessment"] = (
+            f"Culture and susceptibilities support de-escalating from broad-spectrum empiric therapy to "
+            f"{target}, the narrowest agent that covers the isolate. No contraindication to narrowing is "
+            f"evident from the available data. Recommend narrowing; clinician to confirm timing and duration.")
         rec["candidacy"]["recommended_agent"] = target
         ev_ref = susceptible.get(target) or culture_ref
         rec["rationale"] = [
@@ -62,6 +67,10 @@ def _propose(context: dict) -> dict:
                            "text_span": None, "knowledge_source_id": "antibiogram#staphylococcus-aureus-mssa"}]},
         ]
     elif suscepts:
+        rec["stewardship_assessment"] = (
+            "Culture has resulted but the organism requires continued coverage with the current agent; "
+            "no narrower susceptible target is appropriate (e.g. antipseudomonal coverage). Recommend "
+            "continuing current therapy, reassessing daily, and setting a definite stop date.")
         rec["candidacy"]["is_deescalation_candidate"] = "no"
         rec["candidacy"]["recommended_action"] = "continue"
         rec["rationale"] = [
@@ -73,6 +82,11 @@ def _propose(context: dict) -> dict:
                "text_span": None, "knowledge_source_id": "antibiogram#pseudomonas-aeruginosa"}]},
         ]
     else:
+        rec["stewardship_assessment"] = (
+            "Susceptibility results are not yet available, so there is insufficient information to safely "
+            "narrow therapy. Recommend continuing empiric therapy pending cultures and reassessing at the "
+            "next antibiotic time-out; if cultures remain negative and infection becomes unlikely, consider "
+            "stopping therapy.")
         rec["candidacy"]["is_deescalation_candidate"] = "insufficient_information"
         rec["candidacy"]["recommended_action"] = "insufficient_information"
         rec["rationale"] = [

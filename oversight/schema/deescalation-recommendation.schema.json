@@ -4,11 +4,12 @@
   "title": "De-escalation Recommendation",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "patient_reference", "encounter_reference", "candidacy", "rationale", "deterministic_tool_result", "confidence", "routing", "disclosure_text"],
+  "required": ["schema_version", "patient_reference", "encounter_reference", "stewardship_assessment", "candidacy", "rationale", "deterministic_tool_result", "confidence", "routing", "disclosure_text"],
   "properties": {
     "schema_version": {"const": "0.1.0"},
     "patient_reference": {"type": "string", "pattern": "^Patient/.+"},
     "encounter_reference": {"type": "string", "pattern": "^Encounter/.+"},
+    "stewardship_assessment": {"type": "string", "minLength": 1},
     "candidacy": {
       "type": "object",
       "additionalProperties": false,
@@ -27,7 +28,7 @@
             }
           }
         },
-        "recommended_action": {"enum": ["narrow", "continue", "insufficient_information", "escalate"]},
+        "recommended_action": {"enum": ["narrow", "continue", "stop", "switch-iv-to-po", "broaden", "insufficient_information", "escalate"]},
         "recommended_agent": {"type": ["string", "null"]},
         "recommended_dose": {"type": "null"}
       }

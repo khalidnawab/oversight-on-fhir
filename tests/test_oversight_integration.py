@@ -9,6 +9,7 @@ from oversight.oversight.service import OversightService
 
 SURFACE_REC = {"schema_version": "0.1.0", "patient_reference": "Patient/clean-1",
                "encounter_reference": "Encounter/enc-clean-1",
+               "stewardship_assessment": "MSSA susceptible to cefazolin; recommend de-escalation.",
                "candidacy": {"is_deescalation_candidate": "yes",
                    "current_regimen": [{"medication": "piperacillin-tazobactam", "fhir_reference": "MedicationRequest/mr-clean-1"}],
                    "recommended_action": "narrow", "recommended_agent": "cefazolin", "recommended_dose": None},

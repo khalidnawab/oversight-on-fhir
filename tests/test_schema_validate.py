@@ -9,6 +9,7 @@ VALID = {
     "schema_version": "0.1.0",
     "patient_reference": "Patient/clean-1",
     "encounter_reference": "Encounter/enc-1",
+    "stewardship_assessment": "MSSA bacteremia; de-escalate to cefazolin.",
     "candidacy": {
         "is_deescalation_candidate": "yes",
         "current_regimen": [{"medication": "piperacillin-tazobactam", "fhir_reference": "MedicationRequest/mr-1"}],
@@ -56,3 +57,29 @@ def test_model_authored_dose_is_rejected():
     bad["candidacy"]["recommended_dose"] = "500 mg q8h"
     with pytest.raises(SchemaValidationError):
         validate_recommendation(bad)
+
+
+def test_expanded_stewardship_actions_accepted():
+    for action in ("stop", "switch-iv-to-po", "broaden", "continue"):
+        rec = copy.deepcopy(VALID)
+        rec["candidacy"]["recommended_action"] = action
+        validate_recommendation(rec)  # must not raise
+
+
+def test_missing_stewardship_assessment_is_rejected():
+    bad = copy.deepcopy(VALID)
+    del bad["stewardship_assessment"]
+    with pytest.raises(SchemaValidationError):
+        validate_recommendation(bad)
+
+
+def test_model_schema_is_strict_compliant():
+    from oversight.schema.validate import load_model_schema
+    ms = load_model_schema()
+    # code-owned fields nulled, all objects strict, no numeric bounds / patterns
+    assert ms["properties"]["confidence"] == {"type": "null"}
+    assert ms["properties"]["routing"] == {"type": "null"}
+    assert ms["properties"]["deterministic_tool_result"] == {"type": "null"}
+    assert ms["additionalProperties"] is False
+    assert set(ms["required"]) == set(ms["properties"].keys())
+    assert "pattern" not in ms["properties"]["patient_reference"]

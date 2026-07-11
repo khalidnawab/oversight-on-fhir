@@ -48,6 +48,9 @@
           <div class="pt-sub">{{ h.rules|join(", ") }}</div>
         {% elif h and h.action == "narrow" %}<span class="headline"><span class="arrow">→</span> narrow to {{ h.agent }}</span>
         {% elif h and h.action == "continue" %}<span class="pt-sub">continue current</span>
+        {% elif h and h.action == "stop" %}<span class="headline">stop / reassess</span>
+        {% elif h and h.action == "switch-iv-to-po" %}<span class="headline">IV → PO</span>
+        {% elif h and h.action == "broaden" %}<span class="headline">broaden</span>
         {% elif e.eligibility == "insufficient" %}<span class="pt-sub">needs data</span>
         {% else %}<span class="pt-sub">—</span>{% endif %}
       </td>

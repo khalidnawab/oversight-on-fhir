@@ -36,6 +36,7 @@ class _FakeClient:
 VALID_MIN = {
     "schema_version": "0.1.0",
     "patient_reference": "Patient/x", "encounter_reference": "Encounter/y",
+    "stewardship_assessment": "Narrow to cefazolin.",
     "candidacy": {"is_deescalation_candidate": "yes",
                   "current_regimen": [{"medication": "pip-tazo", "fhir_reference": "MedicationRequest/m1"}],
                   "recommended_action": "narrow", "recommended_agent": "cefazolin", "recommended_dose": None},

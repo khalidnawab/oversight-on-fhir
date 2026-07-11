@@ -9,24 +9,30 @@ from oversight.rag.retriever import Retriever
 from oversight.schema.validate import validate_recommendation
 
 
-def main() -> int:
+import sys
+
+
+def review(patient_id: str, encounter_id: str) -> None:
     s = Settings()
     client = FhirClient.from_settings(s)
-    ctx = ContextBuilder(client).build("clean-1", "enc-clean-1")
-    passages = Retriever().retrieve("de-escalation MSSA cefazolin", k=2)
+    ctx = ContextBuilder(client).build(patient_id, encounter_id)
+    passages = Retriever().retrieve("de-escalation stop duration IV to PO culture negative", k=3)
     orch = Orchestrator(FrontierAPIBackend(model=s.model), threshold=s.confidence_threshold, n_samples=2)
-    print(f"Running live orchestrator with the real {s.model} on Patient/clean-1 ...")
+    print(f"\n=== {patient_id} — live {s.model} ===")
     rec = orch.run_with_context(ctx, knowledge_passages=passages)
     validate_recommendation(rec)
-    print("OK — full pipeline produced a schema-valid recommendation from the real model.\n")
-    print(f"  action        : {rec['candidacy']['recommended_action']} -> {rec['candidacy']['recommended_agent']}")
-    print(f"  routing       : {rec['routing']['decision']} (rules: {rec['routing']['triggered_high_risk_rules']})")
-    print(f"  confidence    : {rec['confidence']['score']} via {rec['confidence']['method']}")
-    print(f"  renal dose    : {rec['deterministic_tool_result']['renal_dose_adjustment'].get('dose')}")
-    print("  rationale (model-authored, evidence-linked):")
+    print(f"  action     : {rec['candidacy']['recommended_action']} -> {rec['candidacy']['recommended_agent']}")
+    print(f"  routing    : {rec['routing']['decision']} (rules: {rec['routing']['triggered_high_risk_rules']})")
+    print(f"  assessment : {rec['stewardship_assessment']}")
+    print("  evidence   :")
     for r in rec["rationale"]:
         refs = ", ".join(e.get("fhir_reference") or e.get("knowledge_source_id") or "?" for e in r["evidence"])
-        print(f"    - {r['assertion'][:90]}  [{refs}]")
+        print(f"    - {r['assertion'][:78]}  [{refs}]")
+
+
+def main() -> int:
+    review("clean-1", "enc-clean-1")   # MSSA -> narrow to cefazolin
+    review("u-anand", "enc-u-anand")   # culture-negative -> stop / reassess / insufficient
     return 0
 
 
