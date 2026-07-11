@@ -37,6 +37,17 @@ def test_cds_discovery(monkeypatch):
 
 
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_api_assessment_returns_action(monkeypatch):
+    c = _client(monkeypatch)
+    r = c.get("/api/assessment/clean-1/enc-clean-1")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ok"] is True
+    assert body["action"] in ("narrow", "continue", "stop", "switch-iv-to-po", "broaden",
+                              "insufficient_information", "escalate")
+
+
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
 def test_clean_patient_view_surfaces(monkeypatch):
     c = _client(monkeypatch)
     r = c.get("/patient/clean-1/enc-clean-1")

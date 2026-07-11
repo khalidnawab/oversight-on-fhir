@@ -134,6 +134,10 @@ a:hover { text-decoration: underline; }
 .chip.guideline { color: var(--warn); border-color: #ecd5a8; background: var(--warn-soft); }
 .headline { font-weight: 600; font-size: .9rem; }
 .headline .arrow { color: var(--brand); }
+.assessing { color: var(--muted); font-size: .84rem; display: inline-flex; align-items: center; gap: 7px; }
+.spinner { width: 12px; height: 12px; border: 2px solid var(--line-strong); border-top-color: var(--brand);
+  border-radius: 50%; display: inline-block; animation: spin .7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* --- buttons ----------------------------------------------------------- */
 .btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--sans); font-weight: 600; font-size: .9rem;

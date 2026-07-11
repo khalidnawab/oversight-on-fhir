@@ -43,15 +43,10 @@
         {% else %}<span class="chip">none</span>{% endif %}
       </td>
       <td>
-        {% set h = headlines.get(e.patient_id) %}
-        {% if h and h.escalate %}<span class="badge escalate">⚠ escalate</span>
-          <div class="pt-sub">{{ h.rules|join(", ") }}</div>
-        {% elif h and h.action == "narrow" %}<span class="headline"><span class="arrow">→</span> narrow to {{ h.agent }}</span>
-        {% elif h and h.action == "continue" %}<span class="pt-sub">continue current</span>
-        {% elif h and h.action == "stop" %}<span class="headline">stop / reassess</span>
-        {% elif h and h.action == "switch-iv-to-po" %}<span class="headline">IV → PO</span>
-        {% elif h and h.action == "broaden" %}<span class="headline">broaden</span>
-        {% elif e.eligibility == "insufficient" %}<span class="pt-sub">needs data</span>
+        {% if e.eligibility in ("eligible", "insufficient") %}
+          <span class="assess-cell" data-pid="{{ e.patient_id }}" data-eid="{{ e.encounter_id }}">
+            <span class="assessing"><span class="spinner"></span> assessing…</span>
+          </span>
         {% else %}<span class="pt-sub">—</span>{% endif %}
       </td>
       <td><span class="badge {{ e.eligibility }}">{{ e.eligibility|replace("_"," ") }}</span></td>
@@ -64,4 +59,35 @@
     {% endfor %}
   </tbody>
 </table>
+
+<script>
+// Lazily fetch each patient's agent assessment so the worklist renders instantly and fills in.
+function renderAssessment(cell, d) {
+  if (!d.ok) { cell.innerHTML = '<span class="pt-sub">unavailable</span>'; return; }
+  if (d.escalate) {
+    cell.innerHTML = '<span class="badge escalate">⚠ escalate</span>' +
+      (d.rules && d.rules.length ? '<div class="pt-sub">' + d.rules.join(', ') + '</div>' : '');
+  } else if (d.action === 'narrow') {
+    cell.innerHTML = '<span class="headline"><span class="arrow">→</span> narrow to ' + (d.agent || '') + '</span>';
+  } else if (d.action === 'continue') { cell.innerHTML = '<span class="pt-sub">continue current</span>';
+  } else if (d.action === 'stop') { cell.innerHTML = '<span class="headline">stop / reassess</span>';
+  } else if (d.action === 'switch-iv-to-po') { cell.innerHTML = '<span class="headline">IV &rarr; PO</span>';
+  } else if (d.action === 'broaden') { cell.innerHTML = '<span class="headline">broaden</span>';
+  } else { cell.innerHTML = '<span class="pt-sub">needs data</span>'; }
+}
+async function loadOne(cell) {
+  try {
+    const r = await fetch('/api/assessment/' + cell.dataset.pid + '/' + cell.dataset.eid);
+    renderAssessment(cell, await r.json());
+  } catch (e) { cell.innerHTML = '<span class="pt-sub">unavailable</span>'; }
+}
+// Limit concurrency so we don't fire all at once.
+(async () => {
+  const cells = Array.from(document.querySelectorAll('.assess-cell'));
+  const limit = 4;
+  let i = 0;
+  async function worker() { while (i < cells.length) { const c = cells[i++]; await loadOne(c); } }
+  await Promise.all(Array.from({length: limit}, worker));
+})();
+</script>
 {% endblock %}
