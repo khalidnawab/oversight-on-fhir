@@ -37,6 +37,9 @@ class FhirClient:
         rt, rid = resource["resourceType"], resource["id"]
         return self._request("PUT", f"/{rt}/{rid}", json=resource)
 
+    def delete(self, resource_type: str, resource_id: str) -> dict:
+        return self._request("DELETE", f"/{resource_type}/{resource_id}")
+
     def transaction(self, bundle: dict) -> dict:
         return self._request("POST", "/", json=bundle)
 

@@ -74,6 +74,22 @@ def test_disposition_then_dashboard(monkeypatch):
 
 
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_reset_clears_recorded_data(monkeypatch):
+    import re
+    c = _client(monkeypatch)
+    # record a decision so there is something to clear
+    view = c.get("/patient/clean-1/enc-clean-1")
+    gref = re.search(r"GuidanceResponse/gr-[0-9a-f]+", view.text).group(0)
+    c.post("/disposition", data={"guidance_ref": gref, "disposition": "reject",
+                                 "reason_code": "data-vintage", "note": "x"}, follow_redirects=False)
+    resp = c.post("/reset", follow_redirects=False)
+    assert resp.status_code == 303
+    dash = c.get("/dashboard")
+    # after reset the decisions KPI is zero
+    assert re.search(r"Oversight decisions</div>\s*<div class=\"value\">0<", dash.text)
+
+
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
 def test_cds_service_returns_card(monkeypatch):
     c = _client(monkeypatch)
     r = c.post(f"/cds-services/deescalation-oversight",

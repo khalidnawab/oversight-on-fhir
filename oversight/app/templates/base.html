@@ -22,6 +22,9 @@
       <span class="ico">◔</span> Oversight analytics</a>
     <a class="nav-link" href="/cds-services" target="_blank"><span class="ico">⇄</span> CDS Hooks</a>
     <div class="spacer"></div>
+    <form method="post" action="/reset" onsubmit="return confirm('Delete all recorded recommendations and oversight events? (patient data is kept)')">
+      <button class="btn-reset" type="submit">↺ Reset test data</button>
+    </form>
     <div class="foot">
       Antibiotic de-escalation · sepsis<br>
       Backend <code>{{ backend }}</code><br>

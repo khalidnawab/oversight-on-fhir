@@ -86,6 +86,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                                    reason_code=(reason_code or None), note=(note or None))
         return RedirectResponse(url="/dashboard", status_code=303)
 
+    @app.post("/reset")
+    def reset(request: Request):
+        _svc().reset_recorded()
+        _HEADLINE_CACHE.clear()
+        return RedirectResponse(url=request.headers.get("referer") or "/", status_code=303)
+
     @app.get("/dashboard", response_class=HTMLResponse)
     def dashboard(request: Request):
         stats = aggregate_oversight(settings.fhir_base_url, settings.fhir_bearer_token)

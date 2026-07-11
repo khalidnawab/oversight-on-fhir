@@ -46,6 +46,35 @@ def test_persist_escalation_writes_escalation_event():
     assert "escalation_event" in refs
 
 
+class FakeFhirWithStore:
+    def __init__(self, store):
+        self.store = store  # {resourceType: [ids]}
+        self.deleted = []
+
+    def search(self, rt, params=None):
+        ids = self.store.get(rt, [])
+        return [{"resourceType": rt, "id": i} for i in ids]
+
+    def delete(self, rt, rid):
+        self.store[rt] = [i for i in self.store.get(rt, []) if i != rid]
+        self.deleted.append(f"{rt}/{rid}")
+        return {}
+
+
+def test_reset_deletes_recorded_resources_only():
+    store = {"AuditEvent": ["ae1", "ae2"], "Provenance": ["p1"], "GuidanceResponse": ["gr1"],
+             "Patient": ["clean-1"], "Observation": ["o1"]}
+    fake = FakeFhirWithStore(store)
+    svc = OversightService(fake, model="m", version="0.1.0", backend="demo")
+    counts = svc.reset_recorded()
+    assert counts == {"AuditEvent": 2, "Provenance": 1, "GuidanceResponse": 1}
+    # patient data untouched
+    assert store["Patient"] == ["clean-1"]
+    assert store["Observation"] == ["o1"]
+    # referrers deleted before the guidance response
+    assert fake.deleted.index("Provenance/p1") < fake.deleted.index("GuidanceResponse/gr1")
+
+
 def test_capture_disposition_writes_audit_event():
     fake = FakeFhir()
     _svc(fake).capture_disposition("GuidanceResponse/gr-1", "Practitioner/dr-alice",

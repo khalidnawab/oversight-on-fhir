@@ -38,6 +38,26 @@ class OversightService:
             refs["escalation_event"] = f"AuditEvent/{created.get('id')}"
         return refs
 
+    def reset_recorded(self) -> dict:
+        """Delete all recorded recommendations and oversight events, leaving patient data intact.
+        For testing only. Deletes referrers (AuditEvent, Provenance) before the GuidanceResponses."""
+        from oversight.errors import FhirError
+        counts = {}
+        for rt in ("AuditEvent", "Provenance", "GuidanceResponse"):
+            removed = 0
+            for _ in range(50):  # page through until empty
+                ids = [r["id"] for r in self._fhir.search(rt, {"_count": 200})]
+                if not ids:
+                    break
+                for rid in ids:
+                    try:
+                        self._fhir.delete(rt, rid)
+                        removed += 1
+                    except FhirError:
+                        pass
+            counts[rt] = removed
+        return counts
+
     def capture_disposition(self, guidance_ref: str, practitioner_ref: str, disposition: str,
                             reason_code: str | None = None, note: str | None = None) -> dict:
         ae = R.build_oversight_event(guidance_ref, practitioner_ref, disposition, reason_code, note,

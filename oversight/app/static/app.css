@@ -64,6 +64,10 @@ a:hover { text-decoration: underline; }
 .nav-link.active { background: rgba(53,201,168,.16); color: #fff; }
 .nav-link .ico { width: 17px; opacity: .85; }
 .sidebar .spacer { flex: 1; }
+.btn-reset { width: 100%; background: rgba(255,255,255,.06); color: #cfe0da; border: 1px solid rgba(255,255,255,.12);
+  border-radius: 9px; padding: 8px 12px; font-family: var(--sans); font-size: .82rem; font-weight: 600; cursor: pointer;
+  margin-bottom: 14px; transition: background .15s, color .15s, border-color .15s; }
+.btn-reset:hover { background: rgba(164,41,63,.35); color: #fff; border-color: rgba(164,41,63,.5); }
 .sidebar .foot { font-size: .72rem; color: #6a8f85; border-top: 1px solid rgba(255,255,255,.08); padding-top: 14px; }
 .sidebar .foot code { color: #9dc0b6; font-family: var(--mono); font-size: .7rem; }
 
