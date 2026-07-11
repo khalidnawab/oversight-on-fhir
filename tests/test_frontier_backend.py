@@ -62,12 +62,16 @@ def test_n_samples_collects_multiple():
     assert len(result.samples) == 3
 
 
-@pytest.mark.skipif(not os.getenv("ANTHROPIC_API_KEY"), reason="no ANTHROPIC_API_KEY set")
+@pytest.mark.skipif(not os.getenv("OVERSIGHT_RUN_LIVE_TESTS"),
+                    reason="live API test; set OVERSIGHT_RUN_LIVE_TESTS=1 to run")
 def test_live_smoke():
+    from oversight.schema.validate import load_model_schema
     backend = FrontierAPIBackend(model="claude-opus-4-8")
-    schema = load_schema()
     prompt = ("Produce a de-escalation recommendation for Patient/x Encounter/y currently on "
               "MedicationRequest/m1 piperacillin-tazobactam, isolate MSSA susceptible to cefazolin "
               "per DiagnosticReport/d1. Narrow to cefazolin. Leave recommended_dose null.")
-    result = backend.generate(prompt=prompt, schema=schema)
-    validate_recommendation(result.recommendation)
+    result = backend.generate(prompt=prompt, schema=load_model_schema())
+    # Raw model output: code-owned fields are null; the clinical content is present and evidence-linked.
+    assert result.recommendation["candidacy"]["recommended_action"] in (
+        "narrow", "continue", "stop", "switch-iv-to-po", "broaden", "insufficient_information", "escalate")
+    assert result.recommendation["rationale"] and result.recommendation["rationale"][0]["evidence"]

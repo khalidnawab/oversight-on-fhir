@@ -4,7 +4,7 @@
   "title": "De-escalation Recommendation",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "patient_reference", "encounter_reference", "candidacy", "rationale", "confidence", "routing", "disclosure_text"],
+  "required": ["schema_version", "patient_reference", "encounter_reference", "candidacy", "rationale", "deterministic_tool_result", "confidence", "routing", "disclosure_text"],
   "properties": {
     "schema_version": {"const": "0.1.0"},
     "patient_reference": {"type": "string", "pattern": "^Patient/.+"},
@@ -47,7 +47,7 @@
             "items": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["type"],
+              "required": ["type", "fhir_reference", "document_reference", "text_span", "knowledge_source_id"],
               "properties": {
                 "type": {"enum": ["fhir_resource", "note_excerpt", "knowledge_passage"]},
                 "fhir_reference": {"type": ["string", "null"]},
@@ -62,6 +62,7 @@
     },
     "deterministic_tool_result": {
       "type": ["object", "null"],
+      "additionalProperties": false,
       "properties": {
         "renal_dose_adjustment": {},
         "interactions": {"type": "array"},

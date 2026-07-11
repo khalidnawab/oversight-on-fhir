@@ -14,6 +14,39 @@ def load_schema() -> dict:
     return json.loads(_SCHEMA_PATH.read_text(encoding="utf-8"))
 
 
+# Validation-only keywords that strict structured-output mode does not accept in a request schema.
+_STRIP_KEYWORDS = {"minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum",
+                   "pattern", "format", "minItems", "maxItems", "minLength", "maxLength"}
+
+# Fields the model must NOT author — they are computed by deterministic code after generation
+# (Section 4.3 tool result; Section 9 routing; Section 9.2 self-consistency confidence). The model
+# is constrained to emit null for these; the orchestrator fills them in.
+_CODE_OWNED_FIELDS = ("deterministic_tool_result", "confidence", "routing")
+
+
+def _sanitize(node):
+    if isinstance(node, dict):
+        return {k: _sanitize(v) for k, v in node.items() if k not in _STRIP_KEYWORDS}
+    if isinstance(node, list):
+        return [_sanitize(x) for x in node]
+    return node
+
+
+@lru_cache(maxsize=1)
+def load_model_schema() -> dict:
+    """Schema sent to a constrained backend (frontier structured output / local decoder).
+
+    Nulls the code-owned fields so the model only authors the clinical recommendation and its
+    evidence, and strips validation-only keywords the strict API rejects. The full artifact is
+    still checked against the complete schema by validate_recommendation after the orchestrator
+    fills the code-owned fields in."""
+    import copy
+    s = copy.deepcopy(load_schema())
+    for field in _CODE_OWNED_FIELDS:
+        s["properties"][field] = {"type": "null"}
+    return _sanitize(s)
+
+
 @lru_cache(maxsize=1)
 def _validator() -> Draft202012Validator:
     return Draft202012Validator(load_schema())

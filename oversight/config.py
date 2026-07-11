@@ -1,7 +1,12 @@
+from dotenv import load_dotenv
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from oversight.errors import ConfigError
+
+# Load .env into the process environment so the Anthropic SDK (which reads ANTHROPIC_API_KEY
+# from os.environ) picks up a key placed in the gitignored .env file.
+load_dotenv()
 
 
 class Settings(BaseSettings):
