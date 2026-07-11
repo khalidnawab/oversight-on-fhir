@@ -1,4 +1,5 @@
 import datetime as _dt
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -62,7 +63,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/", response_class=HTMLResponse)
     def census(request: Request):
         entries = CensusScanner(FhirClient.from_settings(settings)).scan()
-        headlines = {e.patient_id: _headline(e) for e in entries if e.eligibility == "eligible"}
+        # Compute the per-patient agent assessments concurrently so the worklist loads quickly even
+        # on the frontier backend (each is an independent model call; results are cached).
+        eligible = [e for e in entries if e.eligibility == "eligible"]
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            hl = list(ex.map(_headline, eligible))
+        headlines = {e.patient_id: h for e, h in zip(eligible, hl)}
         counts = {k: sum(1 for e in entries if e.eligibility == k)
                   for k in ("eligible", "insufficient", "monitoring", "not_eligible")}
         scanned_at = _dt.datetime.now().strftime("%H:%M")
