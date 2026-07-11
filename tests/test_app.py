@@ -63,6 +63,10 @@ def test_clean_patient_view_surfaces(monkeypatch):
     assert r.status_code == 200
     assert "cefazolin" in r.text
     assert "Escalated to human review" not in r.text
+    # chart tabs and EHR data present
+    assert "panel-orders" in r.text and "panel-labs" in r.text
+    assert "MedicationRequest" in r.text  # orders tab
+    assert "Creatinine" in r.text          # labs tab
 
 
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")

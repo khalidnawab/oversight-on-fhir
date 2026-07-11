@@ -16,6 +16,7 @@ from oversight.inference.factory import get_backend
 from oversight.oversight import taxonomy as t
 from oversight.oversight.service import OversightService
 from oversight.orchestrator.census import CensusScanner
+from oversight.orchestrator.chart import build_chart
 from oversight.orchestrator.context import ContextBuilder
 from oversight.orchestrator.loop import Orchestrator
 from oversight.rag.retriever import Retriever
@@ -98,10 +99,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/patient/{pid}/{eid}", response_class=HTMLResponse)
     def patient(request: Request, pid: str, eid: str):
-        entry = CensusScanner(FhirClient.from_settings(settings)).classify(pid)
+        client = FhirClient.from_settings(settings)
+        entry = CensusScanner(client).classify(pid)
+        chart = build_chart(client, pid)
         rec, guidance_ref = _assess(pid, eid)
         return _TEMPLATES.TemplateResponse(request, "clinician.html", ctx(
-            rec=rec, guidance_ref=guidance_ref, reasons=t.REASON_CODES, pid=pid, eid=eid,
+            rec=rec, guidance_ref=guidance_ref, reasons=t.REASON_CODES, pid=pid, eid=eid, chart=chart,
             patient_name=(entry.patient_name if entry else pid),
             location=(entry.location if entry else ""),
             day_of_therapy=(entry.day_of_therapy if entry else 0)))
