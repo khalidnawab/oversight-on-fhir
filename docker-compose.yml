@@ -7,6 +7,10 @@ services:
     environment:
       hapi.fhir.fhir_version: R4
       hapi.fhir.allow_multiple_delete: "true"
+      # Demo server: don't block writes/deletes on dangling references. Prevents HAPI-1096 when an
+      # oversight AuditEvent references a recommendation that was cleared by "Reset test data".
+      hapi.fhir.enforce_referential_integrity_on_write: "false"
+      hapi.fhir.enforce_referential_integrity_on_delete: "false"
     volumes:
       - fhir-data:/data/hapi
     healthcheck:

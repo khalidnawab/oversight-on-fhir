@@ -10,6 +10,7 @@ from fastapi.templating import Jinja2Templates
 from oversight.app import cds_hooks
 from oversight.app.dashboard import aggregate_oversight
 from oversight.config import Settings
+from oversight.errors import FhirError
 from oversight.fhir.client import FhirClient
 from oversight.inference.factory import get_backend
 from oversight.oversight import taxonomy as t
@@ -95,8 +96,17 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.post("/disposition")
     def disposition(guidance_ref: str = Form(...), disposition: str = Form(...),
                     reason_code: str = Form(""), note: str = Form("")):
-        _svc().capture_disposition(guidance_ref, "Practitioner/dr-alice", disposition=disposition,
-                                   reason_code=(reason_code or None), note=(note or None))
+        try:
+            _svc().capture_disposition(guidance_ref, "Practitioner/dr-alice", disposition=disposition,
+                                       reason_code=(reason_code or None), note=(note or None))
+        except FhirError:
+            # The recommendation this decision refers to is no longer on the server (e.g. it was
+            # cleared by "Reset test data" while this page was open). Ask for a fresh review.
+            return HTMLResponse(
+                "<p style='font-family:system-ui;max-width:640px;margin:3rem auto'>"
+                "This recommendation is no longer current — it was likely cleared by a reset while "
+                "this page was open. <a href='/'>Return to the census</a> and re-open the patient to "
+                "record a decision on a fresh recommendation.</p>", status_code=409)
         return RedirectResponse(url="/dashboard", status_code=303)
 
     @app.post("/reset")
