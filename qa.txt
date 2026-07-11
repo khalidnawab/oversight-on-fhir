@@ -1,0 +1,71 @@
+OversightOnFHIR : Validation Results
+=========================================
+
+err = 7, warn = 11, info = 6
+IG Publisher Version: 2.2.10
+Generated Sat Jul 11 15:14:55 EDT 2026. FHIR version 4.0.1 for oversight-on-fhir#0.1.0 (canonical = https://oversight-on-fhir.org/fhir)
+ Build Errors : 0 / 11 / 0
+ D:\projects\oversee\ig\fsh-generated\resources\AuditEvent-escalation-example : 0 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\AuditEvent-oversight-reject-example : 0 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\CodeSystem-high-risk-rule : 1 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\CodeSystem-oversight-disposition : 1 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\CodeSystem-oversight-event-type : 1 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\CodeSystem-oversight-reason : 1 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\Device-oversight-ai : 0 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\GuidanceResponse-gr-example : 0 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\ImplementationGuide-oversight-on-fhir : 0 / 0 / 2
+ D:\projects\oversee\ig\fsh-generated\resources\Patient-clean-1 : 0 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\Practitioner-dr-alice : 0 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\Provenance-prov-example : 0 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\StructureDefinition-ai-authorship-provenance : 0 / 0 / 3
+ D:\projects\oversee\ig\fsh-generated\resources\StructureDefinition-deescalation-guidance-response : 0 / 0 / 2
+ D:\projects\oversee\ig\fsh-generated\resources\StructureDefinition-oversight-event : 0 / 0 / 2
+ D:\projects\oversee\ig\fsh-generated\resources\StructureDefinition-oversight-reason-ext : 0 / 0 / 2
+ D:\projects\oversee\ig\fsh-generated\resources\ValueSet-oversight-disposition-vs : 1 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\ValueSet-oversight-event-type-vs : 1 / 0 / 1
+ D:\projects\oversee\ig\fsh-generated\resources\ValueSet-oversight-reason-vs : 1 / 0 / 1
+</table>
+== n/a ==
+WARNING: Unable to find ImplementationGuide.definition.resource.description for the resource Provenance/prov-example.  Descriptions are strongly encouraged if they cannot be inferred from the resource to allow proper population of the artifact list.
+WARNING: Unable to find ImplementationGuide.definition.resource.description for the resource GuidanceResponse/gr-example.  Descriptions are strongly encouraged if they cannot be inferred from the resource to allow proper population of the artifact list.
+WARNING: Unable to find ImplementationGuide.definition.resource.description for the resource AuditEvent/escalation-example.  Descriptions are strongly encouraged if they cannot be inferred from the resource to allow proper population of the artifact list.
+WARNING: Unable to find ImplementationGuide.definition.resource.description for the resource AuditEvent/oversight-reject-example.  Descriptions are strongly encouraged if they cannot be inferred from the resource to allow proper population of the artifact list.
+WARNING: Unable to find ImplementationGuide.definition.resource.description for the resource Patient/clean-1.  Descriptions are strongly encouraged if they cannot be inferred from the resource to allow proper population of the artifact list.
+WARNING: Unable to find ImplementationGuide.definition.resource.description for the resource Practitioner/dr-alice.  Descriptions are strongly encouraged if they cannot be inferred from the resource to allow proper population of the artifact list.
+WARNING: Unable to find ImplementationGuide.definition.resource.description for the resource Device/oversight-ai.  Descriptions are strongly encouraged if they cannot be inferred from the resource to allow proper population of the artifact list.
+WARNING: 1: The HTML fragment 'ip-statements.xhtml' is not included anywhere in the produced implementation guide
+WARNING: 2: An HTML fragment from the set [cross-version-analysis.xhtml, cross-version-analysis-inline.xhtml] is not included anywhere in the produced implementation guide
+WARNING: 3: An HTML fragment from the set [dependency-table.xhtml, dependency-table-short.xhtml, dependency-table-nontech.xhtml] is not included anywhere in the produced implementation guide
+WARNING: 4: The HTML fragment 'globals-table.xhtml' is not included anywhere in the produced implementation guide
+== fsh-generated\resources\AuditEvent-escalation-example.json ==
+== fsh-generated\resources\AuditEvent-oversight-reject-example.json ==
+== fsh-generated\resources\CodeSystem-high-risk-rule.json ==
+ERROR: Resource: The resource CodeSystem/high-risk-rule must have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\CodeSystem-oversight-disposition.json ==
+ERROR: Resource: The resource CodeSystem/oversight-disposition must have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\CodeSystem-oversight-event-type.json ==
+ERROR: Resource: The resource CodeSystem/oversight-event-type must have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\CodeSystem-oversight-reason.json ==
+ERROR: Resource: The resource CodeSystem/oversight-reason must have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\Device-oversight-ai.json ==
+== fsh-generated\resources\GuidanceResponse-gr-example.json ==
+== fsh-generated\resources\ImplementationGuide-oversight-on-fhir.json ==
+INFORMATION: Resource: The resource ImplementationGuide/oversight-on-fhir could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\Patient-clean-1.json ==
+== fsh-generated\resources\Practitioner-dr-alice.json ==
+== fsh-generated\resources\Provenance-prov-example.json ==
+== fsh-generated\resources\StructureDefinition-ai-authorship-provenance.json ==
+INFORMATION: StructureDefinition/ai-authorship-provenance: StructureDefinition.snapshot.element[4].binding.extension[0]: The extension http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet|5.3.0 is deprecated with the note: 'Use additionalBinding extension or element instead'
+INFORMATION: Resource: The resource StructureDefinition/ai-authorship-provenance could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\StructureDefinition-deescalation-guidance-response.json ==
+INFORMATION: Resource: The resource StructureDefinition/deescalation-guidance-response could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\StructureDefinition-oversight-event.json ==
+INFORMATION: Resource: The resource StructureDefinition/oversight-event could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\StructureDefinition-oversight-reason-ext.json ==
+INFORMATION: Resource: The resource StructureDefinition/oversight-reason-ext could usefully have an OID assigned (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\ValueSet-oversight-disposition-vs.json ==
+ERROR: Resource: The resource ValueSet/oversight-disposition-vs must have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\ValueSet-oversight-event-type-vs.json ==
+ERROR: Resource: The resource ValueSet/oversight-event-type-vs must have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)
+== fsh-generated\resources\ValueSet-oversight-reason-vs.json ==
+ERROR: Resource: The resource ValueSet/oversight-reason-vs must have an OID assigned to cater for possible use with OID based terminology systems e.g. CDA usage (OIDs are easy to assign - see https://build.fhir.org/ig/FHIR/fhir-tools-ig/CodeSystem-ig-parameters.html#ig-parameters-auto-oid-root)

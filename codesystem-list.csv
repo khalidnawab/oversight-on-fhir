@@ -1,0 +1,5 @@
+URL,Version,Status,OIDs,Name,Title,Description,Used
+https://oversight-on-fhir.org/fhir/CodeSystem/high-risk-rule,0.1.0,active,,HighRiskRule,High-Risk Routing Rule,"Deterministic high-risk rules that force escalation regardless of model confidence (Section 9.1).",
+https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition,0.1.0,active,,OversightDisposition,Oversight Disposition,"The clinician's disposition of an agentic AI recommendation.",
+https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type,0.1.0,active,,OversightEventType,Oversight Event Type,"Distinguishes a human oversight decision from a system escalation.",
+https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason,0.1.0,active,,OversightReason,Oversight Override Reason,"Structured reasons a clinician gives when overriding (editing or rejecting) an agentic AI recommendation.",

@@ -1,0 +1,35 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "oversight-event-type",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem oversight-event-type</b></p><a name=\"oversight-event-type\"> </a><a name=\"hcoversight-event-type\"> </a><p>This case-sensitive code system <code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type</code> defines the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style=\"white-space:nowrap\">oversight-decision<a name=\"oversight-event-type-oversight-decision\"> </a></td><td>Human oversight decision over agentic AI output</td></tr><tr><td style=\"white-space:nowrap\">escalation<a name=\"oversight-event-type-escalation\"> </a></td><td>Escalation of an agentic AI recommendation to a human</td></tr></table></div>"
+  },
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type",
+  "version" : "0.1.0",
+  "name" : "OversightEventType",
+  "title" : "Oversight Event Type",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-07-11T15:14:01-04:00",
+  "publisher" : "Oversight-on-FHIR",
+  "contact" : [{
+    "name" : "Oversight-on-FHIR",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://oversight-on-fhir.org"
+    }]
+  }],
+  "description" : "Distinguishes a human oversight decision from a system escalation.",
+  "caseSensitive" : true,
+  "content" : "complete",
+  "count" : 2,
+  "concept" : [{
+    "code" : "oversight-decision",
+    "display" : "Human oversight decision over agentic AI output"
+  },
+  {
+    "code" : "escalation",
+    "display" : "Escalation of an agentic AI recommendation to a human"
+  }]
+}

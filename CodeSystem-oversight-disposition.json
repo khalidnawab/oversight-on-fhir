@@ -1,0 +1,39 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "oversight-disposition",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem oversight-disposition</b></p><a name=\"oversight-disposition\"> </a><a name=\"hcoversight-disposition\"> </a><p>This case-sensitive code system <code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition</code> defines the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style=\"white-space:nowrap\">accept<a name=\"oversight-disposition-accept\"> </a></td><td>Accept</td></tr><tr><td style=\"white-space:nowrap\">edit<a name=\"oversight-disposition-edit\"> </a></td><td>Edit</td></tr><tr><td style=\"white-space:nowrap\">reject<a name=\"oversight-disposition-reject\"> </a></td><td>Reject</td></tr></table></div>"
+  },
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition",
+  "version" : "0.1.0",
+  "name" : "OversightDisposition",
+  "title" : "Oversight Disposition",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-07-11T15:14:01-04:00",
+  "publisher" : "Oversight-on-FHIR",
+  "contact" : [{
+    "name" : "Oversight-on-FHIR",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://oversight-on-fhir.org"
+    }]
+  }],
+  "description" : "The clinician's disposition of an agentic AI recommendation.",
+  "caseSensitive" : true,
+  "content" : "complete",
+  "count" : 3,
+  "concept" : [{
+    "code" : "accept",
+    "display" : "Accept"
+  },
+  {
+    "code" : "edit",
+    "display" : "Edit"
+  },
+  {
+    "code" : "reject",
+    "display" : "Reject"
+  }]
+}

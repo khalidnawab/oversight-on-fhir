@@ -1,0 +1,32 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/Device/oversight-ai> a fhir:Device ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:Resource.id [ fhir:value "oversight-ai"] ;
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ] ;
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: Device oversight-ai</b></p><a name=\"oversight-ai\"> </a><a name=\"hcoversight-ai\"> </a><p><b>status</b>: Active</p><h3>DeviceNames</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Name</b></td><td><b>Type</b></td></tr><tr><td style=\"display: none\">*</td><td>Oversight-on-FHIR agent (claude-opus-4-8)</td><td>Model name</td></tr></table><h3>Versions</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Value</b></td></tr><tr><td style=\"display: none\">*</td><td>0.1.0</td></tr></table></div>"
+  ] ;
+  fhir:Device.status [ fhir:value "active"] ;
+  fhir:Device.deviceName [
+     fhir:index 0 ;
+     fhir:Device.deviceName.name [ fhir:value "Oversight-on-FHIR agent (claude-opus-4-8)" ] ;
+     fhir:Device.deviceName.type [ fhir:value "model-name" ]
+  ] ;
+  fhir:Device.version [
+     fhir:index 0 ;
+     fhir:Device.version.value [ fhir:value "0.1.0" ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/Device/oversight-ai.ttl> a owl:Ontology ;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

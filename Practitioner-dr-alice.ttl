@@ -1,0 +1,34 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/Practitioner/dr-alice> a fhir:Practitioner ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:Resource.id [ fhir:value "dr-alice"] ;
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ] ;
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: Practitioner dr-alice</b></p><a name=\"dr-alice\"> </a><a name=\"hcdr-alice\"> </a><p><b>name</b>: Alex Example </p></div>"
+  ] ;
+  fhir:Practitioner.name [
+     fhir:index 0 ;
+     fhir:HumanName.family [ fhir:value "Example" ] ;
+     fhir:HumanName.given [
+       fhir:value "Alex" ;
+       fhir:index 0
+     ] ;
+     fhir:HumanName.prefix [
+       fhir:value "Dr" ;
+       fhir:index 0
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/Practitioner/dr-alice.ttl> a owl:Ontology ;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

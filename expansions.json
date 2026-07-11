@@ -1,0 +1,182 @@
+{
+  "resourceType" : "Bundle",
+  "id" : "51c431e3-bb3f-4e56-828d-7df9927408b1",
+  "meta" : {
+    "lastUpdated" : "2026-07-11T15:14:01.377-04:00"
+  },
+  "type" : "collection",
+  "entry" : [{
+    "fullUrl" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-disposition-vs",
+    "resource" : {
+      "resourceType" : "ValueSet",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\" data-fhir=\"generated\"><p class=\"res-header-id\"/><p style=\"border: black 1px dotted; background-color: #EEEEEE; padding: 8px; margin-bottom: 8px\">Expansion performed internally based on <a href=\"CodeSystem-oversight-disposition.html\">codesystem Oversight Disposition v0.1.0 (CodeSystem)</a><span class=\"copy-text-inline\"><button data-clipboard-text=\"https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition|0.1.0\" title=\"Click to Copy URL\" class=\"btn-copy\"> </button></span></p><p>This value set contains 3 concepts</p><table class=\"codes\" data-fhir=\"generated\"><tr><td><b>System</b></td><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display (en)</b></td><td><b>JSON</b></td><td><b>XML</b></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition-accept\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-disposition.html#oversight-disposition-accept\">accept</a></td><td>Accept</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;accept&quot;, &quot;display&quot;: &quot;Accept&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;accept&quot;&gt;&lt;display value=&quot;Accept&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition-edit\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-disposition.html#oversight-disposition-edit\">edit</a></td><td>Edit</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;edit&quot;, &quot;display&quot;: &quot;Edit&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;edit&quot;&gt;&lt;display value=&quot;Edit&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition-reject\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-disposition.html#oversight-disposition-reject\">reject</a></td><td>Reject</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;reject&quot;, &quot;display&quot;: &quot;Reject&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;reject&quot;&gt;&lt;display value=&quot;Reject&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr></table></div>"
+      },
+      "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-disposition-vs",
+      "version" : "0.1.0",
+      "name" : "OversightDispositionVS",
+      "title" : "Oversight Disposition Value Set",
+      "status" : "active",
+      "experimental" : false,
+      "date" : "2026-07-11T15:14:01-04:00",
+      "expansion" : {
+        "identifier" : "urn:uuid:1cd59435-5dda-43f8-a80e-913a284fb68b",
+        "timestamp" : "2026-07-11T15:14:36-04:00",
+        "total" : 3,
+        "offset" : 0,
+        "parameter" : [{
+          "name" : "displayLanguage",
+          "valueCode" : "en"
+        },
+        {
+          "name" : "count",
+          "valueInteger" : 1000
+        },
+        {
+          "name" : "offset",
+          "valueInteger" : 0
+        },
+        {
+          "name" : "excludeNested",
+          "valueBoolean" : false
+        },
+        {
+          "name" : "used-codesystem",
+          "valueUri" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition|0.1.0"
+        }],
+        "contains" : [{
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition",
+          "code" : "accept",
+          "display" : "Accept"
+        },
+        {
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition",
+          "code" : "edit",
+          "display" : "Edit"
+        },
+        {
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition",
+          "code" : "reject",
+          "display" : "Reject"
+        }]
+      }
+    }
+  },
+  {
+    "fullUrl" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs",
+    "resource" : {
+      "resourceType" : "ValueSet",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\" data-fhir=\"generated\"><p class=\"res-header-id\"/><p style=\"border: black 1px dotted; background-color: #EEEEEE; padding: 8px; margin-bottom: 8px\">Expansion performed internally based on <a href=\"CodeSystem-oversight-event-type.html\">codesystem Oversight Event Type v0.1.0 (CodeSystem)</a><span class=\"copy-text-inline\"><button data-clipboard-text=\"https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type|0.1.0\" title=\"Click to Copy URL\" class=\"btn-copy\"> </button></span></p><p>This value set contains 2 concepts</p><table class=\"codes\" data-fhir=\"generated\"><tr><td><b>System</b></td><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display (en)</b></td><td><b>JSON</b></td><td><b>XML</b></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type-oversight-decision\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-event-type.html#oversight-event-type-oversight-decision\">oversight-decision</a></td><td>Human oversight decision over agentic AI output</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;oversight-decision&quot;, &quot;display&quot;: &quot;Human oversight decision over agentic AI output&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;oversight-decision&quot;&gt;&lt;display value=&quot;Human oversight decision over agentic AI output&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type-escalation\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-event-type.html#oversight-event-type-escalation\">escalation</a></td><td>Escalation of an agentic AI recommendation to a human</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;escalation&quot;, &quot;display&quot;: &quot;Escalation of an agentic AI recommendation to a human&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;escalation&quot;&gt;&lt;display value=&quot;Escalation of an agentic AI recommendation to a human&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr></table></div>"
+      },
+      "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs",
+      "version" : "0.1.0",
+      "name" : "OversightEventTypeVS",
+      "title" : "Oversight Event Type Value Set",
+      "status" : "active",
+      "experimental" : false,
+      "date" : "2026-07-11T15:14:01-04:00",
+      "expansion" : {
+        "identifier" : "urn:uuid:772dc86e-c1f9-4e14-a0fb-bfee1fbccfb8",
+        "timestamp" : "2026-07-11T15:14:36-04:00",
+        "total" : 2,
+        "offset" : 0,
+        "parameter" : [{
+          "name" : "displayLanguage",
+          "valueCode" : "en"
+        },
+        {
+          "name" : "count",
+          "valueInteger" : 1000
+        },
+        {
+          "name" : "offset",
+          "valueInteger" : 0
+        },
+        {
+          "name" : "excludeNested",
+          "valueBoolean" : false
+        },
+        {
+          "name" : "used-codesystem",
+          "valueUri" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type|0.1.0"
+        }],
+        "contains" : [{
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type",
+          "code" : "oversight-decision",
+          "display" : "Human oversight decision over agentic AI output"
+        },
+        {
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type",
+          "code" : "escalation",
+          "display" : "Escalation of an agentic AI recommendation to a human"
+        }]
+      }
+    }
+  },
+  {
+    "fullUrl" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-reason-vs",
+    "resource" : {
+      "resourceType" : "ValueSet",
+      "text" : {
+        "status" : "generated",
+        "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\" data-fhir=\"generated\"><p class=\"res-header-id\"/><p style=\"border: black 1px dotted; background-color: #EEEEEE; padding: 8px; margin-bottom: 8px\">Expansion performed internally based on <a href=\"CodeSystem-oversight-reason.html\">codesystem Oversight Override Reason v0.1.0 (CodeSystem)</a><span class=\"copy-text-inline\"><button data-clipboard-text=\"https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason|0.1.0\" title=\"Click to Copy URL\" class=\"btn-copy\"> </button></span></p><p>This value set contains 4 concepts</p><table class=\"codes\" data-fhir=\"generated\"><tr><td><b>System</b></td><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display (en)</b></td><td><b>JSON</b></td><td><b>XML</b></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason-clinical-disagreement\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-reason.html#oversight-reason-clinical-disagreement\">clinical-disagreement</a></td><td>Clinician disagrees with the clinical judgment</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;clinical-disagreement&quot;, &quot;display&quot;: &quot;Clinician disagrees with the clinical judgment&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;clinical-disagreement&quot;&gt;&lt;display value=&quot;Clinician disagrees with the clinical judgment&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason-missing-information\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-reason.html#oversight-reason-missing-information\">missing-information</a></td><td>The agent lacked information the clinician has</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;missing-information&quot;, &quot;display&quot;: &quot;The agent lacked information the clinician has&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;missing-information&quot;&gt;&lt;display value=&quot;The agent lacked information the clinician has&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason-patient-specific-factor\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-reason.html#oversight-reason-patient-specific-factor\">patient-specific-factor</a></td><td>A patient-specific consideration the agent did not weigh</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;patient-specific-factor&quot;, &quot;display&quot;: &quot;A patient-specific consideration the agent did not weigh&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;patient-specific-factor&quot;&gt;&lt;display value=&quot;A patient-specific consideration the agent did not weigh&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr><tr><td><a name=\"x-https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason-data-vintage\"> </a><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason</code></td><td style=\"white-space:nowrap\">\u00a0\u00a0<a href=\"CodeSystem-oversight-reason.html#oversight-reason-data-vintage\">data-vintage</a></td><td>The clinician has newer data than the agent did</td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"{&quot;system&quot;: &quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;, &quot;version&quot;: &quot;0.1.0&quot;, &quot;code&quot;: &quot;data-vintage&quot;, &quot;display&quot;: &quot;The clinician has newer data than the agent did&quot;}\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td><td><span class=\"copy-text-inline\"><button data-clipboard-text=\"&lt;coding&gt;&lt;system value=&quot;https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason&quot;&gt;&lt;version value=&quot;0.1.0&quot;&gt;&lt;code value=&quot;data-vintage&quot;&gt;&lt;display value=&quot;The clinician has newer data than the agent did&quot;&gt;&lt;/coding&gt;\" title=\"Click to Copy as Coding\" class=\"btn-copy\"> </button></span></td></tr></table></div>"
+      },
+      "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-reason-vs",
+      "version" : "0.1.0",
+      "name" : "OversightReasonVS",
+      "title" : "Oversight Override Reason Value Set",
+      "status" : "active",
+      "experimental" : false,
+      "date" : "2026-07-11T15:14:01-04:00",
+      "expansion" : {
+        "identifier" : "urn:uuid:aa61b301-0afb-472f-9121-baff196b2f06",
+        "timestamp" : "2026-07-11T15:14:36-04:00",
+        "total" : 4,
+        "offset" : 0,
+        "parameter" : [{
+          "name" : "displayLanguage",
+          "valueCode" : "en"
+        },
+        {
+          "name" : "count",
+          "valueInteger" : 1000
+        },
+        {
+          "name" : "offset",
+          "valueInteger" : 0
+        },
+        {
+          "name" : "excludeNested",
+          "valueBoolean" : false
+        },
+        {
+          "name" : "used-codesystem",
+          "valueUri" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason|0.1.0"
+        }],
+        "contains" : [{
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason",
+          "code" : "clinical-disagreement",
+          "display" : "Clinician disagrees with the clinical judgment"
+        },
+        {
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason",
+          "code" : "missing-information",
+          "display" : "The agent lacked information the clinician has"
+        },
+        {
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason",
+          "code" : "patient-specific-factor",
+          "display" : "A patient-specific consideration the agent did not weigh"
+        },
+        {
+          "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason",
+          "code" : "data-vintage",
+          "display" : "The clinician has newer data than the agent did"
+        }]
+      }
+    }
+  }]
+}

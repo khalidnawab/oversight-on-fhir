@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ValueSet xmlns="http://hl7.org/fhir">
+  <id value="oversight-disposition-vs"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: ValueSet oversight-disposition-vs</b></p><a name="oversight-disposition-vs"> </a><a name="hcoversight-disposition-vs"> </a><ul><li>Include all codes defined in <a href="CodeSystem-oversight-disposition.html"><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition</code></a><span title="Version is not explicitly stated, which means it is fixed to the version provided in this specification"> version &#x1F4E6;0.1.0</span></li></ul></div>
+  </text>
+  <url value="https://oversight-on-fhir.org/fhir/ValueSet/oversight-disposition-vs"/>
+  <version value="0.1.0"/>
+  <name value="OversightDispositionVS"/>
+  <title value="Oversight Disposition Value Set"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2026-07-11T15:14:01-04:00"/>
+  <publisher value="Oversight-on-FHIR"/>
+  <contact>
+    <name value="Oversight-on-FHIR"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://oversight-on-fhir.org"/>
+    </telecom>
+  </contact>
+  <description value="All dispositions."/>
+  <compose>
+    <include>
+      <system value="https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition"/>
+    </include>
+  </compose>
+</ValueSet>

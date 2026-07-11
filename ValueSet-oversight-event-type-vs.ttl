@@ -1,0 +1,46 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs> a fhir:ValueSet ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:Resource.id [ fhir:value "oversight-event-type-vs"] ;
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ] ;
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ValueSet oversight-event-type-vs</b></p><a name=\"oversight-event-type-vs\"> </a><a name=\"hcoversight-event-type-vs\"> </a><ul><li>Include all codes defined in <a href=\"CodeSystem-oversight-event-type.html\"><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type</code></a><span title=\"Version is not explicitly stated, which means it is fixed to the version provided in this specification\"> version ?0.1.0</span></li></ul></div>"
+  ] ;
+  fhir:ValueSet.url [ fhir:value "https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs"] ;
+  fhir:ValueSet.version [ fhir:value "0.1.0"] ;
+  fhir:ValueSet.name [ fhir:value "OversightEventTypeVS"] ;
+  fhir:ValueSet.title [ fhir:value "Oversight Event Type Value Set"] ;
+  fhir:ValueSet.status [ fhir:value "active"] ;
+  fhir:ValueSet.experimental [ fhir:value "false"^^xsd:boolean] ;
+  fhir:ValueSet.date [ fhir:value "2026-07-11T15:14:01-04:00"^^xsd:dateTime] ;
+  fhir:ValueSet.publisher [ fhir:value "Oversight-on-FHIR"] ;
+  fhir:ValueSet.contact [
+     fhir:index 0 ;
+     fhir:ContactDetail.name [ fhir:value "Oversight-on-FHIR" ] ;
+     fhir:ContactDetail.telecom [
+       fhir:index 0 ;
+       fhir:ContactPoint.system [ fhir:value "url" ] ;
+       fhir:ContactPoint.value [ fhir:value "https://oversight-on-fhir.org" ]
+     ]
+  ] ;
+  fhir:ValueSet.description [ fhir:value "All oversight event types."] ;
+  fhir:ValueSet.compose [
+     fhir:ValueSet.compose.include [
+       fhir:index 0 ;
+       fhir:ValueSet.compose.include.system [ fhir:value "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type" ]
+     ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs.ttl> a owl:Ontology ;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

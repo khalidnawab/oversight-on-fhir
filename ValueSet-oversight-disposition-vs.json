@@ -1,0 +1,29 @@
+{
+  "resourceType" : "ValueSet",
+  "id" : "oversight-disposition-vs",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ValueSet oversight-disposition-vs</b></p><a name=\"oversight-disposition-vs\"> </a><a name=\"hcoversight-disposition-vs\"> </a><ul><li>Include all codes defined in <a href=\"CodeSystem-oversight-disposition.html\"><code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition</code></a><span title=\"Version is not explicitly stated, which means it is fixed to the version provided in this specification\"> version &#x1F4E6;0.1.0</span></li></ul></div>"
+  },
+  "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-disposition-vs",
+  "version" : "0.1.0",
+  "name" : "OversightDispositionVS",
+  "title" : "Oversight Disposition Value Set",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-07-11T15:14:01-04:00",
+  "publisher" : "Oversight-on-FHIR",
+  "contact" : [{
+    "name" : "Oversight-on-FHIR",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://oversight-on-fhir.org"
+    }]
+  }],
+  "description" : "All dispositions.",
+  "compose" : {
+    "include" : [{
+      "system" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition"
+    }]
+  }
+}

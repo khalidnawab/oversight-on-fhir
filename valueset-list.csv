@@ -1,0 +1,4 @@
+URL,Version,Status,OIDs,Name,Title,Description,Uses,Used,Sources
+https://oversight-on-fhir.org/fhir/ValueSet/oversight-disposition-vs,0.1.0,active,,OversightDispositionVS,Oversight Disposition Value Set,"All dispositions.",,"Internal"
+https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs,0.1.0,active,,OversightEventTypeVS,Oversight Event Type Value Set,"All oversight event types.",,"Internal"
+https://oversight-on-fhir.org/fhir/ValueSet/oversight-reason-vs,0.1.0,active,,OversightReasonVS,Oversight Override Reason Value Set,"All structured override reasons.",,"Internal"

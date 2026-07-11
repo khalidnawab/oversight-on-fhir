@@ -1,0 +1,84 @@
+[{
+  "id" : "high-risk-rule",
+  "type" : "CodeSystem",
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/high-risk-rule",
+  "version" : "0.1.0",
+  "name" : "HighRiskRule"
+},
+{
+  "id" : "oversight-disposition",
+  "type" : "CodeSystem",
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition",
+  "version" : "0.1.0",
+  "name" : "OversightDisposition"
+},
+{
+  "id" : "oversight-event-type",
+  "type" : "CodeSystem",
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type",
+  "version" : "0.1.0",
+  "name" : "OversightEventType"
+},
+{
+  "id" : "oversight-reason",
+  "type" : "CodeSystem",
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason",
+  "version" : "0.1.0",
+  "name" : "OversightReason"
+},
+{
+  "id" : "oversight-on-fhir",
+  "type" : "ImplementationGuide",
+  "url" : "https://oversight-on-fhir.org/fhir/ImplementationGuide/oversight-on-fhir",
+  "version" : "0.1.0",
+  "name" : "OversightOnFHIR"
+},
+{
+  "id" : "ai-authorship-provenance",
+  "type" : "StructureDefinition",
+  "url" : "https://oversight-on-fhir.org/fhir/StructureDefinition/ai-authorship-provenance",
+  "version" : "0.1.0",
+  "name" : "AIAuthorshipProvenance"
+},
+{
+  "id" : "deescalation-guidance-response",
+  "type" : "StructureDefinition",
+  "url" : "https://oversight-on-fhir.org/fhir/StructureDefinition/deescalation-guidance-response",
+  "version" : "0.1.0",
+  "name" : "DeescalationGuidanceResponse"
+},
+{
+  "id" : "oversight-event",
+  "type" : "StructureDefinition",
+  "url" : "https://oversight-on-fhir.org/fhir/StructureDefinition/oversight-event",
+  "version" : "0.1.0",
+  "name" : "OversightEvent"
+},
+{
+  "id" : "oversight-reason-ext",
+  "type" : "StructureDefinition",
+  "url" : "https://oversight-on-fhir.org/fhir/StructureDefinition/oversight-reason-ext",
+  "version" : "0.1.0",
+  "name" : "OversightReasonExt"
+},
+{
+  "id" : "oversight-disposition-vs",
+  "type" : "ValueSet",
+  "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-disposition-vs",
+  "version" : "0.1.0",
+  "name" : "OversightDispositionVS"
+},
+{
+  "id" : "oversight-event-type-vs",
+  "type" : "ValueSet",
+  "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs",
+  "version" : "0.1.0",
+  "name" : "OversightEventTypeVS"
+},
+{
+  "id" : "oversight-reason-vs",
+  "type" : "ValueSet",
+  "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-reason-vs",
+  "version" : "0.1.0",
+  "name" : "OversightReasonVS"
+}]

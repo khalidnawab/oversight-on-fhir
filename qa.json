@@ -1,0 +1,19 @@
+{
+  "url" : "https://oversight-on-fhir.org/fhir/ImplementationGuide/oversight-on-fhir",
+  "name" : "OversightOnFHIR",
+  "title" : "Oversight-on-FHIR Implementation Guide",
+  "description" : "A draft IG representing the human oversight decision over agentic clinical AI output as first-class FHIR resources. Complementary to the HL7 AI Transparency on FHIR IG: that effort represents AI influence on clinical data; this profile represents the human decision (accept/edit/reject, with a structured reason) over agentic AI output.",
+  "status" : "draft",
+  "package-id" : "oversight-on-fhir",
+  "ig-ver" : "0.1.0",
+  "date" : "Sat, 11 Jul, 2026 15:14:01 -0400",
+  "dateISO8601" : "2026-07-11T15:14:01-04:00",
+  "errs" : 7,
+  "warnings" : 11,
+  "hints" : 6,
+  "suppressed-hints" : 7,
+  "suppressed-warnings" : 0,
+  "version" : "4.0.1",
+  "tool" : "5.0.0 (3)",
+  "maxMemory" : 1387517776
+}

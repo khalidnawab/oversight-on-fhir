@@ -1,0 +1,60 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason> a fhir:CodeSystem ;
+  fhir:nodeRole fhir:treeRoot ;
+  fhir:Resource.id [ fhir:value "oversight-reason"] ;
+  fhir:DomainResource.text [
+     fhir:Narrative.status [ fhir:value "generated" ] ;
+     fhir:Narrative.div "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem oversight-reason</b></p><a name=\"oversight-reason\"> </a><a name=\"hcoversight-reason\"> </a><p>This case-sensitive code system <code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason</code> defines the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style=\"white-space:nowrap\">clinical-disagreement<a name=\"oversight-reason-clinical-disagreement\"> </a></td><td>Clinician disagrees with the clinical judgment</td></tr><tr><td style=\"white-space:nowrap\">missing-information<a name=\"oversight-reason-missing-information\"> </a></td><td>The agent lacked information the clinician has</td></tr><tr><td style=\"white-space:nowrap\">patient-specific-factor<a name=\"oversight-reason-patient-specific-factor\"> </a></td><td>A patient-specific consideration the agent did not weigh</td></tr><tr><td style=\"white-space:nowrap\">data-vintage<a name=\"oversight-reason-data-vintage\"> </a></td><td>The clinician has newer data than the agent did</td></tr></table></div>"
+  ] ;
+  fhir:CodeSystem.url [ fhir:value "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason"] ;
+  fhir:CodeSystem.version [ fhir:value "0.1.0"] ;
+  fhir:CodeSystem.name [ fhir:value "OversightReason"] ;
+  fhir:CodeSystem.title [ fhir:value "Oversight Override Reason"] ;
+  fhir:CodeSystem.status [ fhir:value "active"] ;
+  fhir:CodeSystem.experimental [ fhir:value "false"^^xsd:boolean] ;
+  fhir:CodeSystem.date [ fhir:value "2026-07-11T15:14:01-04:00"^^xsd:dateTime] ;
+  fhir:CodeSystem.publisher [ fhir:value "Oversight-on-FHIR"] ;
+  fhir:CodeSystem.contact [
+     fhir:index 0 ;
+     fhir:ContactDetail.name [ fhir:value "Oversight-on-FHIR" ] ;
+     fhir:ContactDetail.telecom [
+       fhir:index 0 ;
+       fhir:ContactPoint.system [ fhir:value "url" ] ;
+       fhir:ContactPoint.value [ fhir:value "https://oversight-on-fhir.org" ]
+     ]
+  ] ;
+  fhir:CodeSystem.description [ fhir:value "Structured reasons a clinician gives when overriding (editing or rejecting) an agentic AI recommendation."] ;
+  fhir:CodeSystem.caseSensitive [ fhir:value "true"^^xsd:boolean] ;
+  fhir:CodeSystem.content [ fhir:value "complete"] ;
+  fhir:CodeSystem.count [ fhir:value "4"^^xsd:nonNegativeInteger] ;
+  fhir:CodeSystem.concept [
+     fhir:index 0 ;
+     fhir:CodeSystem.concept.code [ fhir:value "clinical-disagreement" ] ;
+     fhir:CodeSystem.concept.display [ fhir:value "Clinician disagrees with the clinical judgment" ]
+  ], [
+     fhir:index 1 ;
+     fhir:CodeSystem.concept.code [ fhir:value "missing-information" ] ;
+     fhir:CodeSystem.concept.display [ fhir:value "The agent lacked information the clinician has" ]
+  ], [
+     fhir:index 2 ;
+     fhir:CodeSystem.concept.code [ fhir:value "patient-specific-factor" ] ;
+     fhir:CodeSystem.concept.display [ fhir:value "A patient-specific consideration the agent did not weigh" ]
+  ], [
+     fhir:index 3 ;
+     fhir:CodeSystem.concept.code [ fhir:value "data-vintage" ] ;
+     fhir:CodeSystem.concept.display [ fhir:value "The clinician has newer data than the agent did" ]
+  ] .
+
+# - ontology header ------------------------------------------------------------
+
+<https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason.ttl> a owl:Ontology ;
+  owl:imports fhir:fhir.ttl .
+
+# -------------------------------------------------------------------------------------
+

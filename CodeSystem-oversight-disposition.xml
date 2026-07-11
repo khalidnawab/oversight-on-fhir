@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CodeSystem xmlns="http://hl7.org/fhir">
+  <id value="oversight-disposition"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: CodeSystem oversight-disposition</b></p><a name="oversight-disposition"> </a><a name="hcoversight-disposition"> </a><p>This case-sensitive code system <code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition</code> defines the following codes:</p><table class="codes"><tr><td style="white-space:nowrap"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style="white-space:nowrap">accept<a name="oversight-disposition-accept"> </a></td><td>Accept</td></tr><tr><td style="white-space:nowrap">edit<a name="oversight-disposition-edit"> </a></td><td>Edit</td></tr><tr><td style="white-space:nowrap">reject<a name="oversight-disposition-reject"> </a></td><td>Reject</td></tr></table></div>
+  </text>
+  <url value="https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition"/>
+  <version value="0.1.0"/>
+  <name value="OversightDisposition"/>
+  <title value="Oversight Disposition"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2026-07-11T15:14:01-04:00"/>
+  <publisher value="Oversight-on-FHIR"/>
+  <contact>
+    <name value="Oversight-on-FHIR"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://oversight-on-fhir.org"/>
+    </telecom>
+  </contact>
+  <description value="The clinician's disposition of an agentic AI recommendation."/>
+  <caseSensitive value="true"/>
+  <content value="complete"/>
+  <count value="3"/>
+  <concept>
+    <code value="accept"/>
+    <display value="Accept"/>
+  </concept>
+  <concept>
+    <code value="edit"/>
+    <display value="Edit"/>
+  </concept>
+  <concept>
+    <code value="reject"/>
+    <display value="Reject"/>
+  </concept>
+</CodeSystem>

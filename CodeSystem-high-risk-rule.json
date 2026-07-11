@@ -1,0 +1,43 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "high-risk-rule",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem high-risk-rule</b></p><a name=\"high-risk-rule\"> </a><a name=\"hchigh-risk-rule\"> </a><p>This case-sensitive code system <code>https://oversight-on-fhir.org/fhir/CodeSystem/high-risk-rule</code> defines the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style=\"white-space:nowrap\">allergy_to_candidate<a name=\"high-risk-rule-allergy_to_candidate\"> </a></td><td>Documented allergy to the candidate narrower agent</td></tr><tr><td style=\"white-space:nowrap\">isolate_not_susceptible<a name=\"high-risk-rule-isolate_not_susceptible\"> </a></td><td>Isolate not susceptible to the proposed narrower agent</td></tr><tr><td style=\"white-space:nowrap\">severe_renal_impairment<a name=\"high-risk-rule-severe_renal_impairment\"> </a></td><td>Severe renal impairment altering dosing</td></tr><tr><td style=\"white-space:nowrap\">neutropenia<a name=\"high-risk-rule-neutropenia\"> </a></td><td>Neutropenia or other immunocompromise</td></tr></table></div>"
+  },
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/high-risk-rule",
+  "version" : "0.1.0",
+  "name" : "HighRiskRule",
+  "title" : "High-Risk Routing Rule",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-07-11T15:14:01-04:00",
+  "publisher" : "Oversight-on-FHIR",
+  "contact" : [{
+    "name" : "Oversight-on-FHIR",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://oversight-on-fhir.org"
+    }]
+  }],
+  "description" : "Deterministic high-risk rules that force escalation regardless of model confidence (Section 9.1).",
+  "caseSensitive" : true,
+  "content" : "complete",
+  "count" : 4,
+  "concept" : [{
+    "code" : "allergy_to_candidate",
+    "display" : "Documented allergy to the candidate narrower agent"
+  },
+  {
+    "code" : "isolate_not_susceptible",
+    "display" : "Isolate not susceptible to the proposed narrower agent"
+  },
+  {
+    "code" : "severe_renal_impairment",
+    "display" : "Severe renal impairment altering dosing"
+  },
+  {
+    "code" : "neutropenia",
+    "display" : "Neutropenia or other immunocompromise"
+  }]
+}

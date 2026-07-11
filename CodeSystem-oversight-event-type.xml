@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CodeSystem xmlns="http://hl7.org/fhir">
+  <id value="oversight-event-type"/>
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p class="res-header-id"><b>Generated Narrative: CodeSystem oversight-event-type</b></p><a name="oversight-event-type"> </a><a name="hcoversight-event-type"> </a><p>This case-sensitive code system <code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type</code> defines the following codes:</p><table class="codes"><tr><td style="white-space:nowrap"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style="white-space:nowrap">oversight-decision<a name="oversight-event-type-oversight-decision"> </a></td><td>Human oversight decision over agentic AI output</td></tr><tr><td style="white-space:nowrap">escalation<a name="oversight-event-type-escalation"> </a></td><td>Escalation of an agentic AI recommendation to a human</td></tr></table></div>
+  </text>
+  <url value="https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type"/>
+  <version value="0.1.0"/>
+  <name value="OversightEventType"/>
+  <title value="Oversight Event Type"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2026-07-11T15:14:01-04:00"/>
+  <publisher value="Oversight-on-FHIR"/>
+  <contact>
+    <name value="Oversight-on-FHIR"/>
+    <telecom>
+      <system value="url"/>
+      <value value="https://oversight-on-fhir.org"/>
+    </telecom>
+  </contact>
+  <description value="Distinguishes a human oversight decision from a system escalation."/>
+  <caseSensitive value="true"/>
+  <content value="complete"/>
+  <count value="2"/>
+  <concept>
+    <code value="oversight-decision"/>
+    <display value="Human oversight decision over agentic AI output"/>
+  </concept>
+  <concept>
+    <code value="escalation"/>
+    <display value="Escalation of an agentic AI recommendation to a human"/>
+  </concept>
+</CodeSystem>

@@ -1,0 +1,45 @@
+# oversight-on-fhir#0.1.0: Oversight-on-FHIR Implementation Guide
+
+## Pages
+
+* [Home](index.md)
+* [Artifacts Summary](artifacts.md)
+
+## Resources
+
+### CodeSystems
+
+* [High-Risk Routing Rule](CodeSystem-high-risk-rule.md)
+* [Oversight Disposition](CodeSystem-oversight-disposition.md)
+* [Oversight Event Type](CodeSystem-oversight-event-type.md)
+* [Oversight Override Reason](CodeSystem-oversight-reason.md)
+
+### ValueSets
+
+* [Oversight Disposition Value Set](ValueSet-oversight-disposition-vs.md)
+* [Oversight Event Type Value Set](ValueSet-oversight-event-type-vs.md)
+* [Oversight Override Reason Value Set](ValueSet-oversight-reason-vs.md)
+
+### Resource Profiles
+
+* [AI Authorship Provenance](StructureDefinition-ai-authorship-provenance.md)
+* [De-escalation Guidance Response](StructureDefinition-deescalation-guidance-response.md)
+* [Oversight Event](StructureDefinition-oversight-event.md)
+
+### Extensions
+
+* [Oversight Reason Extension](StructureDefinition-oversight-reason-ext.md)
+
+### ImplementationGuides
+
+* [Oversight-on-FHIR Implementation Guide](index.md)
+
+### Examples
+
+* [escalation-example (AuditEvent)](AuditEvent-escalation-example.md)
+* [oversight-reject-example (AuditEvent)](AuditEvent-oversight-reject-example.md)
+* [oversight-ai (Device)](Device-oversight-ai.md)
+* [gr-example (GuidanceResponse)](GuidanceResponse-gr-example.md)
+* [clean-1 (Patient)](Patient-clean-1.md)
+* [dr-alice (Practitioner)](Practitioner-dr-alice.md)
+* [prov-example (Provenance)](Provenance-prov-example.md)

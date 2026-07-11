@@ -1,0 +1,43 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "oversight-reason",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem oversight-reason</b></p><a name=\"oversight-reason\"> </a><a name=\"hcoversight-reason\"> </a><p>This case-sensitive code system <code>https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason</code> defines the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td></tr><tr><td style=\"white-space:nowrap\">clinical-disagreement<a name=\"oversight-reason-clinical-disagreement\"> </a></td><td>Clinician disagrees with the clinical judgment</td></tr><tr><td style=\"white-space:nowrap\">missing-information<a name=\"oversight-reason-missing-information\"> </a></td><td>The agent lacked information the clinician has</td></tr><tr><td style=\"white-space:nowrap\">patient-specific-factor<a name=\"oversight-reason-patient-specific-factor\"> </a></td><td>A patient-specific consideration the agent did not weigh</td></tr><tr><td style=\"white-space:nowrap\">data-vintage<a name=\"oversight-reason-data-vintage\"> </a></td><td>The clinician has newer data than the agent did</td></tr></table></div>"
+  },
+  "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason",
+  "version" : "0.1.0",
+  "name" : "OversightReason",
+  "title" : "Oversight Override Reason",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2026-07-11T15:14:01-04:00",
+  "publisher" : "Oversight-on-FHIR",
+  "contact" : [{
+    "name" : "Oversight-on-FHIR",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "https://oversight-on-fhir.org"
+    }]
+  }],
+  "description" : "Structured reasons a clinician gives when overriding (editing or rejecting) an agentic AI recommendation.",
+  "caseSensitive" : true,
+  "content" : "complete",
+  "count" : 4,
+  "concept" : [{
+    "code" : "clinical-disagreement",
+    "display" : "Clinician disagrees with the clinical judgment"
+  },
+  {
+    "code" : "missing-information",
+    "display" : "The agent lacked information the clinician has"
+  },
+  {
+    "code" : "patient-specific-factor",
+    "display" : "A patient-specific consideration the agent did not weigh"
+  },
+  {
+    "code" : "data-vintage",
+    "display" : "The clinician has newer data than the agent did"
+  }]
+}

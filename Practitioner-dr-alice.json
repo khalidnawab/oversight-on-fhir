@@ -1,0 +1,13 @@
+{
+  "resourceType" : "Practitioner",
+  "id" : "dr-alice",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: Practitioner dr-alice</b></p><a name=\"dr-alice\"> </a><a name=\"hcdr-alice\"> </a><p><b>name</b>: Alex Example </p></div>"
+  },
+  "name" : [{
+    "family" : "Example",
+    "given" : ["Alex"],
+    "prefix" : ["Dr"]
+  }]
+}

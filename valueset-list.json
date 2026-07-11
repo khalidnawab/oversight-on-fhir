@@ -1,0 +1,29 @@
+{
+  "codeSystems" : [{
+    "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-disposition-vs",
+    "version" : "0.1.0",
+    "status" : "active",
+    "name" : "OversightDispositionVS",
+    "title" : "Oversight Disposition Value Set",
+    "description" : "All dispositions.",
+    "systems" : ["https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition"]
+  },
+  {
+    "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-event-type-vs",
+    "version" : "0.1.0",
+    "status" : "active",
+    "name" : "OversightEventTypeVS",
+    "title" : "Oversight Event Type Value Set",
+    "description" : "All oversight event types.",
+    "systems" : ["https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type"]
+  },
+  {
+    "url" : "https://oversight-on-fhir.org/fhir/ValueSet/oversight-reason-vs",
+    "version" : "0.1.0",
+    "status" : "active",
+    "name" : "OversightReasonVS",
+    "title" : "Oversight Override Reason Value Set",
+    "description" : "All structured override reasons.",
+    "systems" : ["https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason"]
+  }]
+}

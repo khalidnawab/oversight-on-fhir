@@ -1,0 +1,35 @@
+{
+  "codeSystems" : [{
+    "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-disposition",
+    "version" : "0.1.0",
+    "status" : "active",
+    "name" : "OversightDisposition",
+    "title" : "Oversight Disposition",
+    "description" : "The clinician's disposition of an agentic AI recommendation.",
+    "uses" : {
+    },
+    "ValueSet-oversight-disposition-vs.html" : "Oversight Disposition Value Set"
+  },
+  {
+    "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-event-type",
+    "version" : "0.1.0",
+    "status" : "active",
+    "name" : "OversightEventType",
+    "title" : "Oversight Event Type",
+    "description" : "Distinguishes a human oversight decision from a system escalation.",
+    "uses" : {
+    },
+    "ValueSet-oversight-event-type-vs.html" : "Oversight Event Type Value Set"
+  },
+  {
+    "url" : "https://oversight-on-fhir.org/fhir/CodeSystem/oversight-reason",
+    "version" : "0.1.0",
+    "status" : "active",
+    "name" : "OversightReason",
+    "title" : "Oversight Override Reason",
+    "description" : "Structured reasons a clinician gives when overriding (editing or rejecting) an agentic AI recommendation.",
+    "uses" : {
+    },
+    "ValueSet-oversight-reason-vs.html" : "Oversight Override Reason Value Set"
+  }]
+}
