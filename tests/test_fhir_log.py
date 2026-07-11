@@ -106,3 +106,14 @@ def test_client_logs_write_even_when_body_is_not_a_dict():
     (entry,) = activity_log.since(start)
     assert entry["kind"] == "write"
     assert entry["resource_id"] is None
+
+
+def test_snapshot_returns_entries_and_latest_atomically():
+    log = FhirActivityLog()
+    log.append("GET", "Patient/p1", 200)
+    log.append("POST", "AuditEvent", 201, resource_id="AuditEvent/1")
+    entries, latest = log.snapshot(0)
+    assert latest == 2
+    assert latest == entries[-1]["seq"]  # cursor := latest can never skip an entry
+    entries2, latest2 = log.snapshot(latest)
+    assert entries2 == [] and latest2 == 2

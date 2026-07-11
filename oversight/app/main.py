@@ -101,7 +101,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/api/fhir-log")
     def api_fhir_log(since: int = 0):
         """Increments of the FHIR activity ring buffer for the live panel (polled ~1s)."""
-        return JSONResponse({"entries": activity_log.since(since), "latest": activity_log.latest})
+        entries, latest = activity_log.snapshot(since)
+        return JSONResponse({"entries": entries, "latest": latest})
 
     @app.get("/patient/{pid}/{eid}", response_class=HTMLResponse)
     def patient(request: Request, pid: str, eid: str):

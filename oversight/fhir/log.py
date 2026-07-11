@@ -32,6 +32,12 @@ class FhirActivityLog:
         with self._lock:
             return [e for e in self._entries if e["seq"] > seq]
 
+    def snapshot(self, seq: int) -> tuple[list[dict], int]:
+        """Entries after `seq` and the latest seq, read atomically — a poller that
+        advances its cursor to the returned seq can never skip an entry."""
+        with self._lock:
+            return [e for e in self._entries if e["seq"] > seq], self._seq
+
     @property
     def latest(self) -> int:
         with self._lock:
