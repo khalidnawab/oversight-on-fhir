@@ -28,13 +28,14 @@
   }
 
   function render(e) {
+    var isErr = e.status === null || e.status >= 400;
     var row = document.createElement(e.resource_id ? 'a' : 'div');
-    row.className = 'fhir-row ' + e.kind;
+    row.className = 'fhir-row ' + e.kind + (isErr ? ' err' : '');
     if (e.resource_id) row.href = '/fhir/' + e.resource_id + '/raw';
 
     var tSpan = document.createElement('span');
     tSpan.className = 't';
-    tSpan.textContent = e.ts.slice(11, 19);
+    tSpan.textContent = new Date(e.ts).toLocaleTimeString([], { hour12: false });
 
     var mSpan = document.createElement('span');
     mSpan.className = 'm m-' + e.method.toLowerCase();  // class-only; no server data in innerHTML
@@ -47,6 +48,14 @@
     row.appendChild(tSpan);
     row.appendChild(mSpan);
     row.appendChild(tgSpan);
+
+    if (isErr) {
+      var stSpan = document.createElement('span');
+      stSpan.className = 'st';
+      stSpan.textContent = String(e.status || 'net');
+      row.appendChild(stSpan);
+    }
+
     entriesEl.appendChild(row);
     while (entriesEl.children.length > MAX_ROWS) entriesEl.removeChild(entriesEl.firstChild);
   }
@@ -59,22 +68,22 @@
         liveEl.classList.remove('paused');
         var stick = atBottom();
         (data.entries || []).forEach(render);
-        since = data.latest || since;
+        if (typeof data.latest === 'number') since = data.latest;
         if (stick) entriesEl.scrollTop = entriesEl.scrollHeight;
-        schedule();
+        schedule(1000);
       })
       .catch(function () {
         failures += 1;
-        if (failures >= 5) { liveEl.classList.add('paused'); return; }  // give up visibly
-        schedule();
+        if (failures >= 5) liveEl.classList.add('paused');
+        schedule(failures >= 5 ? 10000 : 1000);  // slow retry while paused, never give up
       });
   }
 
-  function schedule() {
+  function schedule(delay) {
     setTimeout(function () {
-      if (document.hidden) { schedule(); return; }  // idle while tab is hidden
+      if (document.hidden) { schedule(delay); return; }  // idle while tab is hidden
       poll();
-    }, 1000);
+    }, delay);
   }
 
   poll();
