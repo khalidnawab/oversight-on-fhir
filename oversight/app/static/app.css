@@ -115,6 +115,14 @@ a:hover { text-decoration: underline; }
 .worklist tr td:first-child { border-left: 1px solid var(--line); border-top-left-radius: 11px; border-bottom-left-radius: 11px; }
 .worklist tr td:last-child { border-right: 1px solid var(--line); border-top-right-radius: 11px; border-bottom-right-radius: 11px; }
 .worklist tbody tr { box-shadow: var(--shadow-sm); }
+
+/* Plain data tables (orders, labs, cultures, mappings) — visible cell borders for readability. */
+table:not(.worklist) { width: 100%; border-collapse: collapse; font-size: .9rem; }
+table:not(.worklist) th, table:not(.worklist) td { border: 1px solid var(--line-strong); padding: 9px 12px; text-align: left; vertical-align: middle; }
+table:not(.worklist) thead th, table:not(.worklist) tr:first-child th {
+  background: var(--surface-2); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); font-weight: 600; }
+table:not(.worklist) tbody tr:nth-child(even) td, table:not(.worklist) tr:nth-child(even) td { background: rgba(20,33,31,.015); }
 .pt-name { font-weight: 600; font-size: .98rem; }
 .pt-sub { color: var(--muted); font-size: .8rem; margin-top: 1px; }
 .dot-strip { display: inline-block; width: 4px; height: 34px; border-radius: 3px; margin-right: 12px; vertical-align: middle; }
