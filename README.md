@@ -3,6 +3,8 @@
 Instrumented physician oversight of agentic clinical AI (antibiotic de-escalation demonstrator).
 HL7 AI Challenge 2026 submission. Synthetic data only — no PHI.
 
+**Browsable Implementation Guide:** https://khalidnawab.github.io/oversight-on-fhir/
+
 ## Quick start (local dev)
 
 1. `docker compose up -d hapi`  — start the local HAPI FHIR R4 server (wait ~2 min on first boot).
@@ -27,9 +29,11 @@ fixtures once against the running server: `uv run python scripts/load_fixtures.p
 
 ## Implementation guide
 
-The draft IG (profiles + terminology + examples) lives in `ig/`. Build the conformance resources:
-`npx fsh-sushi ig` (outputs to `ig/fsh-generated/`). The browsable HTML site is produced by the HL7
-IG Publisher (`java -jar ig/publisher.jar -ig ig`), which additionally needs Jekyll installed.
+The draft IG (profiles + terminology + examples) is published at
+**https://khalidnawab.github.io/oversight-on-fhir/** and its source lives in `ig/`. Build the
+conformance resources with `npx fsh-sushi ig` (outputs to `ig/fsh-generated/`); the browsable HTML
+site is produced by the HL7 IG Publisher (`java -jar ig/publisher.jar -ig ig`), which additionally
+needs Jekyll installed.
 
 ## Configuration
 

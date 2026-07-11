@@ -2,6 +2,9 @@
 
 **HL7 AI Challenge 2026 · Author: Khalid Nawab · Synthetic data only — no PHI or PII**
 
+**Source repository:** https://github.com/khalidnawab/oversight-on-fhir ·
+**Implementation Guide:** https://khalidnawab.github.io/oversight-on-fhir/
+
 Oversight of agentic clinical AI is mandated nearly everywhere and observable
 nearly nowhere. The FDA's Good Machine Learning Practice, Article 14 of the EU AI
 Act, the NIST AI Risk Management Framework, and the AMA's augmented-intelligence

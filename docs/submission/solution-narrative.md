@@ -3,6 +3,9 @@
 **HL7 AI Challenge 2026 · Author: Khalid Nawab**
 **Synthetic data only — no PHI or PII appears anywhere in this submission.**
 
+**Source repository:** https://github.com/khalidnawab/oversight-on-fhir ·
+**Implementation Guide:** https://khalidnawab.github.io/oversight-on-fhir/
+
 ## The problem
 
 Agentic AI systems plan and execute multi-step clinical work with limited human
