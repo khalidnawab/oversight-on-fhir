@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     synthetic_data_only: bool = True
     model: str = "claude-opus-4-8"
     confidence_threshold: float = Field(default=0.7, ge=0.0, le=1.0)
+    # Test-only affordance: exposes a destructive "reset recorded data" endpoint. Disable outside demos.
+    enable_reset: bool = True
 
     def __init__(self, **kwargs):
         try:

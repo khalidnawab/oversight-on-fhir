@@ -89,6 +89,22 @@ def test_reset_clears_recorded_data(monkeypatch):
     assert re.search(r"Oversight decisions</div>\s*<div class=\"value\">0<", dash.text)
 
 
+def test_reset_blocks_cross_origin_post(monkeypatch):
+    c = _client(monkeypatch)
+    resp = c.post("/reset", headers={"origin": "http://evil.example", "host": "testserver"},
+                  follow_redirects=False)
+    assert resp.status_code == 403
+
+
+def test_reset_404_when_disabled(monkeypatch):
+    monkeypatch.setenv("OVERSIGHT_BACKEND", "demo")
+    monkeypatch.setenv("OVERSIGHT_ENABLE_RESET", "false")
+    from oversight.app.main import create_app
+    from oversight.config import Settings
+    c = TestClient(create_app(Settings()))
+    assert c.post("/reset", follow_redirects=False).status_code == 404
+
+
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
 def test_cds_service_returns_card(monkeypatch):
     c = _client(monkeypatch)

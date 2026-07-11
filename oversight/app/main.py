@@ -1,7 +1,8 @@
 import datetime as _dt
 from pathlib import Path
+from urllib.parse import urlparse
 
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -36,7 +37,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return Orchestrator(get_backend(settings), threshold=settings.confidence_threshold, n_samples=3)
 
     def ctx(**kw) -> dict:
-        return {"backend": settings.backend, **kw}
+        return {"backend": settings.backend, "enable_reset": settings.enable_reset, **kw}
 
     def _headline(entry) -> dict | None:
         key = (entry.patient_id, entry.encounter_id, settings.backend)
@@ -88,6 +89,14 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.post("/reset")
     def reset(request: Request):
+        # Test-only affordance; return 404 when disabled so it isn't exposed in a non-demo build.
+        if not settings.enable_reset:
+            raise HTTPException(status_code=404)
+        # CSRF defense without session infra: reject cross-origin POSTs. A browser always sends
+        # Origin on a cross-site form POST; same-origin form posts and CLI tools (no Origin) pass.
+        origin = request.headers.get("origin")
+        if origin is not None and urlparse(origin).netloc != request.headers.get("host", ""):
+            raise HTTPException(status_code=403, detail="cross-origin reset blocked")
         _svc().reset_recorded()
         _HEADLINE_CACHE.clear()
         return RedirectResponse(url=request.headers.get("referer") or "/", status_code=303)
