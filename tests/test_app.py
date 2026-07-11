@@ -36,6 +36,15 @@ def test_cds_discovery(monkeypatch):
     assert r.json()["services"][0]["hook"] == "patient-view"
 
 
+def test_cds_hooks_page_renders(monkeypatch):
+    c = _client(monkeypatch)
+    r = c.get("/cds-hooks")
+    assert r.status_code == 200
+    assert "CDS Hooks integration" in r.text
+    assert "Consider de-escalation to cefazolin" in r.text  # example info card
+    assert "Escalated to human review" in r.text or "warning" in r.text  # example warning card
+
+
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
 def test_api_assessment_returns_action(monkeypatch):
     c = _client(monkeypatch)

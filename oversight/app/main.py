@@ -157,6 +157,24 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     def cds_discovery():
         return JSONResponse(cds_hooks.discovery_document())
 
+    @app.get("/cds-hooks", response_class=HTMLResponse)
+    def cds_hooks_page(request: Request):
+        import json as _json
+        disclosure = "AI-generated stewardship suggestion — not an order; requires clinician review."
+        narrow_rec = {"candidacy": {"recommended_action": "narrow", "recommended_agent": "cefazolin"},
+                      "rationale": [{"assertion": "Blood culture grew MSSA susceptible to cefazolin.", "evidence": []},
+                                    {"assertion": "Antibiogram names cefazolin the preferred narrow agent for MSSA.", "evidence": []}],
+                      "routing": {"decision": "surface", "triggered_high_risk_rules": []},
+                      "disclosure_text": disclosure}
+        escalate_rec = {"candidacy": {"recommended_action": "narrow", "recommended_agent": "cefazolin"},
+                        "rationale": [], "routing": {"decision": "escalate", "triggered_high_risk_rules": ["allergy_to_candidate"]},
+                        "disclosure_text": disclosure}
+        cards = [cds_hooks.recommendation_to_card(narrow_rec, "GuidanceResponse/gr-example"),
+                 cds_hooks.recommendation_to_card(escalate_rec, "GuidanceResponse/gr-example-2")]
+        return _TEMPLATES.TemplateResponse(request, "cds_hooks.html", ctx(
+            discovery=_json.dumps(cds_hooks.discovery_document(), indent=2), cards=cards,
+            service_id=cds_hooks.SERVICE_ID))
+
     @app.post("/cds-services/" + cds_hooks.SERVICE_ID)
     def cds_service(payload: dict):
         c = payload.get("context", {})

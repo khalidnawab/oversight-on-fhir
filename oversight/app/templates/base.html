@@ -22,7 +22,8 @@
       <span class="ico">✓</span> Reviewed{% if reviewed_count %} <span class="nav-badge">{{ reviewed_count }}</span>{% endif %}</a>
     <a class="nav-link {% if request.url.path == '/dashboard' %}active{% endif %}" href="/dashboard">
       <span class="ico">◔</span> Oversight analytics</a>
-    <a class="nav-link" href="/cds-services" target="_blank"><span class="ico">⇄</span> CDS Hooks</a>
+    <a class="nav-link {% if request.url.path == '/cds-hooks' %}active{% endif %}" href="/cds-hooks">
+      <span class="ico">⇄</span> CDS Hooks</a>
     <div class="spacer"></div>
     {% if enable_reset %}
     <form method="post" action="/reset" onsubmit="return confirm('Delete all recorded recommendations and oversight events? (patient data is kept)')">

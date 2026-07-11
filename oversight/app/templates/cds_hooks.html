@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block page_title %}CDS Hooks{% endblock %}
+{% block page_crumb %}Standards surface · EHR integration{% endblock %}
+{% block page_h1 %}CDS Hooks integration{% endblock %}
+{% block topbar_right %}<div class="scan-chip">FHIR · SMART · CDS Hooks</div>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <p style="font-size:.98rem;line-height:1.6;margin-top:0">
+      <strong>CDS Hooks</strong> is the HL7 standard for surfacing decision support inside the EHR workflow.
+      Oversight-on-FHIR exposes the agent's de-escalation recommendation as a CDS Hooks service, so an EHR
+      can show it as a card at the point of care — with the AI disclosure and an accept / edit / reject
+      control that feeds the same FHIR oversight capture. This completes the standards-native path:
+      <span class="mono">FHIR</span> for data, <span class="mono">SMART</span> for auth,
+      <span class="mono">CDS Hooks</span> for delivery.
+    </p>
+  </div>
+</div>
+
+<p class="eyebrow" style="margin-top:26px">Example cards — how the recommendation appears in an EHR</p>
+<div class="grid-2 stagger">
+  {% for c in cards %}
+  <div class="card cds-card cds-{{ c.indicator }}">
+    <div class="card-body">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+        <span class="badge {{ 'escalate' if c.indicator == 'warning' else 'surface' }}">{{ c.indicator }}</span>
+        <strong style="font-size:1.02rem">{{ c.summary }}</strong>
+      </div>
+      <div class="pt-sub" style="white-space:pre-line;color:var(--ink-soft)">{{ c.detail }}</div>
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+        {% if c.suggestions %}
+          {% for s in c.suggestions %}<button class="btn btn-review btn-sm">{{ s.label }}</button>{% endfor %}
+        {% endif %}
+        <span class="pt-sub">source: {{ c.source.label }}</span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="card" style="margin-top:22px">
+  <div class="card-head"><h2>Recommendation → card mapping</h2></div>
+  <div class="card-body">
+    <table>
+      <tr><th>Recommendation</th><th>Card</th></tr>
+      <tr><td><span class="chip">surface · narrow</span></td><td><span class="badge surface">info</span> summary + rationale, with an <em>accept</em> suggestion whose <span class="mono">uuid</span> is the GuidanceResponse reference</td></tr>
+      <tr><td><span class="chip">escalate</span></td><td><span class="badge escalate">warning</span> escalation summary + triggered high-risk rule; <strong>no</strong> suggestion (a human must decide)</td></tr>
+    </table>
+    <p class="pt-sub" style="margin-top:12px">Selecting the card's suggestion (accept) or overriding it maps to the same
+    oversight-capture path as the clinician UI — producing an <span class="mono">AuditEvent</span> (OversightEvent profile)
+    referencing the reviewed recommendation, with a coded disposition and reason.</p>
+  </div>
+</div>
+
+<div class="card" style="margin-top:22px">
+  <div class="card-head"><h2>Discovery document</h2>
+    <a class="btn btn-ghost btn-sm" href="/cds-services" target="_blank">Open raw endpoint ↗</a></div>
+  <div class="card-body">
+    <p class="pt-sub" style="margin-top:0">An EHR discovers the service at <span class="mono">GET /cds-services</span>,
+    then invokes <span class="mono">POST /cds-services/{{ service_id }}</span> with a patient context to receive cards.</p>
+    <pre class="mono" style="background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:14px 16px;overflow:auto;font-size:.8rem">{{ discovery }}</pre>
+  </div>
+</div>
+{% endblock %}

@@ -134,6 +134,9 @@ a:hover { text-decoration: underline; }
   background: var(--surface-2); border: 1px solid var(--line); border-radius: 7px; padding: 3px 8px; color: var(--ink-soft); }
 .chip.ref { color: var(--info); border-color: #cdddec; background: #f2f7fb; }
 .chip.guideline { color: var(--warn); border-color: #ecd5a8; background: var(--warn-soft); }
+.cds-card { border-left: 4px solid var(--brand); }
+.cds-card.cds-warning { border-left-color: var(--warn); }
+.cds-card.cds-info { border-left-color: var(--info); }
 .headline { font-weight: 600; font-size: .9rem; }
 .headline .arrow { color: var(--brand); }
 .assessing { color: var(--muted); font-size: .84rem; display: inline-flex; align-items: center; gap: 7px; }
