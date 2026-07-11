@@ -25,6 +25,9 @@ _STATIC = Path(__file__).parent / "static"
 # (pid, eid, backend) -> (rec, guidance_ref). The census and the patient view share this, so an
 # assessment is computed + persisted once and clicking "Review" is instant afterwards.
 _REC_CACHE: dict = {}
+# (pid, eid, backend) -> {disposition, reason, note, guidance_ref, when, patient_name, location}.
+# Patients whose decision has been recorded; they move off the pending census into "Reviewed".
+_REVIEWED: dict = {}
 # Single sample keeps each assessment one fast model call and avoids nested thread pools inside
 # FastAPI's worker threads. (Self-consistency with n>1 is available in the backend/CLI, but the
 # interactive app favors responsiveness; the safety-critical escalations are rule-based, not
@@ -59,16 +62,26 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         _REC_CACHE[key] = (rec, guidance_ref)
         return rec, guidance_ref
 
+    def _is_reviewed(e) -> bool:
+        return (e.patient_id, e.encounter_id, settings.backend) in _REVIEWED
+
     @app.get("/", response_class=HTMLResponse)
     def census(request: Request):
         # Deterministic triage only — renders instantly. Per-patient agent assessments load lazily
-        # via /api/assessment so the worklist never blocks on the model.
-        entries = CensusScanner(FhirClient.from_settings(settings)).scan()
+        # via /api/assessment so the worklist never blocks on the model. Reviewed patients drop off.
+        all_entries = CensusScanner(FhirClient.from_settings(settings)).scan()
+        entries = [e for e in all_entries if not _is_reviewed(e)]
         counts = {k: sum(1 for e in entries if e.eligibility == k)
                   for k in ("eligible", "insufficient", "monitoring", "not_eligible")}
         scanned_at = _dt.datetime.now().strftime("%H:%M")
         return _TEMPLATES.TemplateResponse(request, "census.html",
-            ctx(entries=entries, counts=counts, scanned_at=scanned_at))
+            ctx(entries=entries, counts=counts, scanned_at=scanned_at, reviewed_count=len(_REVIEWED)))
+
+    @app.get("/reviewed", response_class=HTMLResponse)
+    def reviewed(request: Request):
+        items = sorted(_REVIEWED.values(), key=lambda r: r.get("when", ""), reverse=True)
+        return _TEMPLATES.TemplateResponse(request, "reviewed.html",
+            ctx(items=items, reviewed_count=len(_REVIEWED)))
 
     @app.get("/api/assessment/{pid}/{eid}")
     def api_assessment(pid: str, eid: str):
@@ -88,14 +101,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         entry = CensusScanner(FhirClient.from_settings(settings)).classify(pid)
         rec, guidance_ref = _assess(pid, eid)
         return _TEMPLATES.TemplateResponse(request, "clinician.html", ctx(
-            rec=rec, guidance_ref=guidance_ref, reasons=t.REASON_CODES,
+            rec=rec, guidance_ref=guidance_ref, reasons=t.REASON_CODES, pid=pid, eid=eid,
             patient_name=(entry.patient_name if entry else pid),
             location=(entry.location if entry else ""),
             day_of_therapy=(entry.day_of_therapy if entry else 0)))
 
     @app.post("/disposition")
     def disposition(guidance_ref: str = Form(...), disposition: str = Form(...),
-                    reason_code: str = Form(""), note: str = Form("")):
+                    reason_code: str = Form(""), note: str = Form(""),
+                    pid: str = Form(""), eid: str = Form("")):
         try:
             _svc().capture_disposition(guidance_ref, "Practitioner/dr-alice", disposition=disposition,
                                        reason_code=(reason_code or None), note=(note or None))
@@ -107,7 +121,17 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 "This recommendation is no longer current — it was likely cleared by a reset while "
                 "this page was open. <a href='/'>Return to the census</a> and re-open the patient to "
                 "record a decision on a fresh recommendation.</p>", status_code=409)
-        return RedirectResponse(url="/dashboard", status_code=303)
+        # Move the patient off the pending census into the Reviewed section.
+        if pid and eid:
+            entry = CensusScanner(FhirClient.from_settings(settings)).classify(pid)
+            _REVIEWED[(pid, eid, settings.backend)] = {
+                "pid": pid, "eid": eid, "disposition": disposition,
+                "reason": reason_code or None, "note": note or None, "guidance_ref": guidance_ref,
+                "when": _dt.datetime.now().strftime("%H:%M"),
+                "patient_name": entry.patient_name if entry else pid,
+                "location": entry.location if entry else "",
+            }
+        return RedirectResponse(url="/", status_code=303)
 
     @app.post("/reset")
     def reset(request: Request):
@@ -121,6 +145,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             raise HTTPException(status_code=403, detail="cross-origin reset blocked")
         _svc().reset_recorded()
         _REC_CACHE.clear()
+        _REVIEWED.clear()
         return RedirectResponse(url=request.headers.get("referer") or "/", status_code=303)
 
     @app.get("/dashboard", response_class=HTMLResponse)

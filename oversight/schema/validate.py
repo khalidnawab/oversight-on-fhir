@@ -21,7 +21,7 @@ _STRIP_KEYWORDS = {"minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum",
 # Fields the model must NOT author — they are computed by deterministic code after generation
 # (Section 4.3 tool result; Section 9 routing; Section 9.2 self-consistency confidence). The model
 # is constrained to emit null for these; the orchestrator fills them in.
-_CODE_OWNED_FIELDS = ("deterministic_tool_result", "confidence", "routing")
+_CODE_OWNED_FIELDS = ("deterministic_tool_result", "confidence", "routing", "disclosure_text")
 
 
 def _sanitize(node):

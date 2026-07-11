@@ -76,12 +76,32 @@ def test_disposition_then_dashboard(monkeypatch):
     assert m
     gref = m.group(0)
     resp = c.post("/disposition", data={"guidance_ref": gref, "disposition": "reject",
-                                        "reason_code": "data-vintage", "note": "Newer culture."},
+                                        "reason_code": "data-vintage", "note": "Newer culture.",
+                                        "pid": "clean-1", "eid": "enc-clean-1"},
                   follow_redirects=False)
     assert resp.status_code == 303
+    assert resp.headers["location"] == "/"  # back to the census
     dash = c.get("/dashboard")
     assert dash.status_code == 200
     assert "oversight decisions" in dash.text.lower()
+
+
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_reviewed_flow_moves_patient_off_census(monkeypatch):
+    import re
+    c = _client(monkeypatch)
+    # fresh reset so census/reviewed state is clean
+    c.post("/reset", follow_redirects=False)
+    view = c.get("/patient/hr-1/enc-hr-1")
+    gref = re.search(r"GuidanceResponse/gr-[0-9a-f]+", view.text).group(0)
+    # before deciding, hr-1 (Okafor) is on the census
+    assert "Okafor" in c.get("/").text
+    c.post("/disposition", data={"guidance_ref": gref, "disposition": "accept",
+                                 "pid": "hr-1", "eid": "enc-hr-1"}, follow_redirects=False)
+    # after deciding, hr-1 is off the census and on the reviewed page
+    assert "Okafor" not in c.get("/").text
+    reviewed = c.get("/reviewed").text
+    assert "Okafor" in reviewed and "accepted" in reviewed
 
 
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")

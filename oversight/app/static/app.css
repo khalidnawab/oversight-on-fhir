@@ -62,6 +62,8 @@ a:hover { text-decoration: underline; }
   color: #b3cbc3; font-weight: 500; font-size: .92rem; transition: background .15s, color .15s; }
 .nav-link:hover { background: rgba(255,255,255,.05); color: #fff; text-decoration: none; }
 .nav-link.active { background: rgba(53,201,168,.16); color: #fff; }
+.nav-badge { background: var(--brand); color: #fff; font-size: .68rem; font-weight: 700; border-radius: 999px;
+  padding: 1px 7px; margin-left: 4px; }
 .nav-link .ico { width: 17px; opacity: .85; }
 .sidebar .spacer { flex: 1; }
 .btn-reset { width: 100%; background: rgba(255,255,255,.06); color: #cfe0da; border: 1px solid rgba(255,255,255,.12);

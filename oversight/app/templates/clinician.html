@@ -97,6 +97,8 @@
         <div class="disclosure" style="margin-bottom:16px"><span>⚑</span><span>{{ rec.disclosure_text }}</span></div>
         <form method="post" action="/disposition" class="decision">
           <input type="hidden" name="guidance_ref" value="{{ guidance_ref }}">
+          <input type="hidden" name="pid" value="{{ pid }}">
+          <input type="hidden" name="eid" value="{{ eid }}">
           <div class="seg" role="radiogroup">
             <label><input type="radio" name="disposition" value="accept" checked onchange="reasonBox(false)"><span class="accept">Accept</span></label>
             <label><input type="radio" name="disposition" value="edit" onchange="reasonBox(true)"><span class="edit">Edit</span></label>

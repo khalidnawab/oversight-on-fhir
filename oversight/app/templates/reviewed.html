@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block page_title %}Reviewed{% endblock %}
+{% block page_crumb %}Antimicrobial stewardship · completed reviews{% endblock %}
+{% block page_h1 %}Reviewed{% endblock %}
+{% block topbar_right %}<div class="scan-chip">{{ items|length }} decisions recorded this session</div>{% endblock %}
+
+{% block content %}
+{% if not items %}
+<div class="card"><div class="card-body">
+  <p class="pt-sub">No reviews completed yet. Decisions you record on the <a href="/">census</a> will appear here.</p>
+</div></div>
+{% else %}
+<table class="worklist">
+  <thead><tr>
+    <th style="width:26%">Patient</th><th>Decision</th><th>Reason</th><th>Note</th><th>When</th><th></th>
+  </tr></thead>
+  <tbody class="stagger">
+    {% for r in items %}
+    <tr>
+      <td>
+        <span class="dot-strip dot-{{ 'not_eligible' if r.disposition == 'accept' else 'monitoring' }}"></span>
+        <span style="display:inline-block;vertical-align:middle">
+          <div class="pt-name">{{ r.patient_name }}</div>
+          <div class="pt-sub">{{ r.location or "—" }}</div>
+        </span>
+      </td>
+      <td>
+        {% if r.disposition == "accept" %}<span class="badge surface">✓ accepted</span>
+        {% elif r.disposition == "edit" %}<span class="badge insufficient">✎ edited</span>
+        {% else %}<span class="badge escalate">✕ rejected</span>{% endif %}
+      </td>
+      <td>{% if r.reason %}<span class="chip">{{ r.reason|replace("-"," ") }}</span>{% else %}<span class="pt-sub">—</span>{% endif %}</td>
+      <td class="pt-sub">{{ r.note or "—" }}</td>
+      <td class="pt-sub">{{ r.when }}</td>
+      <td><a class="btn btn-review" href="/patient/{{ r.pid }}/{{ r.eid }}">View →</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="pt-sub" style="margin-top:14px">Each decision is persisted as a FHIR <span class="mono">AuditEvent</span> (OversightEvent profile). Aggregate metrics are on the <a href="/dashboard">Oversight analytics</a> page.</p>
+{% endif %}
+{% endblock %}

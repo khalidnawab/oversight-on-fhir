@@ -18,6 +18,8 @@
     </div>
     <a class="nav-link {% if request.url.path == '/' %}active{% endif %}" href="/">
       <span class="ico">▤</span> Census</a>
+    <a class="nav-link {% if request.url.path == '/reviewed' %}active{% endif %}" href="/reviewed">
+      <span class="ico">✓</span> Reviewed{% if reviewed_count %} <span class="nav-badge">{{ reviewed_count }}</span>{% endif %}</a>
     <a class="nav-link {% if request.url.path == '/dashboard' %}active{% endif %}" href="/dashboard">
       <span class="ico">◔</span> Oversight analytics</a>
     <a class="nav-link" href="/cds-services" target="_blank"><span class="ico">⇄</span> CDS Hooks</a>
