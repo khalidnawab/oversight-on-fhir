@@ -12,6 +12,7 @@ from oversight.app.dashboard import aggregate_oversight
 from oversight.config import Settings
 from oversight.errors import FhirError
 from oversight.fhir.client import FhirClient
+from oversight.fhir.log import activity_log
 from oversight.inference.factory import get_backend
 from oversight.oversight import taxonomy as t
 from oversight.oversight.service import OversightService
@@ -97,6 +98,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                              "escalate": rec["routing"]["decision"] == "escalate",
                              "rules": rec["routing"]["triggered_high_risk_rules"]})
 
+    @app.get("/api/fhir-log")
+    def api_fhir_log(since: int = 0):
+        """Increments of the FHIR activity ring buffer for the live panel (polled ~1s)."""
+        return JSONResponse({"entries": activity_log.since(since), "latest": activity_log.latest})
+
     @app.get("/patient/{pid}/{eid}", response_class=HTMLResponse)
     def patient(request: Request, pid: str, eid: str):
         client = FhirClient.from_settings(settings)
@@ -149,6 +155,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         _svc().reset_recorded()
         _REC_CACHE.clear()
         _REVIEWED.clear()
+        activity_log.clear()  # after reset_recorded(): its DELETE traffic is wiped too
         return RedirectResponse(url=request.headers.get("referer") or "/", status_code=303)
 
     @app.get("/dashboard", response_class=HTMLResponse)

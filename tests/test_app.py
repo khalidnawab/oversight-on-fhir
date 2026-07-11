@@ -157,3 +157,27 @@ def test_cds_service_returns_card(monkeypatch):
     assert r.status_code == 200
     cards = r.json()["cards"]
     assert cards and "summary" in cards[0]
+
+
+def test_fhir_log_endpoint_incremental(monkeypatch):
+    from oversight.fhir.log import activity_log
+    c = _client(monkeypatch)
+    activity_log.clear()
+    start = activity_log.latest
+    activity_log.append("GET", "Patient/p1", 200)
+    activity_log.append("POST", "GuidanceResponse", 201, resource_id="GuidanceResponse/gr-1")
+    body = c.get(f"/api/fhir-log?since={start}").json()
+    assert [e["target"] for e in body["entries"]] == ["Patient/p1", "GuidanceResponse"]
+    assert body["latest"] == start + 2
+    # cursor past the end -> empty increment
+    assert c.get(f"/api/fhir-log?since={start + 2}").json()["entries"] == []
+
+
+@pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")
+def test_reset_clears_fhir_log(monkeypatch):
+    from oversight.fhir.log import activity_log
+    c = _client(monkeypatch)
+    c.get("/")  # census scan generates FHIR reads
+    assert c.get("/api/fhir-log?since=0").json()["entries"]
+    c.post("/reset", follow_redirects=False)
+    assert c.get("/api/fhir-log?since=0").json()["entries"] == []
