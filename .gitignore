@@ -14,3 +14,9 @@ ig/publisher.jar
 ig/Requirements-fromNarrative.json
 .fhir/
 screenshots/
+transcript.txt
+video/
+PROGRESS.md
+docs/submission/demo-video-script.md
+docs/submission/submission-pdf.html
+docs/submission/*.pdf
