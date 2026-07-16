@@ -23,6 +23,29 @@ record of when and why overrides happen. Stated plainly: oversight of agentic
 clinical AI is mandated nearly everywhere and observable nearly nowhere. Closing that
 gap is the object of this project.
 
+## What a FHIR resource is — and what this project proposes
+
+FHIR (Fast Healthcare Interoperability Resources) is HL7's standard for exchanging
+health data. It defines a catalog of standard record types called *resources* —
+`Patient`, `MedicationRequest`, `Observation`, and roughly 140 others — each with a
+fixed, published structure, created and retrieved over a standard REST API that
+modern EHRs already expose. A FHIR resource is not a proprietary log entry: it is a
+record that any conformant system can store, validate, and query without knowing
+anything about the software that wrote it.
+
+The proposal here is deliberately conservative: no new resource types. Three
+existing resources are each given a job. A `GuidanceResponse` carries the AI's
+recommendation. A `Provenance` attributes that recommendation to a `Device`
+representing the AI, with model identity and version — the *transparency* half: the
+record permanently shows what came from AI. An `AuditEvent` records the clinician's
+decision over it — accept, edit, or reject, with a coded reason — the
+*accountability* half. A draft Implementation Guide then profiles these resources
+(constrains their shape) and defines the terminology, so that "an oversight
+decision" has one precise, machine-checkable representation rather than a
+per-vendor convention. Because the trail is ordinary FHIR, it is EHR-agnostic by
+construction — and any vendor's clinical AI, not only this one, could emit the same
+pattern.
+
 ## What this is
 
 An autonomous, standards-native agent performs a genuine clinical reasoning task —

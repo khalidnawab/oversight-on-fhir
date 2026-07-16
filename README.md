@@ -5,13 +5,24 @@ HL7 AI Challenge 2026 submission. Synthetic data only — no PHI.
 
 **Browsable Implementation Guide:** https://khalidnawab.github.io/oversight-on-fhir/
 
+## The idea in brief
+
+FHIR is HL7's standard for exchanging health data: a catalog of standard record types
+("resources" — `Patient`, `MedicationRequest`, `Observation`, …) served over a standard
+REST API that modern EHRs already expose. This project proposes no new resource types.
+Three existing ones each get a job: a `GuidanceResponse` carries the AI's recommendation,
+a `Provenance` attributes it to the AI device (transparency), and an `AuditEvent` records
+the clinician's accept/edit/reject decision with a coded reason (accountability). A draft
+IG profiles all three. Because the oversight trail is ordinary FHIR, any FHIR-capable
+system can store and query it — it is EHR-agnostic and not tied to this agent.
+
 ## Quick start (local dev)
 
 1. `docker compose up -d hapi`  — start the local HAPI FHIR R4 server (wait ~2 min on first boot).
 2. `uv sync`  — install Python deps.
 3. `copy .env.example .env`  — optionally set `ANTHROPIC_API_KEY` to use the frontier backend.
 4. `uv run python scripts/load_fixtures.py`  — load synthetic patients + clinician.
-5. `uv run pytest`  — run the test suite (89 tests; HAPI-dependent ones skip if it is down).
+5. `uv run pytest`  — run the test suite (123 tests; HAPI-dependent ones skip if it is down).
 6. `uv run uvicorn oversight.app.main:app --reload`  — clinician UI + dashboard at http://localhost:8000
 
 ## Full containerized demo

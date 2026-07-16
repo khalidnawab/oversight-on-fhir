@@ -4,6 +4,8 @@ Oversight of agentic clinical AI is **mandated nearly everywhere** (FDA GMLP, EU
 
 The agent proposes; the clinician disposes; and that disposition — accept, edit, or reject, with a structured reason — lands in the record as standard FHIR that any unaffiliated client can retrieve over REST.
 
+The guide defines no new resource types. It profiles three existing FHIR resources — `GuidanceResponse` (the recommendation), `Provenance` (AI authorship), and `AuditEvent` (the human decision) — so the full oversight trail is storable and queryable on any stock FHIR R4 server.
+
 #### Relationship to the HL7 AI Transparency on FHIR IG
 
 This guide is **complementary** to the HL7 AI Transparency on FHIR IG. That effort represents **AI influence on clinical data**. This guide represents the **human decision over agentic AI output**. The two compose: AI authorship is attributed with `Provenance` to a `Device`, mirroring the AI Transparency approach, while the novel contribution here is the **OversightEvent** — a profile on `AuditEvent`.

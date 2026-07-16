@@ -15,6 +15,17 @@ Transparency on FHIR IG represents AI influence on clinical data; it does not
 represent the human decision to accept, modify, or reject what an agent proposes.
 That missing layer is what this project builds.
 
+**The mechanism, in plain terms.** FHIR — HL7's standard for exchanging health
+data — defines a catalog of standard record types called *resources* (`Patient`,
+`MedicationRequest`, `Observation`, …), each with a fixed published structure,
+retrievable over a standard REST API that modern EHRs already expose. This project
+introduces no new resource types. It takes three that already exist and gives each
+a job: one carries the AI's recommendation, one attributes it to the AI with model
+identity and version (transparency), and one records the clinician's decision over
+it with a coded reason (accountability). Because these are ordinary FHIR resources,
+the oversight trail is EHR-agnostic by construction: any FHIR-capable system can
+store and query it, and any vendor's clinical AI could emit the same pattern.
+
 **The contribution.** Oversight-on-FHIR makes the human oversight decision a
 first-class, queryable FHIR resource. An autonomous, standards-native agent performs
 a real clinical task — antibiotic de-escalation in suspected sepsis — and an
