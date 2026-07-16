@@ -75,7 +75,7 @@ def test_high_risk_patient_view_escalates(monkeypatch):
     r = c.get("/patient/hr-1/enc-hr-1")
     assert r.status_code == 200
     assert "Escalated" in r.text
-    assert "allergy_to_candidate" in r.text
+    assert "severe_renal_impairment" in r.text
 
 
 @pytest.mark.skipif(not _hapi_up(), reason="HAPI not running")

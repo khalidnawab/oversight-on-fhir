@@ -24,8 +24,16 @@ def test_clean_has_susceptibility_and_no_allergy():
     assert "AllergyIntolerance" not in types
 
 
-def test_high_risk_has_cefazolin_allergy():
+def test_high_risk_has_severe_renal_impairment():
+    # The escalation trigger is deterministic renal risk: creatinine high enough that
+    # Cockcroft-Gault lands well under the severe threshold (CrCl < 30) for this patient.
     bundle = json.loads((FIX / "high_risk.json").read_text(encoding="utf-8"))
+    creats = [e["resource"] for e in bundle["entry"]
+              if e["resource"]["resourceType"] == "Observation"
+              and "2160-0" in json.dumps(e["resource"])]
+    assert creats, "high_risk fixture must contain a creatinine Observation"
+    assert creats[0]["valueQuantity"]["value"] >= 3.0
+    # An allergy stays on the chart for texture, but must not implicate the
+    # candidate agent — the model is allowed to see allergies and reason well.
     allergies = [e["resource"] for e in bundle["entry"] if e["resource"]["resourceType"] == "AllergyIntolerance"]
-    assert allergies, "high_risk fixture must contain an AllergyIntolerance"
-    assert "cefazolin" in json.dumps(allergies[0]).lower()
+    assert allergies and "cefazolin" not in json.dumps(allergies[0]).lower()

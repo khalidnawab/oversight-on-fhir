@@ -35,11 +35,13 @@ def test_clean_fixture_end_to_end():
 def test_high_risk_fixture_escalates_end_to_end():
     client = FhirClient.from_settings(settings)
     ctx = ContextBuilder(client).build("hr-1", "enc-hr-1")
-    assert any("cefazolin" in a for a in ctx.allergies)
+    # The fixture's escalation trigger is renal: CrCl ~19 mL/min via Cockcroft-Gault,
+    # computed deterministically from data the model's prompt never includes.
+    assert ctx.serum_creatinine is not None and ctx.serum_creatinine > 3.0
     rec_src = copy.deepcopy(CLEAN_REC)
     rec_src["patient_reference"] = "Patient/hr-1"
     rec_src["encounter_reference"] = "Encounter/enc-hr-1"
     orch = Orchestrator(backend=FakeBackend(rec_src), threshold=0.7, n_samples=3)
     rec = orch.run_with_context(ctx, knowledge_passages=[])
     assert rec["routing"]["decision"] == "escalate"
-    assert "allergy_to_candidate" in rec["routing"]["triggered_high_risk_rules"]
+    assert "severe_renal_impairment" in rec["routing"]["triggered_high_risk_rules"]
